@@ -8,5 +8,17 @@ st.set_page_config(
     page_icon="👋",
 )
 
-# Set the main title of the dashboard
-st.title("CardioVision") 
+risk_stratification_page = st.Page("pages/1_Risk_Stratification.py", title="Risk Stratification", icon=":material/dashboard:", default=True)
+historic_page = st.Page("pages/2_Historic_Data.py", title="Historic Data", icon=":material/dashboard:")
+diagnostic_page = st.Page("pages/3_Diagnostic_Analysis.py", title="Diagnostic Analysis", icon=":material/dashboard:")
+about_page = st.Page("pages/4_About.py", title="About", icon=":material/dashboard:")
+
+pg = st.navigation(
+    {
+        "Patient": [risk_stratification_page],
+        "Historic Analysis": [historic_page, diagnostic_page],
+        "Others": [about_page],
+    }
+)
+
+pg.run()
