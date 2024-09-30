@@ -1,0 +1,397 @@
+age,gender,chest_pain_type,serum_cholesterol,high_fasting_blood_sugar,resting_ecg_results,max_heart_rate,exercise_induced_angina,st_depression,has_hypertension,cigarettes_per_day,years_smoking,family_history_cad,resting_heart_rate,heart_disease_diagnosis
+63,Male,Typical Angina,233.0,True,Left Ventricular Hypertrophy,150.0,False,2.3,1.0,50.0,20.0,True,60.0,False
+67,Male,Asymptomatic,286.0,False,Left Ventricular Hypertrophy,108.0,True,1.5,1.0,40.0,40.0,True,64.0,True
+67,Male,Asymptomatic,229.0,False,Left Ventricular Hypertrophy,129.0,True,2.6,1.0,20.0,35.0,True,78.0,True
+37,Male,Non-Anginal Pain,250.0,False,Normal,187.0,False,3.5,0.0,0.0,0.0,True,84.0,False
+41,Female,Atypical Angina,204.0,False,Left Ventricular Hypertrophy,172.0,False,1.4,1.0,0.0,0.0,True,71.0,False
+56,Male,Atypical Angina,236.0,False,Normal,178.0,False,0.8,1.0,20.0,20.0,True,73.0,False
+62,Female,Asymptomatic,268.0,False,Left Ventricular Hypertrophy,160.0,False,3.6,0.0,0.0,0.0,True,83.0,True
+57,Female,Asymptomatic,354.0,False,Normal,163.0,True,0.6,1.0,0.0,0.0,True,84.0,False
+63,Male,Asymptomatic,254.0,False,Left Ventricular Hypertrophy,147.0,False,1.4,1.0,0.0,0.0,False,75.0,True
+53,Male,Asymptomatic,203.0,True,Left Ventricular Hypertrophy,155.0,True,3.1,0.0,20.0,25.0,True,86.0,True
+57,Male,Asymptomatic,192.0,False,Normal,148.0,False,0.4,0.0,75.0,25.0,False,86.0,False
+56,Female,Atypical Angina,294.0,False,Left Ventricular Hypertrophy,153.0,False,1.3,0.0,0.0,0.0,False,85.0,False
+56,Male,Non-Anginal Pain,256.0,True,Left Ventricular Hypertrophy,142.0,True,0.6,0.0,30.0,25.0,True,74.0,True
+44,Male,Atypical Angina,263.0,False,Normal,173.0,False,0.0,1.0,50.0,30.0,True,70.0,False
+52,Male,Non-Anginal Pain,199.0,True,Normal,162.0,False,0.5,0.0,30.0,35.0,False,91.0,False
+57,Male,Non-Anginal Pain,168.0,False,Normal,174.0,False,1.6,1.0,15.0,40.0,True,60.0,False
+48,Male,Atypical Angina,229.0,False,Normal,168.0,False,1.0,1.0,0.0,0.0,False,75.0,True
+54,Male,Asymptomatic,239.0,False,Normal,160.0,False,1.2,1.0,20.0,30.0,False,86.0,False
+48,Female,Non-Anginal Pain,275.0,False,Normal,139.0,False,0.2,1.0,2.0,20.0,True,62.0,False
+49,Male,Atypical Angina,266.0,False,Normal,171.0,False,0.6,1.0,25.0,22.0,False,82.0,False
+64,Male,Typical Angina,211.0,False,Left Ventricular Hypertrophy,144.0,True,1.8,1.0,30.0,20.0,False,58.0,False
+58,Male,Atypical Angina,284.0,False,Left Ventricular Hypertrophy,160.0,False,1.8,0.0,0.0,0.0,True,69.0,True
+60,Male,Asymptomatic,206.0,False,Left Ventricular Hypertrophy,132.0,True,2.4,1.0,50.0,32.0,False,83.0,True
+50,Female,Non-Anginal Pain,219.0,False,Normal,158.0,False,1.6,0.0,20.0,8.0,True,71.0,False
+58,Female,Non-Anginal Pain,340.0,False,Normal,172.0,False,0.0,1.0,0.0,0.0,True,95.0,False
+66,Female,Typical Angina,226.0,False,Normal,114.0,False,2.6,0.0,0.0,0.0,False,49.0,False
+43,Male,Asymptomatic,247.0,False,Normal,171.0,False,1.5,0.0,10.0,30.0,True,67.0,False
+40,Male,Asymptomatic,167.0,False,Left Ventricular Hypertrophy,114.0,True,2.0,0.0,0.0,0.0,True,64.0,True
+69,Female,Typical Angina,239.0,False,Normal,151.0,False,1.8,1.0,30.0,50.0,True,81.0,False
+60,Male,Asymptomatic,230.0,True,Normal,160.0,True,1.4,1.0,0.0,0.0,False,97.0,True
+64,Male,Non-Anginal Pain,335.0,False,Normal,158.0,False,0.0,0.0,0.0,0.0,True,91.0,True
+59,Male,Asymptomatic,234.0,False,Normal,161.0,False,0.5,1.0,20.0,40.0,False,71.0,False
+44,Male,Non-Anginal Pain,233.0,False,Normal,179.0,True,0.4,0.0,20.0,19.0,False,70.0,False
+42,Male,Asymptomatic,226.0,False,Normal,178.0,False,0.0,1.0,20.0,25.0,True,62.0,False
+43,Male,Asymptomatic,177.0,False,Left Ventricular Hypertrophy,120.0,True,2.5,1.0,40.0,23.0,False,103.0,True
+57,Male,Asymptomatic,276.0,False,Left Ventricular Hypertrophy,112.0,True,0.6,1.0,40.0,30.0,False,65.0,True
+55,Male,Asymptomatic,353.0,False,Normal,132.0,True,1.2,0.0,60.0,30.0,True,69.0,True
+61,Male,Non-Anginal Pain,243.0,True,Normal,137.0,True,1.0,1.0,99.0,35.0,False,88.0,False
+65,Female,Asymptomatic,225.0,False,Left Ventricular Hypertrophy,114.0,False,1.0,0.0,0.0,0.0,True,68.0,True
+40,Male,Typical Angina,199.0,False,Normal,178.0,True,1.4,1.0,0.0,0.0,False,87.0,False
+71,Female,Atypical Angina,302.0,False,Normal,162.0,False,0.4,0.0,40.0,50.0,True,93.0,False
+59,Male,Non-Anginal Pain,212.0,True,Normal,157.0,False,1.6,0.0,50.0,30.0,False,64.0,False
+61,Female,Asymptomatic,330.0,False,Left Ventricular Hypertrophy,169.0,False,0.0,1.0,0.0,0.0,True,81.0,True
+58,Male,Non-Anginal Pain,230.0,False,Left Ventricular Hypertrophy,165.0,False,2.5,1.0,4.0,40.0,False,74.0,True
+51,Male,Non-Anginal Pain,175.0,False,Normal,123.0,False,0.6,0.0,60.0,30.0,True,52.0,False
+50,Male,Asymptomatic,243.0,False,Left Ventricular Hypertrophy,128.0,False,2.6,1.0,20.0,35.0,False,69.0,True
+65,Female,Non-Anginal Pain,417.0,True,Left Ventricular Hypertrophy,157.0,False,0.8,0.0,0.0,0.0,False,110.0,False
+53,Male,Non-Anginal Pain,197.0,True,Left Ventricular Hypertrophy,152.0,False,1.2,0.0,25.0,30.0,False,75.0,False
+41,Female,Atypical Angina,198.0,False,Normal,168.0,False,0.0,1.0,20.0,24.0,False,92.0,False
+65,Male,Asymptomatic,177.0,False,Normal,140.0,False,0.4,0.0,40.0,20.0,True,60.0,False
+44,Male,Asymptomatic,290.0,False,Left Ventricular Hypertrophy,153.0,False,0.0,1.0,0.0,0.0,True,56.0,True
+44,Male,Atypical Angina,219.0,False,Left Ventricular Hypertrophy,188.0,False,0.0,1.0,0.0,0.0,True,79.0,False
+60,Male,Asymptomatic,253.0,False,Normal,144.0,True,1.4,1.0,20.0,40.0,True,77.0,True
+54,Male,Asymptomatic,266.0,False,Left Ventricular Hypertrophy,109.0,True,2.2,1.0,0.0,0.0,True,66.0,True
+50,Male,Non-Anginal Pain,233.0,False,Normal,163.0,False,0.6,1.0,30.0,30.0,True,79.0,True
+41,Male,Asymptomatic,172.0,False,Left Ventricular Hypertrophy,158.0,False,0.0,1.0,50.0,29.0,True,68.0,True
+54,Male,Non-Anginal Pain,273.0,False,Left Ventricular Hypertrophy,152.0,False,0.5,1.0,50.0,30.0,True,67.0,False
+51,Male,Typical Angina,213.0,False,Left Ventricular Hypertrophy,125.0,True,1.4,0.0,0.0,0.0,False,52.0,False
+51,Female,Asymptomatic,305.0,False,Normal,142.0,True,1.2,0.0,0.0,0.0,True,90.0,True
+46,Female,Non-Anginal Pain,177.0,False,Left Ventricular Hypertrophy,160.0,True,1.4,0.0,0.0,0.0,True,96.0,False
+58,Male,Asymptomatic,216.0,False,Left Ventricular Hypertrophy,131.0,True,2.2,1.0,60.0,30.0,True,76.0,True
+54,Female,Non-Anginal Pain,304.0,True,Normal,170.0,False,0.0,0.0,60.0,30.0,False,100.0,False
+54,Male,Asymptomatic,188.0,False,Normal,113.0,False,1.4,1.0,60.0,29.0,True,54.0,True
+60,Male,Asymptomatic,282.0,False,Left Ventricular Hypertrophy,142.0,True,2.8,1.0,40.0,30.0,True,84.0,True
+60,Male,Non-Anginal Pain,185.0,False,Left Ventricular Hypertrophy,155.0,False,3.0,0.0,0.0,0.0,True,67.0,True
+54,Male,Non-Anginal Pain,232.0,False,Left Ventricular Hypertrophy,165.0,False,1.6,0.0,40.0,40.0,False,56.0,False
+59,Male,Asymptomatic,326.0,False,Left Ventricular Hypertrophy,140.0,True,3.4,1.0,0.0,0.0,True,56.0,True
+46,Male,Non-Anginal Pain,231.0,False,Normal,147.0,False,3.6,1.0,40.0,25.0,False,67.0,True
+65,Female,Non-Anginal Pain,269.0,False,Normal,148.0,False,0.8,1.0,0.0,0.0,False,71.0,False
+67,Male,Asymptomatic,254.0,True,Normal,163.0,False,0.2,1.0,20.0,1.0,False,88.0,True
+62,Male,Asymptomatic,267.0,False,Normal,99.0,True,1.8,1.0,20.0,30.0,True,43.0,True
+65,Male,Asymptomatic,248.0,False,Left Ventricular Hypertrophy,158.0,False,0.6,1.0,0.0,0.0,True,82.0,True
+44,Male,Asymptomatic,197.0,False,Left Ventricular Hypertrophy,177.0,False,0.0,1.0,80.0,30.0,False,61.0,True
+65,Female,Non-Anginal Pain,360.0,False,Left Ventricular Hypertrophy,151.0,False,0.8,1.0,0.0,0.0,True,69.0,False
+60,Male,Asymptomatic,258.0,False,Left Ventricular Hypertrophy,141.0,True,2.8,1.0,30.0,1.0,False,93.0,True
+51,Female,Non-Anginal Pain,308.0,False,Left Ventricular Hypertrophy,142.0,False,1.5,1.0,20.0,20.0,True,74.0,False
+48,Male,Atypical Angina,245.0,False,Left Ventricular Hypertrophy,180.0,False,0.2,0.0,50.0,15.0,False,68.0,False
+58,Male,Asymptomatic,270.0,False,Left Ventricular Hypertrophy,111.0,True,0.8,0.0,40.0,54.0,False,70.0,True
+45,Male,Asymptomatic,208.0,False,Left Ventricular Hypertrophy,148.0,True,3.0,1.0,40.0,35.0,False,84.0,False
+53,Female,Asymptomatic,264.0,False,Left Ventricular Hypertrophy,143.0,False,0.4,0.0,0.0,0.0,False,101.0,False
+39,Male,Non-Anginal Pain,321.0,False,Left Ventricular Hypertrophy,182.0,False,0.0,1.0,20.0,20.0,True,65.0,False
+68,Male,Non-Anginal Pain,274.0,True,Left Ventricular Hypertrophy,150.0,True,1.6,0.0,8.0,40.0,True,85.0,True
+52,Male,Atypical Angina,325.0,False,Normal,172.0,False,0.2,1.0,30.0,20.0,True,71.0,False
+44,Male,Non-Anginal Pain,235.0,False,Left Ventricular Hypertrophy,180.0,False,0.0,1.0,40.0,24.0,False,70.0,False
+47,Male,Non-Anginal Pain,257.0,False,Left Ventricular Hypertrophy,156.0,False,0.0,0.0,0.0,0.0,True,62.0,False
+53,Female,Non-Anginal Pain,216.0,False,Left Ventricular Hypertrophy,115.0,False,0.0,0.0,0.0,0.0,False,67.0,False
+53,Female,Asymptomatic,234.0,False,Left Ventricular Hypertrophy,160.0,False,0.0,1.0,0.0,0.0,True,80.0,False
+51,Female,Non-Anginal Pain,256.0,False,Left Ventricular Hypertrophy,149.0,False,0.5,1.0,20.0,20.0,True,81.0,False
+66,Male,Asymptomatic,302.0,False,Left Ventricular Hypertrophy,151.0,False,0.4,1.0,20.0,30.0,True,73.0,False
+62,Female,Asymptomatic,164.0,False,Left Ventricular Hypertrophy,145.0,False,6.2,0.0,0.0,0.0,True,64.0,True
+62,Male,Non-Anginal Pain,231.0,False,Normal,146.0,False,1.8,1.0,30.0,20.0,True,82.0,False
+44,Female,Non-Anginal Pain,141.0,False,Normal,175.0,False,0.6,1.0,0.0,0.0,True,78.0,False
+63,Female,Non-Anginal Pain,252.0,False,Left Ventricular Hypertrophy,172.0,False,0.0,0.0,0.0,0.0,False,71.0,False
+52,Male,Asymptomatic,255.0,False,Normal,161.0,True,0.0,1.0,40.0,20.0,True,100.0,True
+59,Male,Asymptomatic,239.0,False,Left Ventricular Hypertrophy,142.0,True,1.2,1.0,0.0,0.0,True,79.0,True
+60,Female,Asymptomatic,258.0,False,Left Ventricular Hypertrophy,157.0,False,2.6,0.0,20.0,40.0,True,109.0,True
+52,Male,Atypical Angina,201.0,False,Normal,158.0,False,0.8,1.0,20.0,30.0,True,83.0,False
+48,Male,Asymptomatic,222.0,False,Left Ventricular Hypertrophy,186.0,False,0.0,0.0,60.0,20.0,False,83.0,False
+45,Male,Asymptomatic,260.0,False,Left Ventricular Hypertrophy,185.0,False,0.0,1.0,10.0,24.0,True,66.0,False
+34,Male,Typical Angina,182.0,False,Left Ventricular Hypertrophy,174.0,False,0.0,1.0,20.0,6.0,False,53.0,False
+57,Female,Asymptomatic,303.0,False,Left Ventricular Hypertrophy,159.0,False,0.0,1.0,0.0,0.0,False,67.0,False
+71,Female,Non-Anginal Pain,265.0,True,Left Ventricular Hypertrophy,130.0,False,0.0,0.0,0.0,0.0,True,88.0,False
+49,Male,Non-Anginal Pain,188.0,False,Normal,139.0,False,2.0,0.0,30.0,33.0,True,78.0,True
+54,Male,Atypical Angina,309.0,False,Normal,156.0,False,0.0,1.0,30.0,34.0,False,75.0,False
+59,Male,Asymptomatic,177.0,False,Normal,162.0,True,0.0,1.0,20.0,45.0,False,82.0,True
+57,Male,Non-Anginal Pain,229.0,False,Left Ventricular Hypertrophy,150.0,False,0.4,0.0,40.0,40.0,False,75.0,True
+61,Male,Asymptomatic,260.0,False,Normal,140.0,True,3.6,1.0,10.0,20.0,True,60.0,True
+39,Male,Asymptomatic,219.0,False,Normal,140.0,False,1.2,1.0,40.0,20.0,True,69.0,True
+61,Female,Asymptomatic,307.0,False,Left Ventricular Hypertrophy,146.0,True,1.0,1.0,20.0,25.0,True,78.0,True
+56,Male,Asymptomatic,249.0,True,Left Ventricular Hypertrophy,144.0,True,1.2,0.0,5.0,15.0,True,66.0,True
+52,Male,Typical Angina,186.0,False,Left Ventricular Hypertrophy,190.0,False,0.0,0.0,20.0,10.0,True,90.0,False
+43,Female,Asymptomatic,341.0,True,Left Ventricular Hypertrophy,136.0,True,3.0,1.0,40.0,20.0,True,63.0,True
+62,Female,Non-Anginal Pain,263.0,False,Normal,97.0,False,1.2,0.0,0.0,0.0,True,56.0,True
+41,Male,Atypical Angina,203.0,False,Normal,132.0,False,0.0,0.0,0.0,0.0,True,49.0,False
+58,Male,Non-Anginal Pain,211.0,True,Left Ventricular Hypertrophy,165.0,False,0.0,0.0,0.0,0.0,True,84.0,False
+35,Female,Asymptomatic,183.0,False,Normal,182.0,False,1.4,0.0,0.0,0.0,True,85.0,False
+63,Male,Asymptomatic,330.0,True,Left Ventricular Hypertrophy,132.0,True,1.8,0.0,0.0,0.0,False,68.0,True
+65,Male,Asymptomatic,254.0,False,Left Ventricular Hypertrophy,127.0,False,2.8,1.0,40.0,30.0,True,59.0,True
+48,Male,Asymptomatic,256.0,True,Left Ventricular Hypertrophy,150.0,True,0.0,1.0,60.0,15.0,True,87.0,True
+63,Female,Asymptomatic,407.0,False,Left Ventricular Hypertrophy,154.0,False,4.0,1.0,3.0,47.0,True,76.0,True
+51,Male,Non-Anginal Pain,222.0,False,Normal,143.0,True,1.2,1.0,0.0,0.0,False,59.0,False
+55,Male,Asymptomatic,217.0,False,Normal,111.0,True,5.6,1.0,0.0,0.0,False,68.0,True
+65,Male,Typical Angina,282.0,True,Left Ventricular Hypertrophy,174.0,False,1.4,1.0,20.0,7.0,True,72.0,True
+45,Female,Atypical Angina,234.0,False,Left Ventricular Hypertrophy,175.0,False,0.6,0.0,0.0,0.0,True,87.0,False
+56,Female,Asymptomatic,288.0,True,Left Ventricular Hypertrophy,133.0,True,4.0,0.0,0.0,0.0,True,68.0,True
+54,Male,Asymptomatic,239.0,False,Normal,126.0,True,2.8,0.0,0.0,0.0,False,57.0,True
+44,Male,Atypical Angina,220.0,False,Normal,170.0,False,0.0,1.0,40.0,20.0,False,78.0,False
+62,Female,Asymptomatic,209.0,False,Normal,163.0,False,0.0,1.0,0.0,0.0,True,72.0,False
+54,Male,Non-Anginal Pain,258.0,False,Left Ventricular Hypertrophy,147.0,False,0.4,0.0,0.0,0.0,True,66.0,False
+51,Male,Non-Anginal Pain,227.0,False,Normal,154.0,True,0.0,1.0,30.0,36.0,False,83.0,False
+29,Male,Atypical Angina,204.0,False,Left Ventricular Hypertrophy,202.0,False,0.0,1.0,2.0,6.0,False,53.0,False
+51,Male,Asymptomatic,261.0,False,Left Ventricular Hypertrophy,186.0,True,0.0,0.0,0.0,0.0,True,90.0,False
+43,Female,Non-Anginal Pain,213.0,False,Normal,165.0,False,0.2,1.0,25.0,20.0,True,62.0,False
+55,Female,Atypical Angina,250.0,False,Left Ventricular Hypertrophy,161.0,False,1.4,0.0,30.0,30.0,False,98.0,False
+70,Male,Asymptomatic,174.0,False,Normal,125.0,True,2.6,1.0,20.0,30.0,True,40.0,True
+62,Male,Atypical Angina,281.0,False,Left Ventricular Hypertrophy,103.0,False,1.4,1.0,20.0,25.0,True,65.0,True
+35,Male,Asymptomatic,198.0,False,Normal,130.0,True,1.6,0.0,0.0,0.0,False,61.0,True
+51,Male,Non-Anginal Pain,245.0,True,Left Ventricular Hypertrophy,166.0,False,2.4,0.0,0.0,0.0,False,80.0,False
+59,Male,Atypical Angina,221.0,False,Normal,164.0,True,0.0,0.0,20.0,40.0,True,79.0,False
+59,Male,Typical Angina,288.0,False,Left Ventricular Hypertrophy,159.0,False,0.2,0.0,0.0,0.0,False,71.0,True
+52,Male,Atypical Angina,205.0,True,Normal,184.0,False,0.0,1.0,20.0,37.0,False,96.0,False
+64,Male,Non-Anginal Pain,309.0,False,Normal,131.0,True,1.8,1.0,20.0,30.0,False,67.0,True
+58,Male,Non-Anginal Pain,240.0,False,Left Ventricular Hypertrophy,154.0,True,0.6,1.0,20.0,40.0,True,102.0,False
+47,Male,Non-Anginal Pain,243.0,False,Normal,152.0,False,0.0,1.0,0.0,0.0,True,52.0,True
+57,Male,Asymptomatic,289.0,True,Left Ventricular Hypertrophy,124.0,False,1.0,0.0,70.0,38.0,True,102.0,True
+41,Male,Non-Anginal Pain,250.0,False,Normal,179.0,False,0.0,1.0,20.0,20.0,False,80.0,False
+45,Male,Atypical Angina,308.0,False,Left Ventricular Hypertrophy,170.0,False,0.0,0.0,0.0,0.0,True,86.0,False
+60,Female,Non-Anginal Pain,318.0,False,Normal,160.0,False,0.0,0.0,0.0,0.0,False,89.0,False
+52,Male,Typical Angina,298.0,True,Normal,178.0,False,1.2,1.0,0.0,0.0,True,112.0,False
+42,Female,Asymptomatic,265.0,False,Left Ventricular Hypertrophy,122.0,False,0.6,1.0,0.0,0.0,True,74.0,False
+67,Female,Non-Anginal Pain,564.0,False,Left Ventricular Hypertrophy,160.0,False,1.6,1.0,0.0,0.0,False,80.0,False
+55,Male,Asymptomatic,289.0,False,Left Ventricular Hypertrophy,145.0,True,0.8,0.0,20.0,25.0,False,80.0,True
+64,Male,Asymptomatic,246.0,False,Left Ventricular Hypertrophy,96.0,True,2.2,1.0,0.0,0.0,True,73.0,True
+70,Male,Asymptomatic,322.0,False,Left Ventricular Hypertrophy,109.0,False,2.4,1.0,30.0,41.0,True,65.0,True
+51,Male,Asymptomatic,299.0,False,Normal,173.0,True,1.6,1.0,30.0,30.0,False,74.0,True
+58,Male,Asymptomatic,300.0,False,Left Ventricular Hypertrophy,171.0,False,0.0,1.0,10.0,18.0,True,90.0,True
+60,Male,Asymptomatic,293.0,False,Left Ventricular Hypertrophy,170.0,False,1.2,1.0,30.0,48.0,True,94.0,True
+46,Male,Atypical Angina,197.0,True,Normal,156.0,False,0.0,0.0,30.0,25.0,False,74.0,False
+77,Male,Asymptomatic,304.0,False,Left Ventricular Hypertrophy,162.0,True,0.0,1.0,10.0,15.0,True,101.0,True
+54,Female,Non-Anginal Pain,214.0,False,Normal,158.0,False,1.6,1.0,0.0,0.0,True,63.0,False
+58,Female,Asymptomatic,248.0,False,Left Ventricular Hypertrophy,122.0,False,1.0,1.0,0.0,0.0,False,98.0,False
+48,Male,Non-Anginal Pain,255.0,True,Normal,175.0,False,0.0,0.0,20.0,25.0,False,73.0,False
+57,Male,Asymptomatic,207.0,False,Normal,168.0,True,0.0,1.0,20.0,15.0,True,73.0,False
+52,Male,Non-Anginal Pain,223.0,False,Normal,169.0,False,0.0,1.0,50.0,30.0,True,63.0,False
+54,Female,Atypical Angina,288.0,True,Left Ventricular Hypertrophy,159.0,True,0.0,1.0,0.0,0.0,False,89.0,False
+35,Male,Asymptomatic,282.0,False,Left Ventricular Hypertrophy,156.0,True,0.0,0.0,60.0,18.0,False,75.0,True
+45,Female,Atypical Angina,160.0,False,Normal,138.0,False,0.0,0.0,0.0,0.0,False,101.0,False
+70,Male,Non-Anginal Pain,269.0,False,Normal,112.0,True,2.9,1.0,0.0,0.0,False,60.0,True
+53,Male,Asymptomatic,226.0,False,Left Ventricular Hypertrophy,111.0,True,0.0,1.0,40.0,30.0,True,58.0,False
+59,Female,Asymptomatic,249.0,False,Normal,143.0,True,0.0,1.0,0.0,0.0,False,74.0,True
+62,Female,Asymptomatic,394.0,False,Left Ventricular Hypertrophy,157.0,False,1.2,0.0,0.0,0.0,True,65.0,False
+64,Male,Asymptomatic,212.0,False,Left Ventricular Hypertrophy,132.0,False,2.0,1.0,25.0,10.0,False,64.0,True
+57,Male,Asymptomatic,274.0,False,Normal,88.0,True,1.2,1.0,40.0,20.0,True,53.0,True
+52,Male,Asymptomatic,233.0,True,Normal,147.0,False,0.1,1.0,20.0,35.0,False,74.0,False
+56,Male,Asymptomatic,184.0,False,Left Ventricular Hypertrophy,105.0,True,2.1,1.0,40.0,20.0,True,61.0,True
+43,Male,Non-Anginal Pain,315.0,False,Normal,162.0,False,1.9,1.0,30.0,20.0,True,94.0,False
+53,Male,Non-Anginal Pain,246.0,True,Left Ventricular Hypertrophy,173.0,False,0.0,0.0,20.0,15.0,True,71.0,False
+48,Male,Asymptomatic,274.0,False,Left Ventricular Hypertrophy,166.0,False,0.5,0.0,20.0,10.0,True,69.0,True
+56,Female,Asymptomatic,409.0,False,Left Ventricular Hypertrophy,150.0,True,1.9,1.0,0.0,0.0,True,89.0,True
+59,Male,Typical Angina,270.0,False,Left Ventricular Hypertrophy,145.0,False,4.2,1.0,0.0,0.0,True,57.0,False
+60,Female,Asymptomatic,305.0,False,Left Ventricular Hypertrophy,161.0,False,0.0,0.0,0.0,0.0,False,78.0,True
+63,Female,Atypical Angina,195.0,False,Normal,179.0,False,0.0,0.0,2.0,20.0,True,119.0,False
+42,Male,Non-Anginal Pain,240.0,True,Normal,194.0,False,0.8,1.0,10.0,17.0,True,74.0,False
+66,Male,Atypical Angina,246.0,False,Normal,120.0,True,0.0,1.0,0.0,0.0,False,52.0,True
+54,Male,Atypical Angina,283.0,False,Left Ventricular Hypertrophy,195.0,False,0.0,1.0,35.0,25.0,True,92.0,True
+69,Male,Non-Anginal Pain,254.0,False,Left Ventricular Hypertrophy,146.0,False,2.0,1.0,1.0,30.0,True,57.0,True
+50,Male,Non-Anginal Pain,196.0,False,Normal,163.0,False,0.0,1.0,20.0,28.0,False,80.0,False
+51,Male,Asymptomatic,298.0,False,Normal,122.0,True,4.2,1.0,0.0,0.0,False,90.0,True
+43,Male,Asymptomatic,247.0,True,Left Ventricular Hypertrophy,143.0,True,0.1,1.0,35.0,20.0,True,70.0,True
+62,Female,Asymptomatic,294.0,True,Normal,106.0,False,1.9,0.0,20.0,25.0,True,68.0,True
+68,Female,Non-Anginal Pain,211.0,False,Left Ventricular Hypertrophy,115.0,False,1.5,1.0,9.0,20.0,True,64.0,False
+69,Male,Typical Angina,234.0,True,Left Ventricular Hypertrophy,131.0,False,0.1,1.0,0.0,0.0,False,64.0,False
+45,Female,Asymptomatic,236.0,False,Left Ventricular Hypertrophy,152.0,True,0.2,1.0,3.0,5.0,True,78.0,False
+50,Female,Atypical Angina,244.0,False,Normal,162.0,False,1.1,1.0,20.0,34.0,True,85.0,False
+59,Male,Typical Angina,273.0,False,Left Ventricular Hypertrophy,125.0,False,0.0,1.0,20.0,30.0,True,71.0,True
+50,Female,Asymptomatic,254.0,False,Left Ventricular Hypertrophy,159.0,False,0.0,1.0,10.0,35.0,True,60.0,False
+64,Female,Asymptomatic,325.0,False,Normal,154.0,True,0.0,1.0,10.0,50.0,True,91.0,False
+57,Male,Non-Anginal Pain,126.0,True,Normal,173.0,False,0.2,0.0,0.0,0.0,True,86.0,False
+64,Female,Non-Anginal Pain,313.0,False,Normal,133.0,False,0.2,1.0,20.0,40.0,True,85.0,False
+43,Male,Asymptomatic,211.0,False,Normal,161.0,False,0.0,1.0,10.0,20.0,True,59.0,False
+45,Male,Asymptomatic,309.0,False,Left Ventricular Hypertrophy,147.0,True,0.0,1.0,0.0,0.0,False,73.0,True
+58,Male,Asymptomatic,259.0,False,Left Ventricular Hypertrophy,130.0,True,3.0,1.0,15.0,15.0,False,56.0,True
+50,Male,Asymptomatic,200.0,False,Left Ventricular Hypertrophy,126.0,True,0.9,1.0,0.0,0.0,True,92.0,True
+55,Male,Atypical Angina,262.0,False,Normal,155.0,False,0.0,1.0,10.0,6.0,True,76.0,False
+62,Female,Asymptomatic,244.0,False,Normal,154.0,True,1.4,1.0,0.0,0.0,True,79.0,True
+37,Female,Non-Anginal Pain,215.0,False,Normal,170.0,False,0.0,1.0,0.0,0.0,True,78.0,False
+38,Male,Typical Angina,231.0,False,Normal,182.0,True,3.8,1.0,30.0,20.0,True,70.0,True
+41,Male,Non-Anginal Pain,214.0,False,Left Ventricular Hypertrophy,168.0,False,2.0,1.0,0.0,0.0,True,72.0,False
+66,Female,Asymptomatic,228.0,True,Normal,165.0,True,1.0,1.0,0.0,0.0,True,88.0,True
+52,Male,Asymptomatic,230.0,False,Normal,160.0,False,0.0,0.0,0.0,0.0,True,59.0,True
+56,Male,Typical Angina,193.0,False,Left Ventricular Hypertrophy,162.0,False,1.9,1.0,40.0,38.0,True,77.0,False
+46,Female,Atypical Angina,204.0,False,Normal,172.0,False,0.0,1.0,40.0,20.0,True,76.0,False
+46,Female,Asymptomatic,243.0,False,Left Ventricular Hypertrophy,152.0,True,0.0,0.0,0.0,0.0,True,79.0,False
+64,Female,Asymptomatic,303.0,False,Normal,122.0,False,2.0,0.0,0.0,0.0,True,63.0,False
+59,Male,Asymptomatic,271.0,False,Left Ventricular Hypertrophy,182.0,False,0.0,1.0,30.0,31.0,True,76.0,False
+41,Female,Non-Anginal Pain,268.0,False,Left Ventricular Hypertrophy,172.0,True,0.0,0.0,50.0,4.0,False,94.0,False
+54,Female,Non-Anginal Pain,267.0,False,Left Ventricular Hypertrophy,167.0,False,0.0,1.0,0.0,0.0,True,102.0,False
+39,Female,Non-Anginal Pain,199.0,False,Normal,179.0,False,0.0,1.0,0.0,0.0,False,89.0,False
+53,Male,Asymptomatic,282.0,False,Normal,95.0,True,2.0,0.0,0.0,0.0,False,61.0,True
+63,Female,Asymptomatic,269.0,False,Normal,169.0,True,1.8,0.0,0.0,0.0,False,58.0,True
+34,Female,Atypical Angina,210.0,False,Normal,192.0,False,0.7,1.0,10.0,15.0,True,92.0,False
+47,Male,Asymptomatic,204.0,False,Normal,143.0,False,0.1,1.0,20.0,22.0,True,65.0,False
+67,Female,Non-Anginal Pain,277.0,False,Normal,172.0,False,0.0,1.0,0.0,0.0,True,99.0,False
+54,Male,Asymptomatic,206.0,False,Left Ventricular Hypertrophy,108.0,True,0.0,1.0,0.0,0.0,False,59.0,True
+66,Male,Asymptomatic,212.0,False,Left Ventricular Hypertrophy,132.0,True,0.1,1.0,20.0,35.0,True,77.0,True
+52,Female,Non-Anginal Pain,196.0,False,Left Ventricular Hypertrophy,169.0,False,0.1,1.0,0.0,0.0,False,91.0,False
+55,Female,Asymptomatic,327.0,False,ST-T Wave Abnormality,117.0,True,3.4,0.0,15.0,40.0,True,73.0,True
+49,Male,Non-Anginal Pain,149.0,False,Left Ventricular Hypertrophy,126.0,False,0.8,1.0,25.0,40.0,True,70.0,True
+74,Female,Atypical Angina,269.0,False,Left Ventricular Hypertrophy,121.0,True,0.2,0.0,0.0,0.0,True,75.0,False
+54,Female,Non-Anginal Pain,201.0,False,Normal,163.0,False,0.0,0.0,0.0,0.0,True,77.0,False
+54,Male,Asymptomatic,286.0,False,Left Ventricular Hypertrophy,116.0,True,3.2,0.0,0.0,0.0,False,82.0,True
+56,Male,Asymptomatic,283.0,True,Left Ventricular Hypertrophy,103.0,True,1.6,0.0,20.0,14.0,True,66.0,True
+46,Male,Asymptomatic,249.0,False,Left Ventricular Hypertrophy,144.0,False,0.8,1.0,60.0,20.0,True,87.0,True
+49,Female,Atypical Angina,271.0,False,Normal,162.0,False,0.0,0.0,0.0,0.0,True,63.0,False
+42,Male,Atypical Angina,295.0,False,Normal,162.0,False,0.0,1.0,40.0,20.0,False,77.0,False
+41,Male,Atypical Angina,235.0,False,Normal,153.0,False,0.0,0.0,0.0,0.0,False,76.0,False
+41,Female,Atypical Angina,306.0,False,Normal,163.0,False,0.0,1.0,0.0,0.0,True,94.0,False
+49,Female,Asymptomatic,269.0,False,Normal,163.0,False,0.0,1.0,30.0,32.0,True,70.0,False
+61,Male,Typical Angina,234.0,False,Normal,145.0,False,2.6,1.0,0.0,0.0,True,87.0,True
+60,Female,Non-Anginal Pain,178.0,True,Normal,96.0,False,0.0,0.0,0.0,0.0,False,59.0,False
+67,Male,Asymptomatic,237.0,False,Normal,71.0,False,1.0,0.0,2.0,5.0,False,49.0,True
+58,Male,Asymptomatic,234.0,False,Normal,156.0,False,0.1,1.0,40.0,40.0,True,64.0,True
+47,Male,Asymptomatic,275.0,False,Left Ventricular Hypertrophy,118.0,True,1.0,1.0,0.0,0.0,True,83.0,True
+52,Male,Asymptomatic,212.0,False,Normal,168.0,False,1.0,0.0,40.0,25.0,False,79.0,True
+62,Male,Atypical Angina,208.0,True,Left Ventricular Hypertrophy,140.0,False,0.0,1.0,0.0,0.0,False,91.0,False
+58,Male,Asymptomatic,218.0,False,Normal,105.0,False,2.0,0.0,40.0,20.0,True,59.0,True
+64,Male,Asymptomatic,263.0,False,Normal,105.0,True,0.2,0.0,40.0,35.0,True,61.0,False
+51,Female,Non-Anginal Pain,295.0,False,Left Ventricular Hypertrophy,157.0,False,0.6,0.0,0.0,0.0,False,80.0,False
+43,Male,Asymptomatic,303.0,False,Normal,181.0,False,1.2,1.0,0.0,0.0,True,62.0,False
+42,Female,Non-Anginal Pain,209.0,False,Normal,173.0,False,0.0,1.0,28.0,30.0,True,115.0,False
+67,Female,Asymptomatic,223.0,False,Normal,142.0,False,0.3,1.0,20.0,50.0,False,96.0,False
+76,Female,Non-Anginal Pain,197.0,False,ST-T Wave Abnormality,116.0,False,1.1,0.0,0.0,0.0,False,90.0,False
+70,Male,Atypical Angina,245.0,False,Left Ventricular Hypertrophy,143.0,False,0.0,0.0,0.0,0.0,True,79.0,False
+57,Male,Atypical Angina,261.0,False,Normal,141.0,False,0.3,1.0,20.0,35.0,False,69.0,True
+44,Female,Non-Anginal Pain,242.0,False,Normal,149.0,False,0.3,0.0,20.0,20.0,True,68.0,False
+58,Female,Atypical Angina,319.0,True,Left Ventricular Hypertrophy,152.0,False,0.0,0.0,10.0,25.0,True,80.0,True
+60,Female,Typical Angina,240.0,False,Normal,171.0,False,0.9,1.0,0.0,0.0,False,75.0,False
+44,Male,Non-Anginal Pain,226.0,False,Normal,169.0,False,0.0,0.0,80.0,4.0,False,88.0,False
+61,Male,Asymptomatic,166.0,False,Left Ventricular Hypertrophy,125.0,True,3.6,0.0,40.0,4.0,True,70.0,True
+42,Male,Asymptomatic,315.0,False,Normal,125.0,True,1.8,0.0,40.0,18.0,True,66.0,True
+52,Male,Asymptomatic,204.0,True,Normal,156.0,True,1.0,1.0,0.0,0.0,True,74.0,True
+59,Male,Non-Anginal Pain,218.0,True,Normal,134.0,False,2.2,0.0,0.0,0.0,True,60.0,True
+40,Male,Asymptomatic,223.0,False,Normal,181.0,False,0.0,1.0,25.0,27.0,False,58.0,True
+42,Male,Non-Anginal Pain,180.0,False,Normal,150.0,False,0.0,0.0,0.0,0.0,True,51.0,False
+61,Male,Asymptomatic,207.0,False,Left Ventricular Hypertrophy,138.0,True,1.9,0.0,20.0,20.0,True,72.0,True
+66,Male,Asymptomatic,228.0,False,Left Ventricular Hypertrophy,138.0,False,2.3,0.0,0.0,0.0,False,81.0,False
+46,Male,Asymptomatic,311.0,False,Normal,120.0,True,1.8,1.0,15.0,25.0,True,89.0,True
+71,Female,Asymptomatic,149.0,False,Normal,125.0,False,1.6,1.0,0.0,0.0,False,59.0,False
+59,Male,Typical Angina,204.0,False,Normal,162.0,False,0.8,1.0,2.0,35.0,False,70.0,True
+64,Male,Typical Angina,227.0,False,Left Ventricular Hypertrophy,155.0,False,0.6,0.0,0.0,0.0,False,84.0,False
+66,Female,Non-Anginal Pain,278.0,False,Left Ventricular Hypertrophy,152.0,False,0.0,0.0,0.0,0.0,False,83.0,False
+39,Female,Non-Anginal Pain,220.0,False,Normal,152.0,False,0.0,1.0,20.0,23.0,False,98.0,False
+57,Male,Atypical Angina,232.0,False,Left Ventricular Hypertrophy,164.0,False,0.0,0.0,40.0,35.0,True,76.0,True
+58,Female,Asymptomatic,197.0,False,Normal,131.0,False,0.6,1.0,0.0,0.0,True,54.0,False
+57,Male,Asymptomatic,335.0,False,Normal,143.0,True,3.0,1.0,20.0,15.0,True,62.0,True
+47,Male,Non-Anginal Pain,253.0,False,Normal,179.0,False,0.0,1.0,0.0,0.0,True,65.0,False
+63,Male,Asymptomatic,260.0,False,ST-T Wave Abnormality,112.0,True,3.0,0.0,0.0,0.0,False,62.0,True
+44,Male,Asymptomatic,209.0,False,ST-T Wave Abnormality,127.0,False,0.0,0.0,20.0,10.0,False,73.0,False
+60,Male,Asymptomatic,218.0,False,ST-T Wave Abnormality,140.0,True,1.5,1.0,40.0,40.0,False,68.0,True
+55,Male,Asymptomatic,228.0,False,ST-T Wave Abnormality,149.0,True,2.5,0.0,20.0,30.0,False,60.0,True
+66,Male,Non-Anginal Pain,213.0,True,Left Ventricular Hypertrophy,99.0,True,1.3,1.0,20.0,8.0,True,66.0,False
+66,Male,Non-Anginal Pain,0.0,False,ST-T Wave Abnormality,120.0,False,-0.5,1.0,40.0,50.0,True,52.0,False
+65,Male,Asymptomatic,236.0,True,ST-T Wave Abnormality,105.0,True,0.0,1.0,20.0,40.0,True,59.0,True
+60,Male,Non-Anginal Pain,0.0,False,ST-T Wave Abnormality,140.0,True,1.5,1.0,20.0,40.0,False,84.0,False
+60,Male,Atypical Angina,267.0,True,ST-T Wave Abnormality,157.0,False,0.5,1.0,20.0,15.0,False,72.0,True
+56,Male,Atypical Angina,166.0,False,ST-T Wave Abnormality,140.0,False,0.0,1.0,20.0,30.0,True,80.0,False
+59,Male,Asymptomatic,0.0,False,ST-T Wave Abnormality,117.0,True,1.0,1.0,20.0,45.0,True,65.0,True
+62,Male,Asymptomatic,0.0,False,Normal,120.0,True,0.5,0.0,50.0,40.0,False,65.0,True
+63,Male,Asymptomatic,177.0,False,Normal,84.0,True,2.5,0.0,10.0,40.0,True,74.0,True
+46,Male,Asymptomatic,236.0,False,Normal,125.0,True,2.0,0.0,40.0,20.0,True,67.0,True
+63,Male,Asymptomatic,0.0,False,ST-T Wave Abnormality,120.0,False,1.5,0.0,0.0,0.0,False,80.0,False
+60,Male,Asymptomatic,0.0,False,ST-T Wave Abnormality,118.0,True,0.0,1.0,0.0,0.0,False,58.0,False
+58,Male,Asymptomatic,0.0,False,Normal,124.0,False,1.0,1.0,20.0,40.0,True,84.0,True
+64,Male,Asymptomatic,0.0,True,ST-T Wave Abnormality,106.0,False,2.0,0.0,0.0,0.0,False,64.0,True
+52,Male,Non-Anginal Pain,0.0,False,ST-T Wave Abnormality,180.0,False,3.0,1.0,40.0,25.0,False,75.0,True
+69,Male,Asymptomatic,0.0,True,ST-T Wave Abnormality,129.0,False,1.0,1.0,0.0,0.0,False,73.0,True
+60,Male,Asymptomatic,186.0,True,ST-T Wave Abnormality,140.0,True,0.5,0.0,30.0,15.0,False,78.0,True
+56,Male,Asymptomatic,100.0,False,Normal,120.0,True,1.5,1.0,0.0,0.0,True,65.0,True
+77,Male,Asymptomatic,171.0,False,ST-T Wave Abnormality,110.0,True,2.0,1.0,0.0,0.0,False,65.0,True
+63,Male,Asymptomatic,230.0,True,Normal,105.0,True,1.0,1.0,60.0,5.0,False,52.0,True
+55,Male,Non-Anginal Pain,0.0,False,Normal,155.0,False,1.5,0.0,40.0,30.0,True,68.0,True
+52,Male,Non-Anginal Pain,0.0,False,Normal,110.0,True,2.0,1.0,30.0,20.0,True,49.0,True
+64,Male,Asymptomatic,0.0,False,ST-T Wave Abnormality,122.0,True,1.0,1.0,40.0,40.0,False,63.0,True
+60,Male,Asymptomatic,0.0,False,Normal,133.0,True,2.0,0.0,40.0,40.0,True,64.0,False
+59,Male,Asymptomatic,0.0,False,ST-T Wave Abnormality,131.0,True,1.5,1.0,30.0,30.0,True,65.0,False
+61,Male,Non-Anginal Pain,0.0,False,Normal,80.0,True,0.0,1.0,20.0,30.0,False,56.0,True
+40,Male,Asymptomatic,0.0,True,Normal,165.0,False,0.0,1.0,80.0,5.0,True,56.0,True
+61,Male,Asymptomatic,0.0,True,ST-T Wave Abnormality,86.0,False,1.5,0.0,10.0,14.0,True,65.0,True
+41,Male,Asymptomatic,0.0,False,ST-T Wave Abnormality,111.0,False,0.0,0.0,20.0,20.0,True,72.0,False
+63,Male,Asymptomatic,0.0,False,Normal,84.0,True,0.0,1.0,20.0,30.0,True,59.0,True
+59,Male,Asymptomatic,233.0,False,Normal,117.0,True,1.3,1.0,40.0,23.0,True,66.0,True
+59,Male,Non-Anginal Pain,0.0,False,Normal,128.0,True,2.0,0.0,20.0,20.0,False,73.0,True
+62,Male,Asymptomatic,153.0,False,ST-T Wave Abnormality,97.0,True,1.6,1.0,0.0,0.0,False,62.0,True
+56,Male,Atypical Angina,224.0,True,Normal,161.0,False,2.0,1.0,0.0,0.0,True,65.0,False
+53,Male,Asymptomatic,0.0,False,Normal,106.0,False,0.0,1.0,60.0,7.0,True,66.0,True
+59,Male,Asymptomatic,0.0,True,Left Ventricular Hypertrophy,120.0,True,0.0,1.0,30.0,30.0,False,65.0,True
+58,Male,Atypical Angina,0.0,True,Normal,110.0,True,2.0,0.0,10.0,30.0,True,62.0,True
+58,Male,Asymptomatic,0.0,False,Left Ventricular Hypertrophy,106.0,True,1.5,0.0,20.0,10.0,False,68.0,True
+54,Male,Asymptomatic,220.0,False,Normal,140.0,True,3.0,0.0,30.0,20.0,False,68.0,True
+72,Male,Non-Anginal Pain,214.0,False,Normal,102.0,True,1.0,1.0,20.0,42.0,True,58.0,True
+75,Male,Asymptomatic,203.0,True,ST-T Wave Abnormality,108.0,False,0.0,1.0,0.0,0.0,True,55.0,True
+49,Male,Typical Angina,0.0,False,ST-T Wave Abnormality,145.0,False,3.0,0.0,40.0,25.0,False,75.0,True
+60,Male,Asymptomatic,216.0,False,Normal,110.0,True,2.5,1.0,0.0,0.0,True,70.0,True
+58,Male,Asymptomatic,458.0,True,Normal,69.0,False,1.0,1.0,40.0,40.0,True,57.0,False
+61,Male,Asymptomatic,241.0,False,Normal,148.0,True,3.0,0.0,30.0,30.0,False,74.0,True
+67,Male,Asymptomatic,384.0,True,ST-T Wave Abnormality,130.0,True,0.0,0.0,20.0,15.0,False,78.0,True
+62,Male,Asymptomatic,297.0,False,Normal,130.0,True,1.0,0.0,40.0,25.0,True,56.0,True
+65,Male,Asymptomatic,248.0,False,Normal,140.0,True,4.0,0.0,20.0,30.0,True,84.0,True
+63,Male,Asymptomatic,308.0,False,Normal,138.0,True,2.0,0.0,20.0,25.0,False,70.0,True
+69,Male,Asymptomatic,208.0,False,ST-T Wave Abnormality,140.0,True,2.0,0.0,10.0,5.0,False,66.0,True
+62,Male,Asymptomatic,210.0,True,Normal,112.0,True,3.0,1.0,0.0,0.0,False,76.0,True
+75,Male,Asymptomatic,225.0,False,Normal,112.0,True,3.0,1.0,0.0,0.0,True,58.0,True
+40,Male,Non-Anginal Pain,240.0,False,Normal,80.0,True,0.0,0.0,30.0,25.0,True,74.0,False
+67,Male,Asymptomatic,0.0,True,Normal,150.0,False,1.5,1.0,20.0,40.0,True,77.0,True
+58,Male,Asymptomatic,198.0,False,Normal,110.0,False,0.0,0.0,15.0,40.0,False,58.0,True
+63,Male,Asymptomatic,267.0,True,ST-T Wave Abnormality,88.0,True,2.0,1.0,5.0,32.0,True,60.0,True
+43,Male,Asymptomatic,0.0,False,Normal,120.0,False,0.5,0.0,40.0,25.0,False,70.0,True
+63,Male,Non-Anginal Pain,0.0,True,ST-T Wave Abnormality,160.0,False,3.0,1.0,40.0,40.0,True,70.0,False
+68,Male,Non-Anginal Pain,195.0,True,Normal,132.0,False,0.0,1.0,0.0,0.0,True,75.0,True
+65,Male,Asymptomatic,235.0,False,Normal,120.0,True,1.5,1.0,20.0,40.0,True,73.0,True
+63,Male,Asymptomatic,305.0,False,ST-T Wave Abnormality,121.0,True,1.0,0.0,15.0,40.0,True,66.0,True
+64,Male,Asymptomatic,223.0,False,ST-T Wave Abnormality,128.0,False,0.5,0.0,40.0,25.0,False,60.0,False
+61,Male,Asymptomatic,282.0,False,ST-T Wave Abnormality,135.0,True,4.0,1.0,0.0,0.0,False,67.0,True
+50,Male,Asymptomatic,349.0,False,Left Ventricular Hypertrophy,120.0,True,1.0,0.0,20.0,15.0,True,77.0,True
+55,Male,Asymptomatic,160.0,False,ST-T Wave Abnormality,150.0,False,0.0,1.0,20.0,37.0,False,50.0,False
+55,Male,Asymptomatic,186.0,True,ST-T Wave Abnormality,102.0,False,0.0,0.0,20.0,20.0,True,63.0,True
+63,Male,Asymptomatic,252.0,False,ST-T Wave Abnormality,140.0,True,2.0,1.0,40.0,50.0,False,94.0,True
+59,Male,Asymptomatic,222.0,False,Normal,135.0,True,2.5,0.0,30.0,40.0,False,83.0,True
+74,Male,Asymptomatic,258.0,True,ST-T Wave Abnormality,130.0,True,4.0,1.0,20.0,10.0,False,84.0,True
+54,Male,Asymptomatic,202.0,True,Normal,112.0,True,2.0,0.0,0.0,0.0,False,80.0,True
+57,Male,Asymptomatic,197.0,False,Left Ventricular Hypertrophy,100.0,False,0.0,0.0,30.0,40.0,True,77.0,False
+54,Female,Asymptomatic,274.0,False,Normal,105.0,True,1.5,1.0,0.0,0.0,False,63.0,True
+70,Male,Asymptomatic,192.0,False,ST-T Wave Abnormality,129.0,True,3.0,1.0,20.0,40.0,True,52.0,True
+61,Female,Atypical Angina,298.0,True,Normal,120.0,True,0.0,0.0,10.0,50.0,True,64.0,False
+48,Male,Non-Anginal Pain,220.0,True,ST-T Wave Abnormality,162.0,False,0.0,1.0,7.0,30.0,True,68.0,True
+61,Male,Typical Angina,200.0,True,ST-T Wave Abnormality,100.0,False,1.5,1.0,20.0,40.0,False,61.0,True
+66,Male,Asymptomatic,261.0,False,Normal,140.0,False,1.5,0.0,30.0,30.0,False,78.0,True
+55,Male,Asymptomatic,260.0,False,Normal,73.0,False,2.0,0.0,20.0,30.0,False,56.0,True
+62,Male,Non-Anginal Pain,220.0,False,Left Ventricular Hypertrophy,86.0,False,0.0,0.0,40.0,30.0,False,62.0,False
+58,Male,Non-Anginal Pain,219.0,False,ST-T Wave Abnormality,118.0,True,0.0,1.0,20.0,35.0,True,70.0,True
+75,Male,Asymptomatic,310.0,True,Normal,112.0,True,2.0,1.0,20.0,30.0,False,54.0,False
+59,Male,Asymptomatic,274.0,False,Normal,154.0,True,2.0,0.0,0.0,0.0,False,64.0,False
+57,Male,Asymptomatic,270.0,True,ST-T Wave Abnormality,160.0,True,2.0,1.0,30.0,41.0,True,90.0,True
+41,Male,Asymptomatic,171.0,False,Normal,128.0,True,1.5,0.0,40.0,20.0,True,64.0,False
+71,Male,Asymptomatic,221.0,False,ST-T Wave Abnormality,115.0,True,0.0,0.0,60.0,50.0,True,72.0,True
+38,Male,Asymptomatic,289.0,False,Normal,105.0,True,1.5,0.0,20.0,20.0,False,58.0,True
+55,Male,Asymptomatic,217.0,False,Normal,110.0,True,2.5,1.0,20.0,40.0,True,70.0,True
+56,Male,Asymptomatic,223.0,False,ST-T Wave Abnormality,119.0,True,2.0,0.0,20.0,35.0,True,88.0,True
+64,Male,Asymptomatic,193.0,False,ST-T Wave Abnormality,135.0,True,0.5,1.0,30.0,40.0,False,74.0,True
+57,Male,Asymptomatic,173.0,False,Left Ventricular Hypertrophy,119.0,True,3.0,1.0,20.0,30.0,False,70.0,True
+69,Male,Asymptomatic,216.0,True,Left Ventricular Hypertrophy,84.0,True,0.0,0.0,20.0,50.0,False,37.0,True
+57,Male,Atypical Angina,285.0,True,ST-T Wave Abnormality,120.0,False,0.8,1.0,40.0,40.0,True,72.0,True
+53,Male,Asymptomatic,243.0,False,Normal,122.0,True,2.0,0.0,0.0,0.0,False,82.0,True
+67,Male,Asymptomatic,219.0,False,ST-T Wave Abnormality,122.0,True,2.0,1.0,20.0,40.0,True,60.0,True
+74,Male,Non-Anginal Pain,237.0,True,Normal,94.0,False,0.0,1.0,0.0,0.0,False,78.0,True
+58,Male,Asymptomatic,213.0,False,ST-T Wave Abnormality,110.0,False,0.0,1.0,40.0,30.0,False,76.0,False
+61,Male,Asymptomatic,287.0,True,Left Ventricular Hypertrophy,150.0,True,2.0,1.0,20.0,30.0,False,80.0,True
+64,Male,Asymptomatic,258.0,True,Left Ventricular Hypertrophy,130.0,False,0.0,1.0,0.0,0.0,False,72.0,True
+58,Male,Asymptomatic,256.0,True,Left Ventricular Hypertrophy,113.0,True,1.0,1.0,20.0,40.0,False,75.0,True
+60,Male,Asymptomatic,186.0,True,Left Ventricular Hypertrophy,140.0,True,0.5,1.0,30.0,15.0,False,78.0,True
+57,Male,Asymptomatic,264.0,False,Left Ventricular Hypertrophy,100.0,False,0.0,1.0,20.0,30.0,False,70.0,True
+55,Male,Asymptomatic,226.0,False,Left Ventricular Hypertrophy,127.0,True,1.7,0.0,20.0,20.0,False,84.0,True
+56,Male,Asymptomatic,203.0,True,Normal,98.0,False,1.5,0.0,20.0,45.0,True,58.0,True
+57,Male,Asymptomatic,207.0,False,ST-T Wave Abnormality,96.0,True,1.0,1.0,0.0,0.0,True,60.0,False
+61,Male,Non-Anginal Pain,337.0,False,Normal,98.0,True,0.0,0.0,20.0,30.0,False,61.0,True
+58,Male,Non-Anginal Pain,219.0,False,ST-T Wave Abnormality,118.0,True,0.0,1.0,20.0,35.0,True,70.0,True
+74,Male,Asymptomatic,310.0,False,Normal,112.0,True,1.5,1.0,0.0,0.0,False,59.0,True
+68,Male,Non-Anginal Pain,254.0,True,Normal,151.0,True,0.0,1.0,20.0,45.0,True,63.0,False
+51,Female,Asymptomatic,258.0,True,Left Ventricular Hypertrophy,96.0,False,1.0,1.0,0.0,0.0,True,52.0,False
+62,Male,Asymptomatic,254.0,True,ST-T Wave Abnormality,108.0,True,3.0,1.0,40.0,47.0,True,69.0,True
+53,Male,Asymptomatic,300.0,True,ST-T Wave Abnormality,128.0,True,1.5,1.0,20.0,10.0,True,76.0,True
+62,Male,Asymptomatic,170.0,False,ST-T Wave Abnormality,138.0,True,0.0,1.0,20.0,20.0,True,86.0,True
+46,Male,Asymptomatic,310.0,False,Normal,126.0,False,0.0,1.0,20.0,21.0,True,88.0,True
+54,Female,Asymptomatic,333.0,True,ST-T Wave Abnormality,154.0,False,0.0,0.0,0.0,0.0,True,83.0,True
+55,Male,Asymptomatic,223.0,True,ST-T Wave Abnormality,100.0,False,0.0,1.0,20.0,40.0,False,74.0,True
+62,Male,Atypical Angina,254.0,False,Left Ventricular Hypertrophy,93.0,True,0.0,1.0,0.0,0.0,False,67.0,True
