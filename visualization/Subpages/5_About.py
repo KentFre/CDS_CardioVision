@@ -8,8 +8,10 @@ st.title("About")
 
 # Overview Section
 st.header("Overview")
-st.write("A medical dashboard for cardiologists to predict heart attack risk provides real-time, data-driven insights into a patient’s cardiovascular health. It integrates various health metrics such as blood pressure, cholesterol levels, heart rate, BMI, and lifestyle factors like smoking and exercise habits.")
+st.write("A medical dashboard for cardiologists to predict heart attack risk provides real-time, data-driven insights into a patient’s cardiovascular health. It integrates various health metrics such as blood pressure, cholesterol levels, heart rate, and lifestyle factors like smoking and exercise habits.")
 st.button("Learn More", key="feature1")
+        
+
 
 # Features Section
 st.header("Key Features")
