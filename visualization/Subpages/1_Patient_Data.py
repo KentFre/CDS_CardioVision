@@ -8,9 +8,16 @@ import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 
 
-#Set the logo and title
-logo_path = r"C:\Users\Admin\OneDrive\Documents\GitHub\CDS_CardioVision\visualization\assets\CardioVision_icon.png"  # Local path to the logo
-st.title ("Patient Data")
+# Create two columns with specified ratios
+r1, r2 = st.columns((0.1, 1))
+
+# Display the logo in the first column
+r1.image("visualization/assets/CardioVision_icon.png", width=60)
+
+# Set the title in the second column
+r2.title("Patient Data")
+
+
 
 st.markdown(
     """

@@ -36,8 +36,14 @@ data = load_data()
 # Convert to DataFrame
 df = pd.DataFrame(data)
 
-# Title for the diagnostic analytics page
-st.title("Diagnostic Analytics")
+# Create two columns with specified ratios
+r1, r2 = st.columns((0.1, 1))
+
+# Display the logo in the first column
+r1.image("visualization/assets/CardioVision_icon.png", width=60)
+
+# Set the title in the second column
+r2.title("Diagnostic Analytics")
 
 # Select only numerical columns for correlation matrix
 numerical_cols = df.select_dtypes(include=['float64', 'int64'])

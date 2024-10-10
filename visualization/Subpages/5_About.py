@@ -24,8 +24,14 @@ with st.container():
             """, unsafe_allow_html=True
         )
 
-# Set the main title of the dashboard
-st.title("About")
+# Create two columns with specified ratios
+r1, r2 = st.columns((0.1, 1))
+
+# Display the logo in the first column
+r1.image("visualization/assets/CardioVision_icon.png", width=60)
+
+# Set the title in the second column
+r2.title("About")
 
 # Overview Section
 st.header("Overview")

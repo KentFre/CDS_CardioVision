@@ -47,8 +47,14 @@ average_age = df['age'].mean()
 # Gender distribution
 gender_distribution = df['gender'].value_counts()
 
-# Streamlit layout
-st.title("Descriptive Analytics ")
+# Create two columns with specified ratios
+r1, r2 = st.columns((0.1, 1))
+
+# Display the logo in the first column
+r1.image("visualization/assets/CardioVision_icon.png", width=60)
+
+# Set the title in the second column
+r2.title("Descriptive Analytics ")
 
 m1, m2, m3 = st.columns((1,1,1))
 
@@ -123,7 +129,7 @@ visual_options = [
 ]
 selected_features = st.multiselect('Choose the visualizations you want to see:', visual_options)
 
-# 1. Heart Attacks Distribution by Gender and Age Brackets
+# 1. Heart Attacks Distribution by Gender and Age 
 if 'Heart Attacks Distribution by Gender and Age' in selected_features:
     # Define bins and labels for age groups
     bins = [0, 40, 50, 60, 70, 80, float('inf')]
