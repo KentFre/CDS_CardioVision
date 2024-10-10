@@ -35,163 +35,122 @@ df = pd.DataFrame(data)
 def create_hyperlink(text, url):
     return f'<a href="{url}" target="_blank">{text}</a>'
 
+st.markdown(
+    """
+    <style>
+    /* Bordered container for panes */
+    .pane-container {
+        background-color: #ffffff; /* White background for each pane */
+        border: 1px solid #e0e0e0; /* Light gray border */
+        padding: 15px; /* Padding inside the pane */
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow for 3D effect */
+        margin-bottom: 20px;  /* Space between panes */
+    }
+    
+    /* Patient details pane specific styling */
+    .patient-details img {
+        width: 80px;  /* Image width for patient picture */
+        height: auto;
+        border-radius: 50%; /* Circular image */
+        margin-right: 10px; /* Space between image and text */
+    }
+    
+    .patient-details h2 {
+        color: #333; /* Darker text for patient name */
+        font-size: 24px; /* Font size for patient name */
+        font-weight: bold; /* Bold patient name */
+    }
+    
+    .patient-details p {
+        color: #555; /* Slightly muted color for details */
+        font-size: 14px; /* Font size for patient details */
+    }
 
-# Function to apply custom borders to panes
-def bordered_pane(content, pane_title):
-    st.markdown(f"""
-        <div style="
-            border: 2px solid #4CAF50;  /* Green border */
-            border-radius: 8px;         /* Rounded corners */
-            padding: 15px;              /* Padding inside the pane */
-            margin-bottom: 20px;        /* Spacing between panes */
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Optional: shadow effect */
-        ">
-        <h3 style='font-size:18px;'>{pane_title}</h3>
-        {content}
+    /* General padding and border for metrics and vitals */
+    .metric-pane {
+        margin-bottom: 20px;  /* Margin between metric panes */
+    }
+    </style>
+    """, unsafe_allow_html=True
+)
+
+
+# Patient details section
+def patient_details():
+    st.markdown(
+        """
+        <div class="details-box">
+            <img class="patient-image" src="https://via.placeholder.com/80" alt="Patient Picture">
+            <h2>Jose M. Krueger</h2>
+            <p><b>Patient ID:</b> 654789</p>
+            <p><b>Address:</b> 335 Friendship Lane, Oakland, CA 94612</p>
+            <p><b>Phone Number:</b> 408-668-3072</p>
+            <p><b>Email ID:</b> josekrueger@teleworm.com</p>
+           
         </div>
-    """, unsafe_allow_html=True)
+        """, unsafe_allow_html=True
+    )
 
-# Create three columns for layout
-col1, col2, col3 = st.columns([1, 1, 1])
 
-# First Column: Risk Score and Critical Alerts side by side
-with col1:
-    # Create two sub-columns within the first column
-    sub_col1, sub_col2 = st.columns(2)
+
+# Doctor's profile section
+doctor_image_url = "https://via.placeholder.com/40"
+doctor_name = "Dr. Emily Stone"
+
+# Creating a container for the search bar and doctor profile
+with st.container():
+    col1, col2 = st.columns([2, 1])  # Adjust column ratio for search and profile
+
+    with col1:
+        search_query = st.text_input("Search Patients", placeholder="Search by name or ID", key="search", label_visibility="collapsed")
     
-    with sub_col1:
-        # Smaller subheader using HTML/CSS style in markdown
-        st.markdown("<h3 style='font-size:18px;'>RISK SCORE</h3>", unsafe_allow_html=True)  # Heading size reduced
-        
-        # Slider for Risk Score
-        risk_score = st.slider("Select Risk Score", 0, 10, 5, label_visibility="collapsed")  # Default value is 5
-        
-        # Smaller font for the current risk score display
-        st.markdown(f"<p style='font-size:14px;'>Current Risk Score: {risk_score}</p>", unsafe_allow_html=True)  # Smaller text for risk score
-
-        # Pie chart displaying the percentage of the risk
-        #risk_data = [risk_score, 10 - risk_score]  # Risk vs No Risk
-        #pie_colors = ['red', 'green']  # Red for risk, green for no risk
-        
-        #fig, ax = plt.subplots()
-        #ax.pie(risk_data, colors=pie_colors, startangle=90)  # No labels, no percentages
-        #ax.axis('equal')  # Equal aspect ratio ensures that pie chart is circular.
-
-        #st.pyplot(fig)  # Display the pie chart"
-
-
-    with sub_col2:
-        st.button(" CRITICAL ALERTS", key="feature1")
-
-with col1:
-    st.markdown("<h3 style='font-size:18px;'>ACTIONABLE INSIGHTS</h3>", unsafe_allow_html=True)  # Heading size reduced
-    st.write("Content for Actionable Insights Pane")  # Replace with actual content based of the ML Algorithm
-    st.button(" Appointments", key="feature2")
-
-
-    st.markdown("<h3 style='font-size:18px;'>PATIENT RISK SUMMARY</h3>", unsafe_allow_html=True)  # Heading size reduced
-    # Create date inputs for filtering the data
-    start_date = st.date_input("Start Date:", df['Month'].min())
-    end_date = st.date_input("End Date:", df['Month'].max())
-
-    # Filter the data based on the selected date range
-    filtered_df = df[(df['Month'] >= pd.Timestamp(start_date)) & (df['Month'] <= pd.Timestamp(end_date))]
-
-    # Display the filtered DataFrame as a table
-    st.dataframe(filtered_df)
-   
-    
-
-# Second Column (Col 2 and Col 3 for Row 1)
-# Second Column: Diagnostic Imaging
-with col2:
-    st.markdown("<h3 style='font-size:18px;'>DIAGNOSTIC IMAGING</h3>", unsafe_allow_html=True)
-
-    # Date range selection for diagnostic imaging
-    diag_start_date = st.date_input("Start Date;", df['Month'].min())
-    diag_end_date = st.date_input("End Date;", df['Month'].max())
-
-    # Sample diagnostic imaging data with specified tests
-    diagnostic_data = {
-        "Month": pd.date_range(start="2023-01-01", periods=7, freq='ME'),
-        "Tests": ["X-Ray", "CT Scan", "Chest X-Ray", "Echocardiogram", "Angiogram", 
-                  "CT Angiography", "MRI Angiography"],
-        "Links": [
-            "http://emr.example.com/xray", "http://emr.example.com/ctscan", 
-            "http://emr.example.com/chestxray", "http://emr.example.com/echocardiogram",
-            "http://emr.example.com/angiogram", "http://emr.example.com/ctangiography",
-            "http://emr.example.com/mriangiography"
-        ]
-    }
-
-    diag_df = pd.DataFrame(diagnostic_data)
-
-    # Filter diagnostic imaging data based on selected date range
-    filtered_diag_df = diag_df[(diag_df['Month'] >= pd.Timestamp(diag_start_date)) & 
-                                (diag_df['Month'] <= pd.Timestamp(diag_end_date))]
-
-    # Display diagnostic imaging data in a table with hyperlinks
-    if not filtered_diag_df.empty:
-        filtered_diag_df['Links'] = filtered_diag_df.apply(
-            lambda row: create_hyperlink(row['Tests'], row['Links']), axis=1
+    with col2:
+        # Doctor profile with notification bell first
+        st.markdown(
+            f"""
+            <div class="doctor-profile" style="display: flex; align-items: center;">
+                <span class="notification-bell" title="Notifications" style="font-size: 15px;">
+                    🔔
+                </span>
+                <h4 style="margin: 0; font-size: 14px;">{doctor_name}</h4>
+                <img class="doctor-image" src="{doctor_image_url}" alt="Doctor Picture" style="width: 30px; height: auto;">
+            </div>
+            """, unsafe_allow_html=True
         )
-        st.write(filtered_diag_df[['Month', 'Links']].to_html(escape=False), unsafe_allow_html=True)
-    else:
-        st.write("No diagnostic imaging tests found for the selected date range.")
+
+# Function to display patient details
+def display_patient_details(patient_info):
+    st.markdown(
+        f"""
+        <div class="patient-details">
+            <img class="patient-image" src="{patient_info['image']}" alt="Patient Picture">
+            <h2>{patient_info['name']}</h2>
+            <p><b>Patient ID:</b> {patient_info['patient_id']}</p>
+            <p><b>Address:</b> {patient_info['address']}</p>
+            <p><b>Phone Number:</b> {patient_info['phone']}</p>
+            <p><b>Email ID:</b> {patient_info['email']}</p>
+            
+        </div>
+        """, unsafe_allow_html=True
+    )
+
+# Patient data
+patient_info = {
+    "image": "https://via.placeholder.com/80",
+    "name": "Jose M. Krueger",
+    "address": "335 Friendship Lane, Oakland, CA 94612",
+    "patient_id": "654789",
+    "phone": "408-668-3072",
+    "email": "josekrueger@teleworm.com",
+    "risk": "High",
+}
+
+# Layout using columns
+col1, col2 = st.columns([1, 3])
+
+# Column 1: Patient details
+with col1:
+    display_patient_details(patient_info)
 
 
-
-with col3:
-    # Key Lab Results Pane with border
-    st.markdown("<h3 style='font-size:18px;'>KEY LAB RESULTS</h3>", unsafe_allow_html=True)  # Heading size reduced
-    
-    # Sample DataFrame for Key Lab Results
-    lab_data = {
-        "Date": pd.date_range(start="2023-01-01", periods=5, freq='ME'),
-        "Tests": ["Cholesterol", "Blood Pressure", "Fasting Blood Sugar", "Electrocardiogram", "Heart Rate"],
-        "Normal Values": ["<200 mg/dL", "120/80 mmHg", "<100 mg/dL", "Normal", "60-100 bpm"]
-    }
-    
-    lab_df = pd.DataFrame(lab_data)
-
-    # Date range selection for lab results
-    lab_start_date = st.date_input("Start Date", lab_df['Date'].min())
-    lab_end_date = st.date_input("End Date", lab_df['Date'].max())
-
-    # Filter lab results based on the selected date range
-    filtered_lab_df = lab_df[(lab_df['Date'] >= pd.Timestamp(lab_start_date)) & 
-                              (lab_df['Date'] <= pd.Timestamp(lab_end_date))]
-
-    # Display filtered lab results
-    if not filtered_lab_df.empty:
-        st.write(filtered_lab_df[['Date', 'Tests', 'Normal Values']])
-    else:
-        st.write("No lab results found for the selected date range.")
-
-
-
-
-
-
-
-# Create a new section for Trend Analysis directly below the first row of col2 and col3
-st.markdown("<h3 style='font-size:18px; text-align:center;'>TREND ANALYSIS</h3>", unsafe_allow_html=True)
-
-# Create two sub-columns for the Trend Analysis graphs
-trend_col1, trend_col2 = st.columns(2)
-
-# First graph: Chest pain vs BP vs Time
-with trend_col1:
-    fig1 = px.line(df, x='Month', y='trestbps', color='cp', title='Chest Pain vs BP vs Time')
-    st.plotly_chart(fig1)
-
-# Second graph: Cholesterol vs BP vs Time
-with trend_col2:
-    fig2 = px.line(df, x='Month', y='chol', color='chol', title='Cholesterol vs BP vs Time')
-    st.plotly_chart(fig2)
-
-# Customize button below both graphs
-st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
-if st.button("Customize"):
-    st.write("Customization options would go here.")
-st.markdown("</div>", unsafe_allow_html=True)

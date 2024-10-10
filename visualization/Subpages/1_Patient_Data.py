@@ -1,4 +1,3 @@
-
 #This file will cover the patient details
 
 import streamlit as st
@@ -8,6 +7,45 @@ import matplotlib.pyplot as plt
 # Set the main title of the dashboard
 st.title("Patient Data")
 
+st.markdown(
+    """
+    <style>
+    /* Bordered container for panes */
+    .pane-container {
+        background-color: #ffffff; /* White background for each pane */
+        border: 1px solid #e0e0e0; /* Light gray border */
+        padding: 15px; /* Padding inside the pane */
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow for 3D effect */
+        margin-bottom: 20px;  /* Space between panes */
+    }
+    
+    /* Patient details pane specific styling */
+    .patient-details img {
+        width: 80px;  /* Image width for patient picture */
+        height: auto;
+        border-radius: 50%; /* Circular image */
+        margin-right: 10px; /* Space between image and text */
+    }
+    
+    .patient-details h2 {
+        color: #333; /* Darker text for patient name */
+        font-size: 24px; /* Font size for patient name */
+        font-weight: bold; /* Bold patient name */
+    }
+    
+    .patient-details p {
+        color: #555; /* Slightly muted color for details */
+        font-size: 14px; /* Font size for patient details */
+    }
+
+    /* General padding and border for metrics and vitals */
+    .metric-pane {
+        margin-bottom: 20px;  /* Margin between metric panes */
+    }
+    </style>
+    """, unsafe_allow_html=True
+)
 
 
 # Patient details section
@@ -17,12 +55,21 @@ def patient_details():
         <div class="details-box">
             <img class="patient-image" src="https://via.placeholder.com/80" alt="Patient Picture">
             <h2>Jose M. Krueger</h2>
+            <p><b>Patient ID:</b> 654789</p>
             <p><b>Address:</b> 335 Friendship Lane, Oakland, CA 94612</p>
-            <p><b>Card ID:</b> 654789</p>
             <p><b>Phone Number:</b> 408-668-3072</p>
             <p><b>Email ID:</b> josekrueger@teleworm.com</p>
-            <p><b>HA Risk:</b> <span style="color: red;">High</span></p>
-            <h4>Core Complaints</h4>
+           
+        </div>
+        """, unsafe_allow_html=True
+    )
+
+#Core Complaints section: 
+def core_complaints(): 
+    st.markdown(
+        """
+        <div class="details-box">
+         <h4>Core Complaints</h4>
             <ul>
                 <li>High Blood Pressure</li>
                 <li>Severe Chest Pain</li>
@@ -32,6 +79,24 @@ def patient_details():
         </div>
         """, unsafe_allow_html=True
     )
+    
+#Echocardiogram section: 
+def ECG(): 
+    st.markdown(
+        """
+        <div class="details-box">
+         <h4>ECG Insights</h4>
+            <ul>
+                <li>Abnormal ECG</li>
+                <li>Possible atrial fibrillation</li>
+                <li>Possible ST depression</li>
+            </ul>
+            <a href="https://example.com/ecg-notes" target="_blank" style="text-decoration: none; padding: 10px; background-color: #007BFF; color: white; border-radius: 5px; display: inline-block;">Show ECG Results</a>
+        </div>
+        """, unsafe_allow_html=True
+    )
+
+
 
 # Doctor's profile section
 doctor_image_url = "https://via.placeholder.com/40"
@@ -75,11 +140,10 @@ def display_patient_details(patient_info):
         <div class="patient-details">
             <img class="patient-image" src="{patient_info['image']}" alt="Patient Picture">
             <h2>{patient_info['name']}</h2>
+            <p><b>Patient ID:</b> {patient_info['patient_id']}</p>
             <p><b>Address:</b> {patient_info['address']}</p>
-            <p><b>Card ID:</b> {patient_info['card_id']}</p>
             <p><b>Phone Number:</b> {patient_info['phone']}</p>
             <p><b>Email ID:</b> {patient_info['email']}</p>
-            <p><b>HA Risk:</b> <span style="color: red;">{patient_info['risk']}</span></p>
             <h4>Core Complaints</h4>
             <ul>
                 {"".join(f"<li>{complaint}</li>" for complaint in patient_info['complaints'])}
@@ -94,7 +158,7 @@ patient_info = {
     "image": "https://via.placeholder.com/80",
     "name": "Jose M. Krueger",
     "address": "335 Friendship Lane, Oakland, CA 94612",
-    "card_id": "654789",
+    "patient_id": "654789",
     "phone": "408-668-3072",
     "email": "josekrueger@teleworm.com",
     "risk": "High",
@@ -118,8 +182,14 @@ cholesterol_values = np.random.randint(150, 300, size=3)
 
 # Column 2: Vitals and metrics section
 with col2:
-    st.markdown("### HA Risk Score")
-    severity = st.slider('HA Risk Score', 0, 10, 5, label_visibility="collapsed")
+    st.markdown("### HA Risk Calculator")
+        # Action button for HA Risk Calculation
+    if st.button("Calculate Risk"):
+        # Save any necessary session data if required
+        st.session_state['patient_info'] = patient_info  # Example of storing patient info
+        # Navigate to 2_Risk_Calculation.py
+        st.query_params(subpage="2_Risk_Calculation")
+        st.experimental_rerun()
 
     # Blood Pressure and Heart Rate
     col21, col22 = st.columns(2)
