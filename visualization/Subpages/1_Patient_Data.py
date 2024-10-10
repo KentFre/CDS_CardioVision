@@ -1,21 +1,26 @@
-#This file will cover the patient details
+# This file will cover the patient data tab
 
 import streamlit as st
+import pandas as pd
 import numpy as np
+import plotly.express as px
 import matplotlib.pyplot as plt
+from datetime import datetime, timedelta
 
-# Set the main title of the dashboard
-st.title("Patient Data")
+
+#Set the logo and title
+logo_path = r"C:\Users\Admin\OneDrive\Documents\GitHub\CDS_CardioVision\visualization\assets\CardioVision_icon.png"  # Local path to the logo
+st.title ("Patient Data")
 
 st.markdown(
     """
     <style>
     /* Bordered container for panes */
     .pane-container {
-        background-color: #ffffff; /* White background for each pane */
-        border: 1px solid #e0e0e0; /* Light gray border */
+        background-color: #000000; /* White background for each pane */
+        border: 1px solid #000000; /* Light gray border */
         padding: 15px; /* Padding inside the pane */
-        border-radius: 10px; /* Rounded corners */
+        border-radius: 15px; /* Rounded corners */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow for 3D effect */
         margin-bottom: 20px;  /* Space between panes */
     }
@@ -52,51 +57,18 @@ st.markdown(
 def patient_details():
     st.markdown(
         """
-        <div class="details-box">
-            <img class="patient-image" src="https://via.placeholder.com/80" alt="Patient Picture">
-            <h2>Jose M. Krueger</h2>
-            <p><b>Patient ID:</b> 654789</p>
-            <p><b>Address:</b> 335 Friendship Lane, Oakland, CA 94612</p>
-            <p><b>Phone Number:</b> 408-668-3072</p>
-            <p><b>Email ID:</b> josekrueger@teleworm.com</p>
-           
+        <div class="pane-container">
+            <div class="patient-details">
+                <img class="patient-image" src="{image}" alt="Patient Picture">
+                <h2>{name}</h2>
+                <p><b>Patient ID:</b> {patient_id}</p>
+                <p><b>Address:</b> {address}</p>
+                <p><b>Phone Number:</b> {phone}</p>
+                <p><b>Email ID:</b> {email}</p>
+            </div>
         </div>
-        """, unsafe_allow_html=True
+        """.format(**patient_info), unsafe_allow_html=True
     )
-
-#Core Complaints section: 
-def core_complaints(): 
-    st.markdown(
-        """
-        <div class="details-box">
-         <h4>Core Complaints</h4>
-            <ul>
-                <li>High Blood Pressure</li>
-                <li>Severe Chest Pain</li>
-                <li>Fatigue</li>
-            </ul>
-            <a href="https://example.com/cardiologist-notes" target="_blank" style="text-decoration: none; padding: 10px; background-color: #007BFF; color: white; border-radius: 5px; display: inline-block;">Show Cardiologist's Notes</a>
-        </div>
-        """, unsafe_allow_html=True
-    )
-    
-#Echocardiogram section: 
-def ECG(): 
-    st.markdown(
-        """
-        <div class="details-box">
-         <h4>ECG Insights</h4>
-            <ul>
-                <li>Abnormal ECG</li>
-                <li>Possible atrial fibrillation</li>
-                <li>Possible ST depression</li>
-            </ul>
-            <a href="https://example.com/ecg-notes" target="_blank" style="text-decoration: none; padding: 10px; background-color: #007BFF; color: white; border-radius: 5px; display: inline-block;">Show ECG Results</a>
-        </div>
-        """, unsafe_allow_html=True
-    )
-
-
 
 # Doctor's profile section
 doctor_image_url = "https://via.placeholder.com/40"
@@ -122,16 +94,6 @@ with st.container():
             </div>
             """, unsafe_allow_html=True
         )
-         
-
-# Function to create a line chart
-def plot_vitals(data, label, color):
-    fig, ax = plt.subplots(figsize=(3, 2))
-    ax.plot(data, color=color, marker='o')
-    ax.set_title(label, fontsize=9)
-    ax.grid(True)
-    ax.tick_params(axis='both', which='major', labelsize=6)
-    return fig
 
 # Function to display patient details
 def display_patient_details(patient_info):
@@ -144,14 +106,11 @@ def display_patient_details(patient_info):
             <p><b>Address:</b> {patient_info['address']}</p>
             <p><b>Phone Number:</b> {patient_info['phone']}</p>
             <p><b>Email ID:</b> {patient_info['email']}</p>
-            <h4>Core Complaints</h4>
-            <ul>
-                {"".join(f"<li>{complaint}</li>" for complaint in patient_info['complaints'])}
-            </ul>
-            <a href="{patient_info['notes_url']}" target="_blank" style="text-decoration: none; padding: 10px; background-color: #007BFF; color: white; border-radius: 5px; display: inline-block;">Show Cardiologists Notes</a>
+            
         </div>
         """, unsafe_allow_html=True
     )
+
 
 # Patient data
 patient_info = {
@@ -162,9 +121,32 @@ patient_info = {
     "phone": "408-668-3072",
     "email": "josekrueger@teleworm.com",
     "risk": "High",
-    "complaints": ["High Blood Pressure", "Severe Chest Pain", "Fatigue"],
-    "notes_url": "https://example.com/cardiologist-notes"
 }
+
+# Function to generate trend analysis graph
+def generate_trend_analysis(data, feature, start_date, end_date):
+    # Convert start_date and end_date to datetime
+    start_date = pd.to_datetime(start_date)
+    end_date = pd.to_datetime(end_date)
+
+    # Filter the data based on the selected date range
+    filtered_data = data[(data['Date'] >= start_date) & (data['Date'] <= end_date)]
+    
+    # Generate the line graph
+    fig = px.line(filtered_data, x='Date', y=feature, title=f'{feature} Trend Analysis')
+    st.plotly_chart(fig)
+
+# Simulated patient data for trend analysis
+def generate_sample_data():
+    date_range = pd.date_range(start=datetime.now() - timedelta(days=30), periods=30)
+    data = pd.DataFrame({
+        'Date': date_range,
+        'Blood Pressure': np.random.randint(110, 140, size=len(date_range)),
+        'Cholesterol': np.random.randint(150, 240, size=len(date_range)),
+        'FBS': np.random.randint(70, 130, size=len(date_range)),
+        'Heart Rate': np.random.randint(60, 100, size=len(date_range)),
+    })
+    return data
 
 # Layout using columns
 col1, col2 = st.columns([1, 3])
@@ -174,44 +156,56 @@ with col1:
     display_patient_details(patient_info)
 
 
-# Mock data for vitals
-bp_values = np.random.randint(110, 160, size=3)
-hr_values = np.random.randint(60, 100, size=3)
-fbs_values = np.random.randint(70, 150, size=3)
-cholesterol_values = np.random.randint(150, 300, size=3)
+    # Core Complaints Section
+    st.markdown("<h3 style='font-size:18px;'>Core Complaints</h3>", unsafe_allow_html=True)
+    core_complaints = """
+    - Chest pain
+    - Shortness of breath
+    - Dizziness
+    - Irregular heartbeat
+    """
+    st.markdown(core_complaints)
 
-# Column 2: Vitals and metrics section
-with col2:
-    st.markdown("### HA Risk Calculator")
-        # Action button for HA Risk Calculation
-    if st.button("Calculate Risk"):
-        # Save any necessary session data if required
-        st.session_state['patient_info'] = patient_info  # Example of storing patient info
-        # Navigate to 2_Risk_Calculation.py
-        st.query_params(subpage="2_Risk_Calculation")
-        st.experimental_rerun()
-
-    # Blood Pressure and Heart Rate
-    col21, col22 = st.columns(2)
-    with col21:
-        st.markdown("<h5 style='color: red;'>Blood Pressure</h5>", unsafe_allow_html=True)
-        st.metric(label="Blood Pressure", value="120/80 mmHg", label_visibility="collapsed")
-        st.pyplot(plot_vitals(bp_values, "Blood Pressure (mmHg)", "red"))
+# Action button to show cardiologist's notes
+    if st.button("Cardiologist's Notes"):
+        st.write("Displaying Cardiologist's Notes...")
+                
+# ECG Section
+    st.markdown("<h3 style='font-size:18px;'>Echocardiogram</h3>", unsafe_allow_html=True)
+    ecg_results = """
+    - Abnormal ECG
+    - Possible atrial fibrillation
+    - Possible ST Depression
+    """
+    st.markdown(ecg_results)
     
-    with col22:
-        st.markdown("<h5 style='color: purple;'>Heart Rate</h5>", unsafe_allow_html=True)
-        st.metric(label="Heart Rate", value="80 bpm", label_visibility="collapsed")
-        st.pyplot(plot_vitals(hr_values, "Heart Rate (bpm)", "purple"))
+# Action button to show cardiologist's notes
+    if st.button("12 - lead ECG"):
+        st.write("Displaying ECG Results...")
 
-    # FBS and Cholesterol
-    col23, col24 = st.columns(2)
-    with col23:
-        st.markdown("<h5 style='color: blue;'>Fasting Blood Sugar (FBS)</h5>", unsafe_allow_html=True)
-        st.metric(label="FBS", value="100 mg/dL", label_visibility="collapsed")
-        st.pyplot(plot_vitals(fbs_values, "FBS (mg/dL)", "blue"))
-    
-    with col24:
-        st.markdown("<h5 style='color: orange;'>Cholesterol</h5>", unsafe_allow_html=True)
-        st.metric(label="Cholesterol", value="200 mg/dL", label_visibility="collapsed")
-        st.pyplot(plot_vitals(cholesterol_values, "Cholesterol (mg/dL)", "orange"))
+            
+# Column 2: Action button and trend analysis
+    with col2:
+        st.markdown('<div class="calculate-risk-button">', unsafe_allow_html=True)
+        if st.button("Calculate Risk"):
+            st.write("Redirecting to Subpage 2 for Risk Prediction...")
+        st.markdown('</div>', unsafe_allow_html=True)
+
+        # Trend analysis section
+        st.subheader("Trend Analysis")
+
+        # Simulated data
+        data = generate_sample_data()
+
+        # User input for feature and date range
+        feature = st.selectbox('Select feature', ['Blood Pressure', 'Cholesterol', 'FBS', 'Heart Rate'])
+        start_date = st.date_input('Start Date', value=datetime.now() - timedelta(days=30))
+        end_date = st.date_input('End Date', value=datetime.now())
+
+        # Generate trend analysis graph
+        if start_date <= end_date:
+            generate_trend_analysis(data, feature, start_date, end_date)
+        else:
+            st.error('End date must fall after start date.')
+
 
