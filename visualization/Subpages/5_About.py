@@ -2,6 +2,27 @@
 
 import streamlit as st
 
+# Doctor's profile section
+doctor_image_url = "https://via.placeholder.com/40"
+doctor_name = "Dr. Emily Stone"
+
+# Creating a container for the search bar and doctor profile
+with st.container():
+    col1, col2 = st.columns([2, 1])  # Adjust column ratio for search and profile
+
+    with col2:
+        # Doctor profile with notification bell first
+        st.markdown(
+            f"""
+            <div class="doctor-profile" style="display: flex; align-items: center;">
+                <span class="notification-bell" title="Notifications" style="font-size: 15px;">
+                    🔔
+                </span>
+                <h4 style="margin: 0; font-size: 14px;">{doctor_name}</h4>
+                <img class="doctor-image" src="{doctor_image_url}" alt="Doctor Picture" style="width: 30px; height: auto;">
+            </div>
+            """, unsafe_allow_html=True
+        )
 
 # Set the main title of the dashboard
 st.title("About")
