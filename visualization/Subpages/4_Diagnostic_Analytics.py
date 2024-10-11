@@ -28,7 +28,7 @@ with st.container():
 
 def load_data():
     try:
-        data = pd.read_csv('visualization/assets/heart_disease_data.csv')  # Relative path for portability
+        data = pd.read_csv('../visualization/assets/heart_disease_data.csv')  # Relative path for portability
         return data
     except FileNotFoundError:
         st.error("Error loading dataset. Please check the file path.")
@@ -46,7 +46,7 @@ if not data.empty:
     r1, r2 = st.columns((0.1, 1))
 
     # Display the logo in the first column
-    r1.image("visualization/assets/CardioVision_icon.png", width=60)
+    r1.image("../visualization/assets/CardioVision_icon.png", width=60)
 
     # Set the title in the second column
     r2.title("Diagnostic Analytics")

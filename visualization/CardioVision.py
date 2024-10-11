@@ -8,7 +8,7 @@ st.set_page_config(
     page_title="CardioVision",
     layout="wide",
     initial_sidebar_state="expanded",
-    page_icon="assets/CardioVision_Icon.png",
+    page_icon="assets/CardioVision_icon.png",
 )
 
 
