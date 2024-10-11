@@ -1,5 +1,4 @@
 # This file will cover the diagnostic analysis tab
-
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -16,22 +15,13 @@ r1.image("visualization/assets/CardioVision_icon.png", width=60)
 # Set the title in the second column
 r2.title("Risk Calculation")
 
-# Sample DataFrame for Patients Risk Summary
-data = {
-    "Month": pd.date_range(start="2023-01-01", periods=12, freq='ME'),
-    "cp": [1, 2, 3, 2, 1, 3, 1, 2, 3, 1, 2, 3],
-    "trestbps": [130, 140, 125, 138, 132, 145, 128, 130, 135, 120, 142, 135],
-    "chol": [250, 240, 260, 255, 245, 270, 230, 220, 255, 240, 275, 265],
-    "fbs": [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-    "restecg": [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-    "thalach": [150, 160, 165, 158, 155, 170, 145, 150, 160, 165, 168, 175],
-    "exang": [0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0],
-    "oldpeak": [1.2, 2.3, 1.1, 2.5, 1.6, 2.7, 1.0, 1.8, 2.2, 1.5, 2.1, 1.9],
-    "slope": [2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1],
-    "ca": [0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2],
-    "thal": [2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3],
-    "risk score": [7, 8, 6, 7, 8, 9, 6, 7, 8, 5, 9, 7]
-}
+# Sample data for demonstration purposes
+def load_data():
+    data = pd.read_csv('visualization/assets/heart_disease_data.csv')
+    return data
+
+# Load the dataset
+data = load_data()
 
 # Convert dictionary to a DataFrame
 df = pd.DataFrame(data)
@@ -158,4 +148,43 @@ col1, col2 = st.columns([1, 3])
 with col1:
     display_patient_details(patient_info)
 
+
+    # HA Risk Section
+    st.markdown("<h3 style='font-size:18px;'>Heart Attack Risk</h3>", unsafe_allow_html=True)
+    #Prediction model here 
+    
+                
+    # Patiient Risk Summary  Section
+    st.markdown("<h3 style='font-size:18px;'>Patient Risk Summary</h3>", unsafe_allow_html=True)
+    risk_summary = """
+    """
+    st.markdown(risk_summary)
+    #If prediction is yes, highlight 3 top features causing prediction. If no, mention patient is currently not at risk should continue with diet and excerise etc 
+
+
+# Column 2: Action button and Result Section
+with col2:
+    st.markdown('<div class="Save result in EMR">', unsafe_allow_html=True)
+    if st.button("Save Result in EMR"):
+        st.write("Results saved in EMR...")
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    # Results section
+    st.subheader("Results")
+    #Results from prediction model
+
+
+    #Results Explanation
+    st.subheader ("Results Explanation")
+
+    # Explanation of the SHAP Analysis
+    st.markdown("""
+    The SHAP (SHapley Additive exPlanations) analysis provides a method for explaining the predictions made.
+    It assigns an importance value (SHAP value) to each feature for a particular prediction, indicating how much that feature 
+    contributes positively or negatively to the outcome. 
+    SHAP ensures that feature contributions are fairly distributed. This allows for transparent, interpretable insights into 
+    how individual features influence the prediction, helping the doctor understand why a patient is at a certain risk level 
+    """)
+
+    #Code for the SHAP analysis. 
 

@@ -68,9 +68,9 @@ with cols[2]:
 # Meet the Team Section
 st.header("Meet the Team")
 team_members = [
-    {"name": "Dr. Emily Stone", "role": "Lead Cardiologist", "image": "https://via.placeholder.com/50"},
-    {"name": "John Doe", "role": "Data Scientist", "image": "https://via.placeholder.com/50"},
-    {"name": "Jane Smith", "role": "UI/UX Designer", "image": "https://via.placeholder.com/50"},
+    {"name": "Dr. Valentina Ortiz-Milosevic", "role": "Lead Cardiologist", "image": "https://via.placeholder.com/50"},
+    {"name": "Viktoriia Ovcharuk ", "role": " Lead Data Scientist", "image": "https://via.placeholder.com/50"},
+    {"name": "Kent Fredriksdotter", "role": "Lead UI/UX Designer", "image": "https://via.placeholder.com/50"},
 ]
 
 # Display Team Members

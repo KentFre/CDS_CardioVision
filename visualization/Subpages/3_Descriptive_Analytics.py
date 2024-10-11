@@ -30,7 +30,7 @@ with st.container():
 
 # Sample data for demonstration purposes
 def load_data():
-    data = pd.read_csv('C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\CDS_CardioVision\\visualization\\assets\\heart_disease_data.csv')
+    data = pd.read_csv('visualization/assets/heart_disease_data.csv')
     return data
 
 # Load the dataset
