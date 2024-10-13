@@ -6,6 +6,11 @@ import plotly.express as px
 import matplotlib.pyplot as plt
 from datetime import datetime
 
+from models.model_utils import load_preprocessor, load_model, process_and_predict
+# Load the model and preprocessor once at the start
+preprocessor = load_preprocessor("../visualization/models/standardizer.pkl")
+risk_model = load_model("../visualization/models/risk_prediction_model.pkl")
+
 # Create two columns with specified ratios
 r1, r2 = st.columns((0.1, 1))
 
@@ -98,7 +103,17 @@ with st.container():
     col1, col2 = st.columns([2, 1])  # Adjust column ratio for search and profile
 
     with col1:
-        search_query = st.text_input("Search Patients", placeholder="Search by name or ID", key="search", label_visibility="collapsed")
+        # File uploader that only accepts JSON files
+        uploaded_file = st.file_uploader("Choose a JSON file", type="json")
+        if uploaded_file is not None:
+            try:
+                transformed_df = process_and_predict(preprocessor, risk_model, uploaded_file)
+                
+                # Display the DataFrame in Streamlit
+                st.write("Transformed Data with Column Names:")
+                st.dataframe(transformed_df)
+            except Exception as e:
+                st.error(f"An error occurred: {e}")
     
     with col2:
         # Doctor profile with notification bell first

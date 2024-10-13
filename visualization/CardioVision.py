@@ -1,5 +1,3 @@
-
-
 import streamlit as st
 
 # Set the page configuration
@@ -10,7 +8,6 @@ st.set_page_config(
     initial_sidebar_state="expanded",
     page_icon="assets/CardioVision_icon.png",
 )
-
 
 
 patient_data_page = st.Page("Subpages/1_Patient_Data.py", title="Patient Data", icon=":material/dashboard:", default=True)

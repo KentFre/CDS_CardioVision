@@ -1,0 +1,24 @@
+{
+  "PersonalData": {
+    "age": 63,
+    "gender": "Male",
+    "chest_pain_type": "Typical Angina",
+    "family_history_cad": true
+  },
+  "VitalParameters": {
+    "resting_heart_rate": 60.0,
+    "max_heart_rate": 150.0,
+    "has_hypertension": 1.0,
+    "exercise_induced_angina": false
+  },
+  "LaboratoryValues": {
+    "serum_cholesterol": 233.0,
+    "high_fasting_blood_sugar": true,
+    "st_depression": 2.3,
+    "cigarettes_per_day": 50.0,
+    "years_smoking": 20.0
+  },
+  "ECGResults": {
+    "resting_ecg_results": "Normal"
+  }
+}

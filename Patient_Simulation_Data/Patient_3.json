@@ -1,0 +1,21 @@
+{
+  "PersonalData": {
+    "age": 41,
+    "gender": "Female",
+    "chest_pain_type": "Atypical Angina",
+    "family_history_cad": true
+  },
+  "VitalParameters": {
+    "resting_heart_rate": 71.0,
+    "max_heart_rate": 172.0,
+    "has_hypertension": 1.0,
+    "exercise_induced_angina": false
+  },
+  "LaboratoryValues": {
+    "serum_cholesterol": 204.0,
+    "high_fasting_blood_sugar": false,
+    "st_depression": 1.4,
+    "cigarettes_per_day": 0.0,
+    "years_smoking": 0.0
+  }
+}
