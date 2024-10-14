@@ -17,5 +17,8 @@
     "st_depression": 1.5,
     "cigarettes_per_day": 40.0,
     "years_smoking": 40.0
+  },
+  "ECGResults": {
+    "resting_ecg_results": "Normal"
   }
 }

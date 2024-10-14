@@ -6,18 +6,37 @@ import numpy as np
 import plotly.express as px
 import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
+import base64
 
+# Function to load and encode the image as base64
+def get_image_as_base64(image_path):
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode()
 
-# Create two columns with specified ratios
-r1, r2 = st.columns((0.1, 1))
+doctor_name = "Dr. Emily Stone"
+doctor_image_base64 = st.session_state['doctor_image_base64']
 
-# Display the logo in the first column
-r1.image("../visualization/assets/CardioVision_icon.png", width=60)
+with st.container():
+    r1, r2 = st.columns([2, 1])
 
-# Set the title in the second column
-r2.title("Patient Data")
+    with r1:
+        # Display the title in the first column
+        r1.title("Patient Data")
 
-
+    with r2:
+        # Display the profile information with the image, right-aligned and with reduced whitespace
+        st.markdown(
+            f"""
+            <div class="doctor-profile" style="display: flex; align-items: center; justify-content: flex-end;">
+                <span class="notification-bell" title="Notifications" style="font-size: 15px; margin-right: 5px;">
+                    🔔
+                </span>
+                <h4 style="margin: 0; font-size: 14px; margin-right: 0px;">{doctor_name}</h4>
+                <img src="data:image/png;base64,{doctor_image_base64}" alt="Doctor Picture" style="width: 35px; height: auto;">
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
 st.markdown(
     """
@@ -77,10 +96,6 @@ def patient_details():
         """.format(**patient_info), unsafe_allow_html=True
     )
 
-# Doctor's profile section
-doctor_image_url = "https://via.placeholder.com/40"
-doctor_name = "Dr. Emily Stone"
-
 # Creating a container for the search bar and doctor profile
 with st.container():
     col1, col2 = st.columns([2, 1])  # Adjust column ratio for search and profile
@@ -90,17 +105,7 @@ with st.container():
     
     with col2:
         # Doctor profile with notification bell first
-        st.markdown(
-            f"""
-            <div class="doctor-profile" style="display: flex; align-items: center;">
-                <span class="notification-bell" title="Notifications" style="font-size: 15px;">
-                    🔔
-                </span>
-                <h4 style="margin: 0; font-size: 14px;">{doctor_name}</h4>
-                <img class="doctor-image" src="{doctor_image_url}" alt="Doctor Picture" style="width: 30px; height: auto;">
-            </div>
-            """, unsafe_allow_html=True
-        )
+        pass
 
 # Function to display patient details
 def display_patient_details(patient_info):

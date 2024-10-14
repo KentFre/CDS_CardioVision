@@ -85,14 +85,12 @@ def process_and_predict(preprocessor, model, json_file):
         print("Transformed Data with Column Names:")
         print(transformed_df)
 
-        return transformed_df
-
 
 
         # Make a prediction
-        #prediction = model.predict(processed_data)
+        prediction = model.predict(transformed_df)
         
-        #return prediction
+        return prediction
 
     except ValueError as e:
         # Handle validation errors or other exceptions
