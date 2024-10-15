@@ -1,28 +1,67 @@
-# This file will cover the diagnostic analysis tab
 import streamlit as st
 import pandas as pd
 import numpy as np
-import plotly.express as px
-import matplotlib.pyplot as plt
+import base64
 from datetime import datetime
+from models.model_utils import load_preprocessor, load_model, calculate_risk  # Update this path based on your utils location
 
-from models.model_utils import load_preprocessor, load_model, process_and_predict
-# Load the model and preprocessor once at the start
+# Function to load and encode the image as base64
+def get_image_as_base64(image_path):
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode()
+
+# Load the model and preprocessor
 preprocessor = load_preprocessor("../visualization/models/standardizer.pkl")
 risk_model = load_model("../visualization/models/risk_prediction_model.pkl")
 
 doctor_name = "Dr. Emily Stone"
-doctor_image_base64 = st.session_state['doctor_image_base64']
+doctor_image_base64 = st.session_state.get('doctor_image_base64', '')
+patient_data = st.session_state.get('patient_data', {})
+data_available = bool(patient_data)
 
+# Risk calculation state
+if 'risk_calculated' not in st.session_state:
+    st.session_state['risk_calculated'] = False
+
+# Style settings for the patient pane
+st.markdown(
+    """
+    <style>
+    .pane-container {
+        background-color: #ffffff;
+        border: 1px solid #e0e0e0;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        margin-bottom: 20px;
+        line-height: 1.2;
+    }
+    .patient-details img {
+        width: 80px;
+        height: auto;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    .patient-details h2 {
+        color: #333;
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .patient-details p {
+        color: #555;
+        font-size: 14px;
+        margin: 5px 0;
+    }
+    </style>
+    """, unsafe_allow_html=True
+)
+
+# Layout for doctor profile and patient title
 with st.container():
     r1, r2 = st.columns([2, 1])
-
     with r1:
-        # Display the title in the first column
         r1.title("Patient Risk Calculation")
-
     with r2:
-        # Display the profile information with the image, right-aligned and with reduced whitespace
         st.markdown(
             f"""
             <div class="doctor-profile" style="display: flex; align-items: center; justify-content: flex-end;">
@@ -32,170 +71,74 @@ with st.container():
                 <h4 style="margin: 0; font-size: 14px; margin-right: 0px;">{doctor_name}</h4>
                 <img src="data:image/png;base64,{doctor_image_base64}" alt="Doctor Picture" style="width: 35px; height: auto;">
             </div>
+            """, unsafe_allow_html=True
+        )
+
+col1, col2 = st.columns([1, 3])
+
+# Column 1: Patient details section
+def display_patient_details():
+    patient_info = patient_data.get("PatientInfo", {})
+    image_path = patient_info.get("patient_photo_link", "assets/CardioVision.svg")
+    image_base64 = get_image_as_base64(image_path)
+    
+    st.markdown(
+        f"""
+        <div class="pane-container">
+            <div class="patient-details">
+                <img src="data:image/svg+xml;base64,{image_base64}" alt="Patient Picture" style="width:100px;height:auto;">
+                <h2>{patient_info.get('name', 'N/A')}</h2>
+                <p><b>ID:</b> {patient_info.get('patient_id', 'N/A')}</p>
+                <p><b>Age:</b> {patient_info.get('age', 'N/A')}</p>
+                <p><b>Gender:</b> {patient_info.get('gender', 'N/A')}</p>
+                <p><b>Address:</b> {patient_info.get('address', 'N/A')}</p>
+                <p><b>Phone:</b> {patient_info.get('phone', 'N/A')}</p>
+                <p><b>Email:</b> {patient_info.get('email', 'N/A')}</p>
+            </div>
+        </div>
+        """, unsafe_allow_html=True
+    )
+
+with col1:
+    display_patient_details()
+
+with col2:
+    # Display the warning or info message and "Calculate Risk" button
+    if not st.session_state['risk_calculated']:
+        # Warning message if no risk has been calculated
+        st.markdown(
+            """
+            <div style="padding: 10px; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px; margin-bottom: 15px;">
+                <p style="margin: 0; color: #721c24;">⚠️ No Heart Attack Risk has been calculated.</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+    else:
+        # Info message if the risk has already been calculated
+        st.markdown(
+            """
+            <div style="padding: 10px; background-color: #d1ecf1; border: 1px solid #bee5eb; border-radius: 5px; margin-bottom: 15px;">
+                <p style="margin: 0; color: #0c5460;">ℹ️ A Heart Attack Risk Score has been recently calculated. You can recalculate if needed.</p>
+            </div>
             """,
             unsafe_allow_html=True
         )
 
-# Sample data for demonstration purposes
-def load_data():
-    data = pd.read_csv('../visualization/assets/heart_disease_data.csv')
-    return data
-
-# Load the dataset
-data = load_data()
-
-# Convert dictionary to a DataFrame
-df = pd.DataFrame(data)
-
-# Create a function to generate hyperlinks
-def create_hyperlink(text, url):
-    return f'<a href="{url}" target="_blank">{text}</a>'
-
-st.markdown(
-    """
-    <style>
-    /* Bordered container for panes */
-    .pane-container {
-        background-color: #ffffff; /* White background for each pane */
-        border: 1px solid #e0e0e0; /* Light gray border */
-        padding: 15px; /* Padding inside the pane */
-        border-radius: 10px; /* Rounded corners */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow for 3D effect */
-        margin-bottom: 20px;  /* Space between panes */
-    }
-    
-    /* Patient details pane specific styling */
-    .patient-details img {
-        width: 80px;  /* Image width for patient picture */
-        height: auto;
-        border-radius: 50%; /* Circular image */
-        margin-right: 10px; /* Space between image and text */
-    }
-    
-    .patient-details h2 {
-        color: #333; /* Darker text for patient name */
-        font-size: 24px; /* Font size for patient name */
-        font-weight: bold; /* Bold patient name */
-    }
-    
-    .patient-details p {
-        color: #555; /* Slightly muted color for details */
-        font-size: 14px; /* Font size for patient details */
-    }
-
-    /* General padding and border for metrics and vitals */
-    .metric-pane {
-        margin-bottom: 20px;  /* Margin between metric panes */
-    }
-    </style>
-    """, unsafe_allow_html=True
-)
-
-
-# Patient details section
-def patient_details():
-    st.markdown(
-        """
-        <div class="details-box">
-            <img class="patient-image" src="https://via.placeholder.com/80" alt="Patient Picture">
-            <h2>Jose M. Krueger</h2>
-            <p><b>Patient ID:</b> 654789</p>
-            <p><b>Address:</b> 335 Friendship Lane, Oakland, CA 94612</p>
-            <p><b>Phone Number:</b> 408-668-3072</p>
-            <p><b>Email ID:</b> josekrueger@teleworm.com</p>
-           
-        </div>
-        """, unsafe_allow_html=True
-    )
-
-# Creating a container for the search bar and doctor profile
-with st.container():
-    col1, col2 = st.columns([2, 1])  # Adjust column ratio for search and profile
-
-    with col1:
-        # File uploader that only accepts JSON files
-        uploaded_file = st.file_uploader("Choose a JSON file", type="json")
-        if uploaded_file is not None:
+    # Calculate risk function and summary section
+    # Assuming your page imports calculate_risk
+    if st.button("Calculate Risk"):
+        if data_available:
             try:
-                transformed_df = process_and_predict(preprocessor, risk_model, uploaded_file)
-                
-                # Display the DataFrame in Streamlit
-                st.write("Transformed Data with Column Names:")
-                st.dataframe(transformed_df)
+                # Directly call calculate_risk
+                result, explanation = calculate_risk(preprocessor, risk_model)
+                st.session_state['risk_calculated'] = True  # Set the state
+                # Display results and explanations
+                st.subheader("Risk Calculation Results")
+                st.write(result)
+                st.subheader("Explanation of Results")
+                st.write(explanation)
             except Exception as e:
-                st.error(f"An error occurred: {e}")
-
-# Function to display patient details
-def display_patient_details(patient_info):
-    st.markdown(
-        f"""
-        <div class="patient-details">
-            <img class="patient-image" src="{patient_info['image']}" alt="Patient Picture">
-            <h2>{patient_info['name']}</h2>
-            <p><b>Patient ID:</b> {patient_info['patient_id']}</p>
-            <p><b>Address:</b> {patient_info['address']}</p>
-            <p><b>Phone Number:</b> {patient_info['phone']}</p>
-            <p><b>Email ID:</b> {patient_info['email']}</p>
-            
-        </div>
-        """, unsafe_allow_html=True
-    )
-
-# Patient data
-patient_info = {
-    "image": "https://via.placeholder.com/80",
-    "name": "Jose M. Krueger",
-    "address": "335 Friendship Lane, Oakland, CA 94612",
-    "patient_id": "654789",
-    "phone": "408-668-3072",
-    "email": "josekrueger@teleworm.com",
-    "risk": "High",
-}
-
-# Layout using columns
-col1, col2 = st.columns([1, 3])
-
-# Column 1: Patient details
-with col1:
-    display_patient_details(patient_info)
-
-
-    # HA Risk Section
-    st.markdown("<h3 style='font-size:18px;'>Heart Attack Risk</h3>", unsafe_allow_html=True)
-    #Prediction model here 
-    
-                
-    # Patiient Risk Summary  Section
-    st.markdown("<h3 style='font-size:18px;'>Patient Risk Summary</h3>", unsafe_allow_html=True)
-    risk_summary = """
-    """
-    st.markdown(risk_summary)
-    #If prediction is yes, highlight 3 top features causing prediction. If no, mention patient is currently not at risk should continue with diet and excerise etc 
-
-
-# Column 2: Action button and Result Section
-with col2:
-    st.markdown('<div class="Save result in EMR">', unsafe_allow_html=True)
-    if st.button("Save Result in EMR"):
-        st.write("Results saved in EMR...")
-    st.markdown('</div>', unsafe_allow_html=True)
-
-    # Results section
-    st.subheader("Results")
-    #Results from prediction model
-
-
-    #Results Explanation
-    st.subheader ("Results Explanation")
-
-    # Explanation of the SHAP Analysis
-    st.markdown("""
-    The SHAP (SHapley Additive exPlanations) analysis provides a method for explaining the predictions made.
-    It assigns an importance value (SHAP value) to each feature for a particular prediction, indicating how much that feature 
-    contributes positively or negatively to the outcome. 
-    SHAP ensures that feature contributions are fairly distributed. This allows for transparent, interpretable insights into 
-    how individual features influence the prediction, helping the doctor understand why a patient is at a certain risk level 
-    """)
-
-    #Code for the SHAP analysis. 
-
+                st.error(f"Error calculating risk: {e}")
+        else:
+            st.warning("Please upload patient data to calculate risk.")

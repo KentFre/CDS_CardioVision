@@ -1,14 +1,7 @@
-"""
-model_utils.py
---------------
-This module provides utility functions for data preprocessing and machine learning model usage.
-
-"""
-
-# Import libraries
-import pickle
+import streamlit as st
 import pandas as pd
 import numpy as np
+import pickle
 
 # Function to load the preprocessor
 def load_preprocessor(path):
@@ -23,21 +16,18 @@ def load_model(path):
     return model
 
 # Process, validate, and predict function
-def process_and_predict(preprocessor, model, json_file):
+def process_and_predict(preprocessor, model):
     try:
-        # Load JSON file
-        data = pd.read_json(json_file)
+        # Access patient data from session state
+        patient_data = st.session_state.get('patient_data', {})
         
-        # Extract data from nested JSON structure
-        try:
-            personal_data = data['PersonalData']
-            vital_parameters = data['VitalParameters']
-            laboratory_values = data['LaboratoryValues']
-            ecg_results = data['ECGResults']
-            symptoms_observations = data['SymptomsObservations']
-            social_factors = data['SocialFactors']
-        except KeyError:
-            raise ValueError("JSON structure is incorrect or missing required sections.")
+        # Safely access each nested dictionary
+        personal_data = patient_data.get('PatientInfo', {})
+        symptoms_observations = patient_data.get('SymptomsObservations', {})
+        vital_parameters = patient_data.get('VitalParameters', {})
+        laboratory_values = patient_data.get('LaboratoryValues', {})
+        ecg_results = patient_data.get('ECGResults', {})
+        social_factors = patient_data.get('SocialFactors', {})
         
         # Flatten the extracted data into a dictionary
         flat_data = {
@@ -54,12 +44,13 @@ def process_and_predict(preprocessor, model, json_file):
             'st_depression': laboratory_values.get('st_depression'),
             'cigarettes_per_day': social_factors.get('cigarettes_per_day'),
             'years_smoking': social_factors.get('years_smoking'),
-            'resting_ecg_results': ecg_results.get('resting_ecg_results')
+            'resting_ecg_results': ecg_results.get('resting_ecg_results'),
+            'family_history_cad': social_factors.get('family_history_cad')
         }
-        
+
         # Check for missing values
-        if any(value is None for value in flat_data.values()):
-            missing_fields = [key for key, value in flat_data.items() if value is None]
+        missing_fields = [key for key, value in flat_data.items() if value is None]
+        if missing_fields:
             raise ValueError(f"Missing required fields: {', '.join(missing_fields)}")
         
         # Convert to DataFrame for processing
@@ -68,27 +59,30 @@ def process_and_predict(preprocessor, model, json_file):
         # Preprocess the data
         processed_data = preprocessor.transform(input_df)
         
-        # Get column names for transformed data
+        # Convert transformed data to DataFrame with feature names
         feature_names = preprocessor.get_feature_names_out()
-        
-        # Convert transformed data to DataFrame
         transformed_df = pd.DataFrame(processed_data, columns=feature_names)
-        
-        # Set the display option for maximum columns
-        pd.set_option('display.max_columns', None)
-        
-        # Print the column names and transformed data
-        print("Transformed Data with Column Names:")
-        print(transformed_df)
         
         # Make a prediction
         prediction = model.predict(transformed_df)
         
-        return prediction
+        # Generate an explanation for the prediction
+        explanation = "The prediction for heart attack risk is based on factors such as age, cholesterol level, and ECG results."
+        
+        return prediction[0], explanation
 
     except ValueError as e:
-        # Handle validation errors or other exceptions
-        return str(e)
+        # Handle validation errors
+        return None, str(e)
     except Exception as e:
-        # Handle any other unexpected errors
-        return f"An error occurred: {e}"
+        # Handle other unexpected errors
+        return None, f"An error occurred: {e}"
+
+# Function to calculate risk
+def calculate_risk(preprocessor, model):
+    prediction, explanation = process_and_predict(preprocessor, model)
+    if prediction is not None:
+        risk_level = "High Risk" if prediction == 1 else "Low Risk"
+        return f"Prediction: {risk_level}", explanation
+    else:
+        return explanation, ""

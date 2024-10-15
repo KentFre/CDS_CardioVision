@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit_lottie import st_lottie
 import json
 import time
 import base64
@@ -12,6 +13,10 @@ def get_image_as_base64(image_path):
 if 'doctor_image_base64' not in st.session_state:
     doctor_image_path = "assets/stone_profile_picture.png"
     st.session_state['doctor_image_base64'] = get_image_as_base64(doctor_image_path)
+
+if 'patient_image_base64' not in st.session_state:
+    patient_image_path = "assets/Patient.svg"
+    st.session_state['patient_image_base64'] = get_image_as_base64(patient_image_path)
 
 # Set the page configuration
 st.set_page_config(
@@ -31,7 +36,7 @@ if 'lottie' not in st.session_state:
 
 if not st.session_state.lottie:
     lottfinder = load_lottie_file("assets/CardioVision_Loader_H.json")
-    st.lottie(lottfinder, speed=1, loop=True)
+    st_lottie(lottfinder, speed=1, loop=True)
     time.sleep(2)
     st.session_state.lottie = True
     st.rerun()

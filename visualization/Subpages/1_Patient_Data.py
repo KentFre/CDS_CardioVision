@@ -1,30 +1,91 @@
-# This file will cover the patient data tab
-
 import streamlit as st
 import pandas as pd
 import numpy as np
-import plotly.express as px
-import matplotlib.pyplot as plt
-from datetime import datetime, timedelta
 import base64
+import json
+from datetime import datetime, timedelta
+import time
 
 # Function to load and encode the image as base64
 def get_image_as_base64(image_path):
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode()
+    
+# Define if risk has been calculated and store in session state
+if 'risk_calculated' not in st.session_state:
+    st.session_state['risk_calculated'] = False
 
+# Thresholds for the patient data
+thresholds = {
+    "resting_heart_rate": (60, 100),
+    "max_heart_rate": (60, 170),
+    "serum_cholesterol": (120, 240),
+}
+
+# Function to determine text color based on value and thresholds
+def get_color(value, range):
+    min_val, max_val = range
+    if value < min_val or value > max_val:
+        return "red"
+    return "black"
+
+# Check boolean and other conditions for additional fields
+def get_condition_color(value, condition=True):
+    return "red" if value == condition else "black"
+
+# Load the doctor profile image from session state
 doctor_name = "Dr. Emily Stone"
-doctor_image_base64 = st.session_state['doctor_image_base64']
+doctor_image_base64 = st.session_state.get('doctor_image_base64', '')
 
+# CSS styling to adjust line spacing in the patient pane
+st.markdown(
+    """
+    <style>
+    .pane-container {
+        background-color: #ffffff;
+        border: 1px solid #e0e0e0;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        margin-bottom: 20px;
+        line-height: 1.2; /* Reduced line spacing */
+    }
+
+    .patient-details img {
+        width: 80px;
+        height: auto;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .patient-details h2 {
+        color: #333;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .patient-details p {
+        color: #555;
+        font-size: 14px;
+        margin: 5px 0;
+    }
+
+    .metric-pane p {
+        font-size: 16px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Display doctor profile
 with st.container():
     r1, r2 = st.columns([2, 1])
 
     with r1:
-        # Display the title in the first column
-        r1.title("Patient Data")
+        r1.title("Patient Data Overview")
 
     with r2:
-        # Display the profile information with the image, right-aligned and with reduced whitespace
         st.markdown(
             f"""
             <div class="doctor-profile" style="display: flex; align-items: center; justify-content: flex-end;">
@@ -38,186 +99,166 @@ with st.container():
             unsafe_allow_html=True
         )
 
-st.markdown(
-    """
-    <style>
-    /* Bordered container for panes */
-    .pane-container {
-        background-color: #000000; /* White background for each pane */
-        border: 1px solid #000000; /* Light gray border */
-        padding: 15px; /* Padding inside the pane */
-        border-radius: 15px; /* Rounded corners */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow for 3D effect */
-        margin-bottom: 20px;  /* Space between panes */
-    }
+# Upload JSON area
+with st.expander("Simulate EHR Data Transfer"):
+    uploaded_file = st.file_uploader("Upload a JSON file for patient data", type="json")
     
-    /* Patient details pane specific styling */
-    .patient-details img {
-        width: 80px;  /* Image width for patient picture */
-        height: auto;
-        border-radius: 50%; /* Circular image */
-        margin-right: 10px; /* Space between image and text */
-    }
-    
-    .patient-details h2 {
-        color: #333; /* Darker text for patient name */
-        font-size: 24px; /* Font size for patient name */
-        font-weight: bold; /* Bold patient name */
-    }
-    
-    .patient-details p {
-        color: #555; /* Slightly muted color for details */
-        font-size: 14px; /* Font size for patient details */
-    }
+    if uploaded_file:
+        with st.spinner("Loading patient data..."):
+            # Load JSON content into session_state immediately
+            st.session_state['patient_data'] = json.load(uploaded_file)
+            time.sleep(1)  # Simulating processing delay if needed
+            st.success("Patient data loaded successfully!")
 
-    /* General padding and border for metrics and vitals */
-    .metric-pane {
-        margin-bottom: 20px;  /* Margin between metric panes */
-    }
-    </style>
-    """, unsafe_allow_html=True
-)
+# Access patient data from session state for the rest of the app
+patient_data = st.session_state.get('patient_data', {})
+data_available = bool(patient_data)
 
 
-# Patient details section
-def patient_details():
-    st.markdown(
-        """
-        <div class="pane-container">
-            <div class="patient-details">
-                <img class="patient-image" src="{image}" alt="Patient Picture">
-                <h2>{name}</h2>
-                <p><b>Patient ID:</b> {patient_id}</p>
-                <p><b>Address:</b> {address}</p>
-                <p><b>Phone Number:</b> {phone}</p>
-                <p><b>Email ID:</b> {email}</p>
-            </div>
-        </div>
-        """.format(**patient_info), unsafe_allow_html=True
-    )
-
-# Creating a container for the search bar and doctor profile
-with st.container():
-    col1, col2 = st.columns([2, 1])  # Adjust column ratio for search and profile
-
-    with col1:
-        search_query = st.text_input("Search Patients", placeholder="Search by name or ID", key="search", label_visibility="collapsed")
-    
-    with col2:
-        # Doctor profile with notification bell first
-        pass
-
-# Function to display patient details
-def display_patient_details(patient_info):
-    st.markdown(
-        f"""
-        <div class="patient-details">
-            <img class="patient-image" src="{patient_info['image']}" alt="Patient Picture">
-            <h2>{patient_info['name']}</h2>
-            <p><b>Patient ID:</b> {patient_info['patient_id']}</p>
-            <p><b>Address:</b> {patient_info['address']}</p>
-            <p><b>Phone Number:</b> {patient_info['phone']}</p>
-            <p><b>Email ID:</b> {patient_info['email']}</p>
-            
-        </div>
-        """, unsafe_allow_html=True
-    )
-
-
-# Patient data
-patient_info = {
-    "image": "https://via.placeholder.com/80",
-    "name": "Jose M. Krueger",
-    "address": "335 Friendship Lane, Oakland, CA 94612",
-    "patient_id": "654789",
-    "phone": "408-668-3072",
-    "email": "josekrueger@teleworm.com",
-    "risk": "High",
-}
-
-# Function to generate trend analysis graph
-def generate_trend_analysis(data, feature, start_date, end_date):
-    # Convert start_date and end_date to datetime
-    start_date = pd.to_datetime(start_date)
-    end_date = pd.to_datetime(end_date)
-
-    # Filter the data based on the selected date range
-    filtered_data = data[(data['Date'] >= start_date) & (data['Date'] <= end_date)]
-    
-    # Generate the line graph
-    fig = px.line(filtered_data, x='Date', y=feature, title=f'{feature} Trend Analysis')
-    st.plotly_chart(fig)
-
-# Simulated patient data for trend analysis
-def generate_sample_data():
-    date_range = pd.date_range(start=datetime.now() - timedelta(days=30), periods=30)
-    data = pd.DataFrame({
-        'Date': date_range,
-        'Blood Pressure': np.random.randint(110, 140, size=len(date_range)),
-        'Cholesterol': np.random.randint(150, 240, size=len(date_range)),
-        'FBS': np.random.randint(70, 130, size=len(date_range)),
-        'Heart Rate': np.random.randint(60, 100, size=len(date_range)),
-    })
-    return data
-
-# Layout using columns
+# Layout columns for displaying patient details
 col1, col2 = st.columns([1, 3])
 
-# Column 1: Patient details
+# Column 1: Basic patient info
 with col1:
-    display_patient_details(patient_info)
 
+    # Patient pane with default text if no data uploaded
+    patient_info = patient_data.get("PatientInfo", {})
+    image_path = patient_info.get("patient_photo_link", "assets/CardioVision.svg")
+    image_base64 = get_image_as_base64(image_path)
+    # Display the patient pane 
+    st.markdown(
+        f"""
+        <div class="pane-container">
+            <div class="patient-details">
+                <img src="data:image/svg+xml;base64,{image_base64}" alt="Patient Picture" style="width:100px;height:auto;">
+                <h2>{patient_info.get('name', 'N/A')}</h2>
+                <p><b>ID:</b> {patient_info.get('patient_id', 'N/A')}</p>
+                <p><b>Age:</b> {patient_info.get('age', 'N/A')}</p>
+                <p><b>Gender:</b> {patient_info.get('gender', 'N/A')}</p>
+                <p><b>Address:</b> {patient_info.get('address', 'N/A')}</p>
+                <p><b>Phone:</b> {patient_info.get('phone', 'N/A')}</p>
+                <p><b>Email:</b> {patient_info.get('email', 'N/A')}</p>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
-    # Core Complaints Section
-    st.markdown("<h3 style='font-size:18px;'>Core Complaints</h3>", unsafe_allow_html=True)
-    core_complaints = """
-    - Chest pain
-    - Shortness of breath
-    - Dizziness
-    - Irregular heartbeat
-    """
-    st.markdown(core_complaints)
+    # Core Complaints
+    st.subheader("Core Complaints")
+    if data_available:
+        core_complaints = patient_data.get("CoreComplaints", [])
+        st.write("1. " + "\n2. ".join(core_complaints))
+    else:
+        st.write("No data available.")
 
-# Action button to show cardiologist's notes
-    if st.button("Cardiologist's Notes"):
-        st.write("Displaying Cardiologist's Notes...")
+    # Cardiologist's Notes popover
+    with st.popover("Cardiologist's Notes", use_container_width=True):
+        # Retrieve notes from the patient_data if available
+        notes = patient_data.get("CardiologistNotes", "No notes available.")
+        st.write(notes)
+
+    # Load and display ECG image in a popover
+    ecg_image_path = "assets/12leadecg.svg"
+    ecg_image_base64 = get_image_as_base64(ecg_image_path)
+
+    with st.popover("12-lead ECG Results", use_container_width=True):
+        # Display the ECG image in a scrollable container
+        st.markdown(
+            f"""
+            <div style="overflow-y: auto; max-height: 500px; text-align: center;">
+                <img src="data:image/svg+xml;base64,{ecg_image_base64}" alt="12-lead ECG" style="width: 100%; height: auto;">
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+# Column 2: Last Patient Data and Trend Analysis
+with col2:
+
+    # Define a function to generate the tile content dynamically
+    def display_tile(label, value, color="black"):
+        return f"""
+            <div class="data-tile" style="width: 20%; margin: 5px; padding: 10px; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); text-align: center;">
+                <p style="margin: 0; font-weight: bold; color: #333;">{label}</p>
+                <p style="margin: 5px 0; color: {color}; font-size: 18px;">{value}</p>
+            </div>
+        """
+
+    # CSS for grid layout
+    st.markdown(
+        """
+        <style>
+        .tile-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: flex-start;
+        }
+        .data-tile {
+            flex: 1 1 calc(25% - 10px);
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    if data_available:
+        # Display warning message and red "Calculate Risk" button if the risk is not calculated
+        # Display warning message and button if the risk is not calculated
+        if not st.session_state['risk_calculated']:
+            # Warning message container with flexbox layout
+            st.markdown(
+                """
+                <div style="display: flex; align-items: center; padding: 10px; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px; margin-bottom: 15px;">
+                    <p style="margin: 0; color: #721c24; flex: 1;">⚠️ No Heart Attack Risk has been calculated.</p>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+        # Generate the HTML content for the tiles
+        tile_content = f"""
+            <div class="tile-container">
+                {display_tile("Resting Heart Rate (bpm)", patient_data["VitalParameters"].get("resting_heart_rate", ""), get_color(patient_data["VitalParameters"].get("resting_heart_rate", ""), thresholds.get("resting_heart_rate")))}
+                {display_tile("Max Heart Rate (bpm)", patient_data["VitalParameters"].get("max_heart_rate", ""), get_color(patient_data["VitalParameters"].get("max_heart_rate", ""), thresholds.get("max_heart_rate")))}
+                {display_tile("Serum Cholesterol (mg/dL)", patient_data["LaboratoryValues"].get("serum_cholesterol", ""), get_color(patient_data["LaboratoryValues"].get("serum_cholesterol", ""), thresholds.get("serum_cholesterol")))}
+                {display_tile("Cigarettes per Day", patient_data["SocialFactors"].get("cigarettes_per_day", ""))}
                 
-# ECG Section
-    st.markdown("<h3 style='font-size:18px;'>Echocardiogram</h3>", unsafe_allow_html=True)
-    ecg_results = """
-    - Abnormal ECG
-    - Possible atrial fibrillation
-    - Possible ST Depression
-    """
-    st.markdown(ecg_results)
-    
-# Action button to show cardiologist's notes
-    if st.button("12 - lead ECG"):
-        st.write("Displaying ECG Results...")
+                {display_tile("Has Hypertension", "Yes" if patient_data["VitalParameters"].get("has_hypertension", 0) == 1 else "No", get_condition_color(patient_data["VitalParameters"].get("has_hypertension", 0), 1))}
+                {display_tile("ST Depression", patient_data["LaboratoryValues"].get("st_depression", ""), "red" if patient_data["LaboratoryValues"].get("st_depression", 0) > 0 else "black")}
+                {display_tile("Exercise Induced Angina", "Yes" if patient_data["SymptomsObservations"].get("exercise_induced_angina", False) else "No", get_condition_color(patient_data["SymptomsObservations"].get("exercise_induced_angina", False), True))}
+                {display_tile("Resting ECG Results", patient_data["ECGResults"].get("resting_ecg_results", ""), "red" if patient_data["ECGResults"].get("resting_ecg_results", "").lower() != "normal" else "black")}
+            </div>
+        """
 
-            
-# Column 2: Action button and trend analysis
-    with col2:
-        st.markdown('<div class="calculate-risk-button">', unsafe_allow_html=True)
-        if st.button("Calculate Risk"):
-            st.write("Redirecting to Subpage 2 for Risk Prediction...")
-        st.markdown('</div>', unsafe_allow_html=True)
+        # Display the tiles
+        st.markdown(tile_content, unsafe_allow_html=True)
 
-        # Trend analysis section
-        st.subheader("Trend Analysis")
+        # Trend Analysis section
+        with st.expander("Trend Analysis"):
+            date_range = pd.date_range(start=datetime.now() - timedelta(days=30), periods=30)
+            trend_data = pd.DataFrame({
+                'Date': date_range,
+                'Blood Pressure': np.random.randint(110, 140, size=len(date_range)),
+                'Cholesterol': np.random.randint(150, 240, size=len(date_range)),
+                'FBS': np.random.randint(70, 130, size=len(date_range)),
+                'Heart Rate': np.random.randint(60, 100, size=len(date_range)),
+            })
 
-        # Simulated data
-        data = generate_sample_data()
+            row1_col1, row1_col2, row1_col3 = st.columns(3)
+            with row1_col1:
+                feature = st.selectbox('Select feature', ['Blood Pressure', 'Cholesterol', 'FBS', 'Heart Rate'])
+            with row1_col2:
+                start_date = st.date_input('Start Date', value=datetime.now() - timedelta(days=30))
+            with row1_col3:
+                end_date = st.date_input('End Date', value=datetime.now())
 
-        # User input for feature and date range
-        feature = st.selectbox('Select feature', ['Blood Pressure', 'Cholesterol', 'FBS', 'Heart Rate'])
-        start_date = st.date_input('Start Date', value=datetime.now() - timedelta(days=30))
-        end_date = st.date_input('End Date', value=datetime.now())
-
-        # Generate trend analysis graph
-        if start_date <= end_date:
-            generate_trend_analysis(data, feature, start_date, end_date)
-        else:
-            st.error('End date must fall after start date.')
-
-
+            if start_date <= end_date:
+                filtered_data = trend_data[(trend_data['Date'] >= pd.to_datetime(start_date)) & 
+                                           (trend_data['Date'] <= pd.to_datetime(end_date))]
+                st.line_chart(filtered_data.set_index('Date')[feature])
+            else:
+                st.error('End date must fall after start date.')
+    else:
+        st.warning("No patient data uploaded.")

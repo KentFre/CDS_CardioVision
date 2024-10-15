@@ -1,9 +1,21 @@
 {
-  "PersonalData": {
+  "PatientInfo": {
+    "patient_photo_link": "assets/Patient_Female.svg",
+    "patient_id": "978345",
+    "name": "Anna R. Thompson",
+    "address": "214 Sunset Blvd, San Francisco, CA 94118",
+    "phone": "415-555-7890",
+    "email": "annathompson@teleworm.com",
     "age": 41,
-    "gender": "Female",
-    "family_history_cad": true
+    "gender": "Female"
   },
+  "CoreComplaints": [
+    "Chest pain",
+    "Shortness of breath during exercise",
+    "Mild fatigue",
+    "Occasional light-headedness"
+  ],
+  "CardiologistNotes": "Patient presents with a family history of coronary artery disease (CAD) and experiences atypical chest pain. Recent ECG and cholesterol readings suggest potential risk factors. Recommend a monitored exercise regimen and stress management techniques. Follow-up testing in three months to assess progress and any changes in symptoms.",
   "SymptomsObservations": {
     "chest_pain_type": "Atypical Angina",
     "exercise_induced_angina": false
@@ -23,6 +35,7 @@
   },
   "SocialFactors": {
     "cigarettes_per_day": 0.0,
-    "years_smoking": 0.0
+    "years_smoking": 0.0,
+    "family_history_cad": true
   }
 }
