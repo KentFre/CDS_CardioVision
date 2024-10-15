@@ -34,6 +34,8 @@ def process_and_predict(preprocessor, model, json_file):
             vital_parameters = data['VitalParameters']
             laboratory_values = data['LaboratoryValues']
             ecg_results = data['ECGResults']
+            symptoms_observations = data['SymptomsObservations']
+            social_factors = data['SocialFactors']
         except KeyError:
             raise ValueError("JSON structure is incorrect or missing required sections.")
         
@@ -41,17 +43,17 @@ def process_and_predict(preprocessor, model, json_file):
         flat_data = {
             'age': personal_data.get('age'),
             'gender': personal_data.get('gender'),
-            'chest_pain_type': personal_data.get('chest_pain_type'),
+            'chest_pain_type': symptoms_observations.get('chest_pain_type'),
             'family_history_cad': personal_data.get('family_history_cad'),
             'resting_heart_rate': vital_parameters.get('resting_heart_rate'),
             'max_heart_rate': vital_parameters.get('max_heart_rate'),
             'has_hypertension': vital_parameters.get('has_hypertension'),
-            'exercise_induced_angina': vital_parameters.get('exercise_induced_angina'),
+            'exercise_induced_angina': symptoms_observations.get('exercise_induced_angina'),
             'serum_cholesterol': laboratory_values.get('serum_cholesterol'),
             'high_fasting_blood_sugar': laboratory_values.get('high_fasting_blood_sugar'),
             'st_depression': laboratory_values.get('st_depression'),
-            'cigarettes_per_day': laboratory_values.get('cigarettes_per_day'),
-            'years_smoking': laboratory_values.get('years_smoking'),
+            'cigarettes_per_day': social_factors.get('cigarettes_per_day'),
+            'years_smoking': social_factors.get('years_smoking'),
             'resting_ecg_results': ecg_results.get('resting_ecg_results')
         }
         
@@ -66,27 +68,19 @@ def process_and_predict(preprocessor, model, json_file):
         # Preprocess the data
         processed_data = preprocessor.transform(input_df)
         
-
-         # Get column names for transformed data
-        feature_names = preprocessor.get_feature_names_out()
-        print(feature_names)
-
-        # Convert transformed data to DataFrame
-        transformed_df = pd.DataFrame(processed_data, columns=feature_names)
-
         # Get column names for transformed data
         feature_names = preprocessor.get_feature_names_out()
-
+        
         # Convert transformed data to DataFrame
         transformed_df = pd.DataFrame(processed_data, columns=feature_names)
+        
         # Set the display option for maximum columns
         pd.set_option('display.max_columns', None)
+        
         # Print the column names and transformed data
         print("Transformed Data with Column Names:")
         print(transformed_df)
-
-
-
+        
         # Make a prediction
         prediction = model.predict(transformed_df)
         

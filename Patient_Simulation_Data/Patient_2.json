@@ -2,23 +2,27 @@
   "PersonalData": {
     "age": 67,
     "gender": "Male",
-    "chest_pain_type": "Asymptomatic",
     "family_history_cad": true
+  },
+  "SymptomsObservations": {
+    "chest_pain_type": "Asymptomatic",
+    "exercise_induced_angina": true
   },
   "VitalParameters": {
     "resting_heart_rate": 64.0,
     "max_heart_rate": 108.0,
-    "has_hypertension": 1.0,
-    "exercise_induced_angina": true
+    "has_hypertension": 1.0
   },
   "LaboratoryValues": {
     "serum_cholesterol": 286.0,
     "high_fasting_blood_sugar": false,
-    "st_depression": 1.5,
-    "cigarettes_per_day": 40.0,
-    "years_smoking": 40.0
+    "st_depression": 1.5
   },
   "ECGResults": {
     "resting_ecg_results": "Normal"
+  },
+  "SocialFactors": {
+    "cigarettes_per_day": 40.0,
+    "years_smoking": 40.0
   }
 }
