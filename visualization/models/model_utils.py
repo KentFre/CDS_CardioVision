@@ -83,6 +83,6 @@ def calculate_risk(preprocessor, model):
     prediction, explanation = process_and_predict(preprocessor, model)
     if prediction is not None:
         risk_level = "High Risk" if prediction == 1 else "Low Risk"
-        return f"Prediction: {risk_level}", explanation
+        return f"{risk_level}", explanation
     else:
         return explanation, ""

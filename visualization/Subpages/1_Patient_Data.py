@@ -105,6 +105,10 @@ with st.expander("Simulate EHR Data Transfer"):
     
     if uploaded_file:
         with st.spinner("Loading patient data..."):
+            # Reset specific session state values when a new file is uploaded
+            st.session_state['risk_calculated'] = False
+            st.session_state['risk_result'] = None
+            st.session_state['risk_explanation'] = None
             # Load JSON content into session_state immediately
             st.session_state['patient_data'] = json.load(uploaded_file)
             time.sleep(1)  # Simulating processing delay if needed

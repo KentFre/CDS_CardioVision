@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import base64
-from datetime import datetime
+import time
 from models.model_utils import load_preprocessor, load_model, calculate_risk  # Update this path based on your utils location
 
 # Function to load and encode the image as base64
@@ -102,43 +102,85 @@ def display_patient_details():
 with col1:
     display_patient_details()
 
-with col2:
-    # Display the warning or info message and "Calculate Risk" button
-    if not st.session_state['risk_calculated']:
-        # Warning message if no risk has been calculated
+@st.fragment
+def right_column():
+    # Define paths and placeholders
+    image_path = "assets/light_out.svg"
+    risk_text = "No Risk Calculated"
+    text_color = "black"
+
+    # Check if risk has been calculated and set the initial image path and risk text
+    if st.session_state['risk_calculated']:
+        result = st.session_state.get('risk_result', 'No Risk Calculated')
+        explanation = st.session_state.get('risk_explanation', '')
+        if result == "Low Risk":
+            image_path = "assets/light_green.svg"
+            risk_text = "Low Risk"
+            text_color = "green"
+        elif result == "High Risk":
+            image_path = "assets/light_red.svg"
+            risk_text = "High Risk"
+            text_color = "red"
+    
+    # Display traffic light image and risk text
+    risk_col1, risk_col2 = st.columns([1, 2])
+
+    with risk_col1:
         st.markdown(
-            """
-            <div style="padding: 10px; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px; margin-bottom: 15px;">
-                <p style="margin: 0; color: #721c24;">⚠️ No Heart Attack Risk has been calculated.</p>
+            f"""
+            <div style="display: flex; align-items: center; justify-content: space-around;">
+                <img src="data:image/svg+xml;base64,{get_image_as_base64(image_path)}" alt="{risk_text} Traffic Light" width="100">
             </div>
-            """,
-            unsafe_allow_html=True
-        )
-    else:
-        # Info message if the risk has already been calculated
-        st.markdown(
-            """
-            <div style="padding: 10px; background-color: #d1ecf1; border: 1px solid #bee5eb; border-radius: 5px; margin-bottom: 15px;">
-                <p style="margin: 0; color: #0c5460;">ℹ️ A Heart Attack Risk Score has been recently calculated. You can recalculate if needed.</p>
-            </div>
-            """,
-            unsafe_allow_html=True
+            """, unsafe_allow_html=True
         )
 
-    # Calculate risk function and summary section
-    # Assuming your page imports calculate_risk
-    if st.button("Calculate Risk"):
-        if data_available:
-            try:
-                # Directly call calculate_risk
-                result, explanation = calculate_risk(preprocessor, risk_model)
-                st.session_state['risk_calculated'] = True  # Set the state
-                # Display results and explanations
-                st.subheader("Risk Calculation Results")
-                st.write(result)
-                st.subheader("Explanation of Results")
-                st.write(explanation)
-            except Exception as e:
-                st.error(f"Error calculating risk: {e}")
+    with risk_col2:
+        # Display status message
+        if st.session_state['risk_calculated']:
+            st.markdown(
+                """
+                <div style="padding: 10px; background-color: #d1ecf1; border: 1px solid #bee5eb; border-radius: 5px; margin-bottom: 15px;">
+                    <p style="margin: 0; color: #0c5460;">ℹ️ A Heart Attack Risk Score has been recently calculated. You can recalculate if needed.</p>
+                </div>
+                """, unsafe_allow_html=True
+            )
         else:
-            st.warning("Please upload patient data to calculate risk.")
+            st.markdown(
+                """
+                <div style="padding: 10px; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px; margin-bottom: 15px;">
+                    <p style="margin: 0; color: #721c24;">⚠️ No Heart Attack Risk has been calculated.</p>
+                </div>
+                """, unsafe_allow_html=True
+            )
+
+        # Button to calculate the risk
+        if st.button("Calculate Risk"):
+            if data_available:
+                with st.spinner("Calculating risk..."):
+                    time.sleep(1)  # Simulate calculation delay
+                    result, explanation = calculate_risk(preprocessor, risk_model)
+                    st.session_state['risk_calculated'] = True
+                    st.session_state['risk_result'] = result
+                    st.session_state['risk_explanation'] = explanation
+
+                    # Update image and text based on the calculated risk
+                    if st.session_state['risk_result'] == "Low Risk":
+                        image_path = "assets/light_green.svg"
+                        risk_text = "Low Risk"
+                        text_color = "green"
+                    elif st.session_state['risk_result'] == "High Risk":
+                        image_path = "assets/light_red.svg"
+                        risk_text = "High Risk"
+                        text_color = "red"
+                
+                st.rerun()
+
+    # Display the explanation in full width underneath
+    if st.session_state.get('risk_calculated', False):
+        st.subheader("Explanation of Results")
+        st.write(st.session_state['risk_result'])
+        st.write(st.session_state['risk_explanation'])
+
+# Run the right column fragment
+with col2:
+    right_column()
