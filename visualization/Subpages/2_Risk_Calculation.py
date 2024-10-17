@@ -16,6 +16,12 @@ risk_model = load_model("../visualization/models/risk_prediction_model.pkl")
 
 doctor_name = "Dr. Emily Stone"
 doctor_image_base64 = st.session_state.get('doctor_image_base64', '')
+
+# Define if risk has been calculated and store in session state
+if 'patient_data' not in st.session_state:
+    st.session_state['patient_data'] = {}
+    st.session_state['risk_explanation'] = ""
+
 patient_data = st.session_state.get('patient_data', {})
 data_available = bool(patient_data)
 
@@ -74,7 +80,29 @@ with st.container():
             """, unsafe_allow_html=True
         )
 
-col1, col2 = st.columns([1, 3])
+with st.expander(label="🛈 Instruction"):
+    st.write(
+        """
+        This page allows you to calculate the heart attack risk score for a patient and view an explanation of the contributing factors.
+
+        ### Risk Calculation
+        1. **Upload Patient Data**: First, upload a JSON file with the patient's medical information, which includes vital signs, lab results, and any relevant symptoms. [This will be automatically performed by the EHR in the final implementation.]
+        2. **Calculate Risk**: Click on the "Calculate Risk" button to analyze the patient’s data. The system will generate a risk score:
+           - A **Green Light** indicates a **Low Risk**.
+           - A **Red Light** indicates a **High Risk**.
+        3. **Review Results**: The calculated risk level will be displayed along with a brief message summarizing the outcome.
+
+        ### SHAP Evaluation
+        After calculating the risk, the SHAP evaluation will provide an explanation of the factors that contributed to the patient's risk level:
+        - This analysis helps clarify how each feature (such as age, cholesterol level, or heart rate) influenced the risk score.
+        - Understanding these factors can support informed decision-making and personalized patient care.
+        
+        **Note**: You may re-upload or update patient data at any time to reassess the risk or view different results.
+        """
+    )
+
+# Three-column layout for patient info, risk calculation light, and result text
+pat_info_col, light_column, explain_column = st.columns([1, 1, 2])
 
 # Column 1: Patient details section
 def display_patient_details():
@@ -99,20 +127,18 @@ def display_patient_details():
         """, unsafe_allow_html=True
     )
 
-with col1:
+with pat_info_col:
     display_patient_details()
 
-@st.fragment
-def right_column():
-    # Define paths and placeholders
+# Column 2: Traffic light and button
+with light_column:
+    # Set initial image and text based on risk status
     image_path = "assets/light_out.svg"
     risk_text = "No Risk Calculated"
     text_color = "black"
 
-    # Check if risk has been calculated and set the initial image path and risk text
     if st.session_state['risk_calculated']:
         result = st.session_state.get('risk_result', 'No Risk Calculated')
-        explanation = st.session_state.get('risk_explanation', '')
         if result == "Low Risk":
             image_path = "assets/light_green.svg"
             risk_text = "Low Risk"
@@ -122,65 +148,45 @@ def right_column():
             risk_text = "High Risk"
             text_color = "red"
     
-    # Display traffic light image and risk text
-    risk_col1, risk_col2 = st.columns([1, 2])
-
-    with risk_col1:
+    col_light_left, col_light_middle, col_light_right = st.columns([1, 2, 1])
+    with col_light_middle:
         st.markdown(
             f"""
-            <div style="display: flex; align-items: center; justify-content: space-around;">
-                <img src="data:image/svg+xml;base64,{get_image_as_base64(image_path)}" alt="{risk_text} Traffic Light" width="100">
+            <div style="display: flex; align-items: center; justify-content: center; margin: 30px 0 10px 0;">
+                <img src="data:image/svg+xml;base64,{get_image_as_base64(image_path)}" alt="{risk_text} Traffic Light" width="110" style="padding: 10px;">
             </div>
-            """, unsafe_allow_html=True
+            """, 
+            unsafe_allow_html=True
         )
+        if st.session_state['patient_data'] != {}:
+            if st.button("Calculate Risk", type="primary"):
+                if data_available:
+                    with st.spinner("Calculating risk..."):
+                        time.sleep(1)  # Simulate calculation delay
+                        result, explanation = calculate_risk(preprocessor, risk_model)
+                        st.session_state['risk_calculated'] = True
+                        st.session_state['risk_result'] = result
+                        st.session_state['risk_explanation'] = explanation
+                        st.rerun()  # Refresh the app with updated session state
 
-    with risk_col2:
-        # Display status message
-        if st.session_state['risk_calculated']:
-            st.markdown(
-                """
-                <div style="padding: 10px; background-color: #d1ecf1; border: 1px solid #bee5eb; border-radius: 5px; margin-bottom: 15px;">
-                    <p style="margin: 0; color: #0c5460;">ℹ️ A Heart Attack Risk Score has been recently calculated. You can recalculate if needed.</p>
-                </div>
-                """, unsafe_allow_html=True
-            )
+# Column 3: Risk calculation result text
+with explain_column:
+    st.subheader("Risk Calculation Result")
+    
+    # Display risk result with either success or error formatting
+    patient_name = patient_data.get('PatientInfo', {}).get('name', 'the patient')
+    risk_result = st.session_state.get('risk_result', 'No Risk Calculated')
+    if not st.session_state['patient_data'] == {}:
+        if not st.session_state['risk_calculated']:
+            st.error("⚠️ No Heart Attack Risk has been calculated.")
         else:
-            st.markdown(
-                """
-                <div style="padding: 10px; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px; margin-bottom: 15px;">
-                    <p style="margin: 0; color: #721c24;">⚠️ No Heart Attack Risk has been calculated.</p>
-                </div>
-                """, unsafe_allow_html=True
-            )
+            if risk_result == "High Risk":
+                st.error(f"A heart attack risk score has been calculated based on the provided patient information. {patient_name} has a **High Risk** of experiencing a heart attack.")
+            elif risk_result == "Low Risk":
+                st.success(f"A heart attack risk score has been calculated based on the provided patient information. {patient_name} has a **Low Risk** of experiencing a heart attack.")
+    else:
+        st.error("⚠️ No Patient Data uploaded. Reload Patient data from EHR or enter manually!")
 
-        # Button to calculate the risk
-        if st.button("Calculate Risk"):
-            if data_available:
-                with st.spinner("Calculating risk..."):
-                    time.sleep(1)  # Simulate calculation delay
-                    result, explanation = calculate_risk(preprocessor, risk_model)
-                    st.session_state['risk_calculated'] = True
-                    st.session_state['risk_result'] = result
-                    st.session_state['risk_explanation'] = explanation
-
-                    # Update image and text based on the calculated risk
-                    if st.session_state['risk_result'] == "Low Risk":
-                        image_path = "assets/light_green.svg"
-                        risk_text = "Low Risk"
-                        text_color = "green"
-                    elif st.session_state['risk_result'] == "High Risk":
-                        image_path = "assets/light_red.svg"
-                        risk_text = "High Risk"
-                        text_color = "red"
-                
-                st.rerun()
-
-    # Display the explanation in full width underneath
-    if st.session_state.get('risk_calculated', False):
-        st.subheader("Explanation of Results")
-        st.write(st.session_state['risk_result'])
-        st.write(st.session_state['risk_explanation'])
-
-# Run the right column fragment
-with col2:
-    right_column()
+# Full-width section below the columns for SHAP explanation
+st.subheader("Explanation of Results")
+st.write(st.session_state['risk_explanation'])

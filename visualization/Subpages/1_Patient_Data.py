@@ -37,7 +37,7 @@ def get_condition_color(value, condition=True):
 doctor_name = "Dr. Emily Stone"
 doctor_image_base64 = st.session_state.get('doctor_image_base64', '')
 
-# CSS styling to adjust line spacing in the patient pane
+# CSS styling for patient pane
 st.markdown(
     """
     <style>
@@ -98,6 +98,24 @@ with st.container():
             """,
             unsafe_allow_html=True
         )
+
+# Instructions expander
+with st.expander("ℹ️ Instruction"):
+    st.write(
+        """
+        **Welcome to the Patient Data Analysis and Risk Prediction Page**
+        
+        Here you can simulate the process of Electronic Health Record (EHR) data transfer for a patient by uploading a JSON file. 
+        Once uploaded, you can verify the patient data, which includes essential details like personal information, core complaints, and patient parameters. 
+        Additionally, this section provides insight into various health metrics and ECG results that are crucial for the heart attack risk prediction process.
+        
+        **Steps:**
+        1. Upload a JSON file containing patient data to simulate the EHR connection.
+        2. Review the displayed patient information to ensure accuracy.
+        3. Observe the health metrics tiles and ECG details for additional insights.
+        4. Use the provided features for an in-depth risk analysis on the next pages.
+        """
+    )
 
 # Upload JSON area
 with st.expander("Simulate EHR Data Transfer"):
@@ -209,7 +227,6 @@ with col2:
 
     if data_available:
         # Display warning message and red "Calculate Risk" button if the risk is not calculated
-        # Display warning message and button if the risk is not calculated
         if not st.session_state['risk_calculated']:
             # Warning message container with flexbox layout
             st.markdown(
@@ -237,7 +254,7 @@ with col2:
         """
 
         # Display the tiles
-        st.markdown(tile_content, unsafe_allow_html=True)
+        st.html(tile_content)
 
         # Trend Analysis section
         with st.expander("Trend Analysis"):
