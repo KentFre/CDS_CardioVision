@@ -1,0 +1,41 @@
+{
+  "PatientInfo": {
+    "patient_photo_link": "assets/Patient.svg",
+    "patient_id": "654789",
+    "name": "Jose M. Krueger",
+    "address": "335 Friendship Lane, Oakland, CA 94612",
+    "phone": "408-668-3072",
+    "email": "josekrueger@teleworm.com",
+    "age": 63,
+    "gender": "Male"
+  },
+  "CoreComplaints": [
+    "Chest pain",
+    "Shortness of breath",
+    "Dizziness",
+    "Irregular heartbeat"
+  ],
+  "CardiologistNotes": "Patient exhibits signs of cardiovascular risk, particularly elevated cholesterol and history of hypertension. Regular monitoring of vital signs is recommended, alongside lifestyle adjustments to address risk factors such as smoking. Initiate a follow-up for further testing in 6 months.",
+  "SymptomsObservations": {
+    "chest_pain_type": "Typical Angina",
+    "exercise_induced_angina": false
+  },
+  "VitalParameters": {
+    "resting_heart_rate": 60.0,
+    "max_heart_rate": 150.0,
+    "has_hypertension": 1.0
+  },
+  "LaboratoryValues": {
+    "serum_cholesterol": 233.0,
+    "high_fasting_blood_sugar": true,
+    "st_depression": 2.3
+  },
+  "ECGResults": {
+    "resting_ecg_results": "Normal"
+  },
+  "SocialFactors": {
+    "cigarettes_per_day": 50.0,
+    "years_smoking": 20.0,
+    "family_history_cad": true
+  }
+}

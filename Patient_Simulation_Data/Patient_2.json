@@ -1,0 +1,41 @@
+{
+  "PatientInfo": {
+    "patient_photo_link": "assets/Patient2.svg",
+    "patient_id": "987321",
+    "name": "William S. Harper",
+    "address": "2745 Oak Street, San Francisco, CA 94102",
+    "phone": "415-555-8932",
+    "email": "william.harper@example.com",
+    "age": 67,
+    "gender": "Male"
+  },
+  "CoreComplaints": [
+    "Persistent fatigue",
+    "Occasional chest discomfort",
+    "Difficulty with exertion",
+    "Palpitations"
+  ],
+  "CardiologistNotes": "Patient reports asymptomatic with occasional chest discomfort. High serum cholesterol observed; patient has a history of heavy smoking. Recommend ongoing lifestyle modifications and monitoring for signs of CAD progression. Follow-up in 4 months.",
+  "SymptomsObservations": {
+    "chest_pain_type": "Asymptomatic",
+    "exercise_induced_angina": true
+  },
+  "VitalParameters": {
+    "resting_heart_rate": 64.0,
+    "max_heart_rate": 108.0,
+    "has_hypertension": 1.0
+  },
+  "LaboratoryValues": {
+    "serum_cholesterol": 286.0,
+    "high_fasting_blood_sugar": false,
+    "st_depression": 1.5
+  },
+  "ECGResults": {
+    "resting_ecg_results": "Normal"
+  },
+  "SocialFactors": {
+    "cigarettes_per_day": 40.0,
+    "years_smoking": 40.0,
+    "family_history_cad": false
+  }
+}
