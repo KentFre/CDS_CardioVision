@@ -1,6 +1,6 @@
 {
   "PatientInfo": {
-    "patient_photo_link": "assets/Patient2.svg",
+    "patient_photo_link": "visualization/assets/Patient2.svg",
     "patient_id": "987321",
     "name": "William S. Harper",
     "address": "2745 Oak Street, San Francisco, CA 94102",

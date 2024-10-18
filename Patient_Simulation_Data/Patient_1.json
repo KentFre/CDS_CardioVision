@@ -1,6 +1,6 @@
 {
   "PatientInfo": {
-    "patient_photo_link": "assets/Patient.svg",
+    "patient_photo_link": "visualization/assets/Patient.svg",
     "patient_id": "654789",
     "name": "Jose M. Krueger",
     "address": "335 Friendship Lane, Oakland, CA 94612",

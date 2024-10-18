@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import base64
 import time
-from models.model_utils import load_preprocessor, load_model, calculate_risk  # Update this path based on your utils location
+from visualization.models.model_utils import load_preprocessor, load_model, calculate_risk  # Update this path based on your utils location
 
 # Function to load and encode the image as base64
 def get_image_as_base64(image_path):
@@ -11,8 +11,8 @@ def get_image_as_base64(image_path):
         return base64.b64encode(img_file.read()).decode()
 
 # Load the model and preprocessor
-preprocessor = load_preprocessor("../visualization/models/standardizer.pkl")
-risk_model = load_model("../visualization/models/risk_prediction_model.pkl")
+preprocessor = load_preprocessor("visualization/models/standardizer.pkl")
+risk_model = load_model("visualization/models/risk_prediction_model.pkl")
 
 doctor_name = "Dr. Emily Stone"
 doctor_image_base64 = st.session_state.get('doctor_image_base64', '')
@@ -107,7 +107,7 @@ pat_info_col, light_column, explain_column = st.columns([1, 1, 2])
 # Column 1: Patient details section
 def display_patient_details():
     patient_info = patient_data.get("PatientInfo", {})
-    image_path = patient_info.get("patient_photo_link", "assets/CardioVision.svg")
+    image_path = patient_info.get("patient_photo_link", "visualization/assets/CardioVision.svg")
     image_base64 = get_image_as_base64(image_path)
     
     st.markdown(
@@ -133,18 +133,18 @@ with pat_info_col:
 # Column 2: Traffic light and button
 with light_column:
     # Set initial image and text based on risk status
-    image_path = "assets/light_out.svg"
+    image_path = "visualization/assets/light_out.svg"
     risk_text = "No Risk Calculated"
     text_color = "black"
 
     if st.session_state['risk_calculated']:
         result = st.session_state.get('risk_result', 'No Risk Calculated')
         if result == "Low Risk":
-            image_path = "assets/light_green.svg"
+            image_path = "visualization/assets/light_green.svg"
             risk_text = "Low Risk"
             text_color = "green"
         elif result == "High Risk":
-            image_path = "assets/light_red.svg"
+            image_path = "visualization/assets/light_red.svg"
             risk_text = "High Risk"
             text_color = "red"
     

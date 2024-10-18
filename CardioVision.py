@@ -11,11 +11,11 @@ def get_image_as_base64(image_path):
 
 # Check if the image is already encoded and stored in session state
 if 'doctor_image_base64' not in st.session_state:
-    doctor_image_path = "assets/stone_profile_picture.png"
+    doctor_image_path = "visualization/assets/stone_profile_picture.png"
     st.session_state['doctor_image_base64'] = get_image_as_base64(doctor_image_path)
 
 if 'patient_image_base64' not in st.session_state:
-    patient_image_path = "assets/Patient.svg"
+    patient_image_path = "visualization/assets/Patient.svg"
     st.session_state['patient_image_base64'] = get_image_as_base64(patient_image_path)
 
 # Set the page configuration
@@ -23,7 +23,7 @@ st.set_page_config(
     page_title="CardioVision",
     layout="wide",
     initial_sidebar_state="expanded",
-    page_icon="assets/CardioVision_icon.png",
+    page_icon="visualization/assets/CardioVision_icon.png",
 )
 
 # Load your Lottie JSON file
@@ -35,7 +35,7 @@ if 'lottie' not in st.session_state:
     st.session_state.lottie = False
 
 if not st.session_state.lottie:
-    lottfinder = load_lottie_file("assets/CardioVision_Loader_H.json")
+    lottfinder = load_lottie_file("visualization/assets/CardioVision_Loader_H.json")
     st_lottie(lottfinder, speed=1, loop=True)
     time.sleep(2)
     st.session_state.lottie = True
@@ -103,15 +103,15 @@ st.markdown(
 
 # Display your logo at the top
 st.logo(
-    "assets/CardioVision_Full_Logo.svg"
+    "visualization/assets/CardioVision_Full_Logo.svg"
 )
 
 # Define pages
-patient_data_page = st.Page("Subpages/1_Patient_Data.py", title="Patient Data", icon=":material/personal_injury:", default=True)
-risk_assessment_page = st.Page("Subpages/2_Risk_Calculation.py", title="Risk Calculation", icon=":material/recent_patient:")
-descriptive_analytics_page = st.Page("Subpages/3_Descriptive_Analytics.py", title="Descriptive Analytics", icon=":material/monitor_heart:")
-diagnostic_analytics_page = st.Page("Subpages/4_Diagnostic_Analytics.py", title="Diagnostic Analytics", icon=":material/quick_reference_all:")
-about_page = st.Page("Subpages/5_About.py", title="About", icon=":material/help:")
+patient_data_page = st.Page("visualization/Subpages/1_Patient_Data.py", title="Patient Data", icon=":material/personal_injury:", default=True)
+risk_assessment_page = st.Page("visualization/Subpages/2_Risk_Calculation.py", title="Risk Calculation", icon=":material/recent_patient:")
+descriptive_analytics_page = st.Page("visualization/Subpages/3_Descriptive_Analytics.py", title="Descriptive Analytics", icon=":material/monitor_heart:")
+diagnostic_analytics_page = st.Page("visualization/Subpages/4_Diagnostic_Analytics.py", title="Diagnostic Analytics", icon=":material/quick_reference_all:")
+about_page = st.Page("visualization/Subpages/5_About.py", title="About", icon=":material/help:")
 
 pg = st.navigation(
     {
