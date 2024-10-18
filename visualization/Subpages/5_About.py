@@ -11,15 +11,15 @@ def get_image_as_base64(image_path):
         return base64.b64encode(img_file.read()).decode()
 
 # Encode the images
-cardiologist_image = get_image_as_base64("assets/team/Cardiologist.svg")
-data_scientist_image = get_image_as_base64("assets/team/Data_Scientist.svg")
-architect_image = get_image_as_base64("assets/team/SW_Arch.svg")
-uiuxdesigner_image = get_image_as_base64("assets/team/UIUX_Designer.svg")
-mlengineer_image = get_image_as_base64("assets/team/ML_Engineer.svg")
-xaiengineer_image = get_image_as_base64("assets/team/XAI_Engineer.svg")
-patient_management_image_base64 = get_image_as_base64("assets/Patient_Management.svg")
-risk_prediction_image_base64 = get_image_as_base64("assets/Risk_Prediction.svg")
-xai_image_base64 = get_image_as_base64("assets/XAI.svg")
+cardiologist_image = get_image_as_base64("visualization/assets/team/Cardiologist.svg")
+data_scientist_image = get_image_as_base64("visualization/assets/team/Data_Scientist.svg")
+architect_image = get_image_as_base64("visualization/assets/team/SW_Arch.svg")
+uiuxdesigner_image = get_image_as_base64("visualization/assets/team/UIUX_Designer.svg")
+mlengineer_image = get_image_as_base64("visualization/assets/team/ML_Engineer.svg")
+xaiengineer_image = get_image_as_base64("visualization/assets/team/XAI_Engineer.svg")
+patient_management_image_base64 = get_image_as_base64("visualization/assets/Patient_Management.svg")
+risk_prediction_image_base64 = get_image_as_base64("visualization/assets/Risk_Prediction.svg")
+xai_image_base64 = get_image_as_base64("visualization/assets/XAI.svg")
 
 doctor_name = "Dr. Emily Stone"
 doctor_image_base64 = st.session_state['doctor_image_base64']
