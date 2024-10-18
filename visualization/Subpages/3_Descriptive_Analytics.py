@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from models.plot_utils import (
+from visualization.models.plot_utils import (
     plot_gender_distribution,
     plot_age_distribution,
     plot_risk_by_gender,
@@ -9,7 +9,7 @@ from models.plot_utils import (
     plot_heart_attack_by_age_group_and_gender
 )
 import plotly.express as px
-from models.data_utils import load_data, get_summary_statistics
+from visualization.models.data_utils import load_data, get_summary_statistics
 
 # Doctor Profile and Title
 doctor_name = "Dr. Emily Stone"
@@ -33,7 +33,7 @@ with st.container():
         )
 
 # Load and prepare data
-data_path = '../visualization/assets/heart_disease_data.csv'
+data_path = 'data/02_processed_data/complete_case_data.csv'
 df = load_data(data_path)
 total_patients, total_risk_patients, average_age = get_summary_statistics(df)
 

@@ -145,7 +145,7 @@ with col1:
 
     # Patient pane with default text if no data uploaded
     patient_info = patient_data.get("PatientInfo", {})
-    image_path = patient_info.get("patient_photo_link", "assets/CardioVision.svg")
+    image_path = patient_info.get("patient_photo_link", "visualization/assets/CardioVision.svg")
     image_base64 = get_image_as_base64(image_path)
     # Display the patient pane 
     st.markdown(
@@ -181,7 +181,7 @@ with col1:
         st.write(notes)
 
     # Load and display ECG image in a popover
-    ecg_image_path = "assets/12leadecg.svg"
+    ecg_image_path = "visualization/assets/12leadecg.svg"
     ecg_image_base64 = get_image_as_base64(ecg_image_path)
 
     with st.popover("12-lead ECG Results", use_container_width=True):

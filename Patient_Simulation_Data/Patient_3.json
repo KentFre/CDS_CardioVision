@@ -1,6 +1,6 @@
 {
   "PatientInfo": {
-    "patient_photo_link": "assets/Patient_Female.svg",
+    "patient_photo_link": "visualization/assets/Patient_Female.svg",
     "patient_id": "978345",
     "name": "Anna R. Thompson",
     "address": "214 Sunset Blvd, San Francisco, CA 94118",

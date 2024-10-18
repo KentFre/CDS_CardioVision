@@ -17,8 +17,8 @@ if 'selected_features' not in st.session_state:
 @st.cache_data
 def load_data():
     try:
-        data = pd.read_csv('../data/02_processed_data/complete_case_machine_learning_data.csv')
-        raw_data = pd.read_csv('../data/02_processed_data/complete_case_data.csv')
+        data = pd.read_csv('data/02_processed_data/complete_case_machine_learning_data.csv')
+        raw_data = pd.read_csv('data/02_processed_data/complete_case_data.csv')
         return data, raw_data
     except FileNotFoundError:
         st.error("Error loading dataset. Please check the file path.")
