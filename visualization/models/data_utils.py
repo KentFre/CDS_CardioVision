@@ -16,5 +16,3 @@ def get_summary_statistics(df):
 # Function to get gender distribution
 def get_gender_distribution(df):
     return df['gender'].value_counts()
-
-# Other data processing functions as needed...

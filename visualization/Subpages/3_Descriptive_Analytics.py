@@ -1,7 +1,15 @@
 import streamlit as st
 import pandas as pd
+from models.plot_utils import (
+    plot_gender_distribution,
+    plot_age_distribution,
+    plot_risk_by_gender,
+    plot_risk_distribution,
+    plot_age_distribution_by_gender_and_heart_attack,
+    plot_heart_attack_by_age_group_and_gender
+)
 import plotly.express as px
-from models.data_utils import load_data, get_summary_statistics, get_gender_distribution
+from models.data_utils import load_data, get_summary_statistics
 
 # Doctor Profile and Title
 doctor_name = "Dr. Emily Stone"
@@ -94,83 +102,120 @@ st.html(tiles_html)
 
 # Expander for Population Visualization
 with st.expander("Population Visualization", expanded=True):
+    
+    st.info("Choose a predefined visualization to explore key insights into the general patient population used to train the model.")
+
     g1, g2 = st.columns((1, 1))
 
-    # Select the graphs to display
-    graph_options = ['Gender Distribution', 'Age Distribution of Patients', 'Heart Attack Risk by Gender', 'Distribution of Heart Attacks']
+    # Update the graph options to include the new plots
+    graph_options = [
+        'Gender Distribution', 
+        'Age Distribution of Patients', 
+        'Heart Attack Risk by Gender', 
+        'Distribution of Heart Attacks',
+        'Age Distribution by Gender and Heart Attack Status',
+        'Heart Attack Distribution by Age Group and Gender'
+    ]
     selected_graph1 = g1.selectbox("Select first graph", graph_options, index=0)
     selected_graph2 = g2.selectbox("Select second graph", graph_options, index=1)
     
     # First Graph Visualization
     if selected_graph1 == 'Gender Distribution':
-        fig1 = px.pie(df, names='gender', title='Gender Distribution')
-        fig1.update_traces(marker=dict(colors=['skyblue', 'lightcoral']))
+        fig1 = plot_gender_distribution(df)
         g1.plotly_chart(fig1, use_container_width=True)
 
     elif selected_graph1 == 'Age Distribution of Patients':
-        fig1 = px.histogram(df, x='age', nbins=10, title='Age Distribution of Patients')
-        fig1.update_traces(marker_color='#2a9d8f')
+        fig1 = plot_age_distribution(df)
         g1.plotly_chart(fig1, use_container_width=True)
 
     elif selected_graph1 == 'Heart Attack Risk by Gender':
-        risk_by_gender = df[df['heart_disease_diagnosis'] == True]['gender'].value_counts()
-        fig1 = px.bar(risk_by_gender, x=risk_by_gender.index, y=risk_by_gender.values, title='Heart Attack Risk by Gender')
-        fig1.update_traces(marker_color='#264653')
+        fig1 = plot_risk_by_gender(df)
         g1.plotly_chart(fig1, use_container_width=True)
 
     elif selected_graph1 == 'Distribution of Heart Attacks':
-        risk_distribution = df['heart_disease_diagnosis'].value_counts().reset_index()
-        risk_distribution.columns = ['Heart Attack Risk', 'Count']
-        fig1 = px.bar(risk_distribution, x='Heart Attack Risk', y='Count', title='Distribution of Heart Attacks')
-        fig1.update_traces(marker_color='#234973')
+        fig1 = plot_risk_distribution(df)
+        g1.plotly_chart(fig1, use_container_width=True)
+
+    elif selected_graph1 == 'Age Distribution by Gender and Heart Attack Status':
+        fig1 = plot_age_distribution_by_gender_and_heart_attack(df)
+        g1.plotly_chart(fig1, use_container_width=True)
+
+    elif selected_graph1 == 'Heart Attack Distribution by Age Group and Gender':
+        fig1 = plot_heart_attack_by_age_group_and_gender(df)
         g1.plotly_chart(fig1, use_container_width=True)
 
     # Second Graph Visualization
     if selected_graph2 == 'Gender Distribution':
-        fig2 = px.pie(df, names='gender', title='Gender Distribution')
-        fig2.update_traces(marker=dict(colors=['skyblue', 'lightcoral']))
+        fig2 = plot_gender_distribution(df)
         g2.plotly_chart(fig2, use_container_width=True)
 
     elif selected_graph2 == 'Age Distribution of Patients':
-        fig2 = px.histogram(df, x='age', nbins=10, title='Age Distribution of Patients')
-        fig2.update_traces(marker_color='#2a9d8f')
+        fig2 = plot_age_distribution(df)
         g2.plotly_chart(fig2, use_container_width=True)
 
     elif selected_graph2 == 'Heart Attack Risk by Gender':
-        risk_by_gender = df[df['heart_disease_diagnosis'] == True]['gender'].value_counts()
-        fig2 = px.bar(risk_by_gender, x=risk_by_gender.index, y=risk_by_gender.values, title='Heart Attack Risk by Gender')
-        fig2.update_traces(marker_color='#264653')
+        fig2 = plot_risk_by_gender(df)
         g2.plotly_chart(fig2, use_container_width=True)
 
     elif selected_graph2 == 'Distribution of Heart Attacks':
-        risk_distribution = df['heart_disease_diagnosis'].value_counts().reset_index()
-        risk_distribution.columns = ['Heart Attack Risk', 'Count']
-        fig2 = px.bar(risk_distribution, x='Heart Attack Risk', y='Count', title='Distribution of Heart Attacks')
-        fig2.update_traces(marker_color='#234973')
+        fig2 = plot_risk_distribution(df)
         g2.plotly_chart(fig2, use_container_width=True)
 
-# Dropdown for visualization selection
-st.subheader("Data Visualisation")
-# Expander for Further Data Description with additional options for deeper analysis
-with st.expander("Further Data Description"):
-    st.subheader("Custom Data Exploration")
-    
-    # Choose feature to explore
-    feature_options = ['Cholesterol Levels', 'Resting Heart Rate', 'Max Heart Rate']
-    selected_feature = st.selectbox('Choose a feature to analyze:', feature_options)
-    
-    # Display corresponding visualization based on the selection
-    if selected_feature == 'Cholesterol Levels':
-        fig3 = px.histogram(df, x='serum_cholesterol', title='Cholesterol Level Distribution', nbins=20)
-        fig3.update_layout(xaxis_title='Cholesterol (mg/dL)', yaxis_title='Number of Patients')
-        st.plotly_chart(fig3, use_container_width=True)
+    elif selected_graph2 == 'Age Distribution by Gender and Heart Attack Status':
+        fig2 = plot_age_distribution_by_gender_and_heart_attack(df)
+        g2.plotly_chart(fig2, use_container_width=True)
 
-    elif selected_feature == 'Resting Heart Rate':
-        fig3 = px.histogram(df, x='resting_heart_rate', title='Resting Heart Rate Distribution', nbins=20)
-        fig3.update_layout(xaxis_title='Resting Heart Rate (BPM)', yaxis_title='Number of Patients')
-        st.plotly_chart(fig3, use_container_width=True)
+    elif selected_graph2 == 'Heart Attack Distribution by Age Group and Gender':
+        fig2 = plot_heart_attack_by_age_group_and_gender(df)
+        g2.plotly_chart(fig2, use_container_width=True)
 
-    elif selected_feature == 'Max Heart Rate':
-        fig3 = px.histogram(df, x='max_heart_rate', title='Max Heart Rate Distribution', nbins=20)
-        fig3.update_layout(xaxis_title='Max Heart Rate (BPM)', yaxis_title='Number of Patients')
-        st.plotly_chart(fig3, use_container_width=True)
+
+
+# Section 1: Feature Selection
+st.subheader("Feature Exploration")
+st.info("This section provides a quick summary of key metrics for numerical features in the dataset. Select a feature and a visualization type.")
+
+numerical_features = df.select_dtypes(include=['float64', 'int64']).columns.tolist()
+
+# Dropdown for feature selection
+selected_feature = st.selectbox("Choose a feature to analyze:", numerical_features)
+
+# Step 2: Two columns for tabular data and visualization
+col1, col2 = st.columns(2)
+
+# Column 1: Display tabular data of the selected feature
+with col1:
+    st.write(f"**Tabular Data for {selected_feature}**")
+    summary = (df[[selected_feature]].describe().transpose())
+    st.dataframe(summary)
+    
+    # Extract summary statistics
+    instances = int(summary['count'].values[0])
+    average = summary['mean'].values[0]
+    min_value = summary['min'].values[0]
+    max_value = summary['max'].values[0]
+
+    # Display a summary text underneath the table
+    st.text_area(
+        "Summary",
+        value=f"There were {instances} instances used to train the data for the feature '{selected_feature}'. "
+              f"The average value in the data is {average:.2f}, with a minimum of {min_value} and a maximum of {max_value}."
+    )
+
+# Column 2: Visualization options
+with col2:
+    st.write(f"**Visualization for {selected_feature}**")
+    # Radio button for visualization type
+    analysis_type = st.radio("Choose visualization type:", ["Distribution", "Box Plot"])
+
+    if analysis_type == "Distribution":
+        # Distribution plot of the selected feature
+        fig = px.histogram(df, x=selected_feature, nbins=20, title=f'Distribution of {selected_feature}')
+        fig.update_layout(xaxis_title=selected_feature, yaxis_title='Frequency')
+        st.plotly_chart(fig, use_container_width=True)
+
+    elif analysis_type == "Box Plot":
+        # Box plot of the selected feature
+        fig = px.box(df, y=selected_feature, title=f'Box Plot of {selected_feature}')
+        fig.update_layout(yaxis_title=selected_feature)
+        st.plotly_chart(fig, use_container_width=True)
