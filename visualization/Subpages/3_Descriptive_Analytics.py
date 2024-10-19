@@ -38,7 +38,7 @@ df = load_data(data_path)
 total_patients, total_risk_patients, average_age = get_summary_statistics(df)
 
 # Instructions Expander
-with st.expander(label="🛈 Instructions"):
+with st.expander(label="Instructions", icon=":material/info:"):
     st.write(
         """
         Welcome to the **Descriptive Analytics** page! Here, you can:
