@@ -80,7 +80,7 @@ with st.container():
             """, unsafe_allow_html=True
         )
 
-with st.expander(label="🛈 Instruction"):
+with st.expander(label="Instruction", icon=":material/info:"):
     st.write(
         """
         This page allows you to calculate the heart attack risk score for a patient and view an explanation of the contributing factors.

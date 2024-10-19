@@ -78,7 +78,7 @@ with st.container():
         )
 
 # Instructions
-with st.expander("🛈 Instructions", expanded=True):
+with st.expander("Instructions", icon=":material/info:", expanded=True):
     st.write("""
     This **Diagnostic Analytics** dashboard allows you to explore relationships between different variables in the dataset. 
     Use the provided options to analyze correlations, cluster variables, and uncover diagnostic insights. 
@@ -95,7 +95,7 @@ if not df.empty:
     
     st.subheader("Correlation Analysis")
     # Info Expander for explaining the pair plot
-    with st.expander("ℹ️ What is Correlation Analysis?"):
+    with st.expander("What is Correlation Analysis?", icon=":material/info:"):
         st.write("""
         **Correlation analysis** measures the strength and direction of the linear relationship between two variables. 
         The correlation coefficient (often referred to as "r") ranges from -1 to 1:
@@ -179,7 +179,7 @@ if not df.empty:
             st.subheader("Correlation Insights")
 
             # Expander for explaining correlations
-            with st.expander("ℹ️ Understanding Correlations"):
+            with st.expander("Understanding Correlations", icon=":material/info:"):
                 st.write("""
                 - **Positive Correlation**: As one variable increases, the other also increases (closer to +1).
                 - **Negative Correlation**: As one variable increases, the other decreases (closer to -1).
@@ -225,7 +225,7 @@ if not df.empty:
         st.subheader("Pair Plot and Feature Comparison")
 
         # Info Expander for explaining the pair plot
-        with st.expander("ℹ️ What is a Pair Plot & Regression Line?"):
+        with st.expander("What is a Pair Plot & Regression Line?", icon=":material/info:"):
             st.write("""
             A **pair plot** is a grid of scatter plots used to visualize pairwise relationships between different features in the dataset. 
             Each scatter plot shows the relationship between two features, and the diagonal of the grid shows the distribution of each individual feature.
@@ -294,7 +294,7 @@ if not df.empty:
         st.subheader("Clustering Analysis")
 
         # Info Expander for explaining clustering
-        with st.expander("ℹ️ What is Clustering?"):
+        with st.expander("What is Clustering?", icon=":material/info:"):
             st.write("""
             Clustering is an unsupervised machine learning technique used to group similar data points together based on their features.
             It helps to identify underlying patterns or groups within your data. In this analysis, we use **K-Means Clustering**, which divides the data into a set number of clusters based on feature similarity.

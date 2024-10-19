@@ -100,7 +100,7 @@ with st.container():
         )
 
 # Instructions expander
-with st.expander("ℹ️ Instruction"):
+with st.expander("Instruction", icon=":material/info:"):
     st.write(
         """
         **Welcome to the Patient Data Analysis and Risk Prediction Page**
@@ -117,8 +117,7 @@ with st.expander("ℹ️ Instruction"):
         """
     )
 
-with st.expander("Simulate EHR Data Transfer"):
-    
+with st.expander("Simulate EHR Data Transfer", icon=":material/publish:"):
     
     # Creating the column layout
     upload_col1, upload_col2 = st.columns([1, 1])
