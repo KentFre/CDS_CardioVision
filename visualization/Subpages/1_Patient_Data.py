@@ -117,20 +117,54 @@ with st.expander("ℹ️ Instruction"):
         """
     )
 
-# Upload JSON area
 with st.expander("Simulate EHR Data Transfer"):
-    uploaded_file = st.file_uploader("Upload a JSON file for patient data", type="json")
     
-    if uploaded_file:
-        with st.spinner("Loading patient data..."):
-            # Reset specific session state values when a new file is uploaded
-            st.session_state['risk_calculated'] = False
-            st.session_state['risk_result'] = None
-            st.session_state['risk_explanation'] = None
-            # Load JSON content into session_state immediately
-            st.session_state['patient_data'] = json.load(uploaded_file)
-            time.sleep(1)  # Simulating processing delay if needed
-            st.success("Patient data loaded successfully!")
+    
+    # Creating the column layout
+    upload_col1, upload_col2 = st.columns([1, 1])
+    
+    with upload_col1:
+        # File uploader in expander
+        uploaded_file = st.file_uploader("Upload a JSON file for new patient data", type="json")
+        # Upload JSON area    
+        if uploaded_file:
+            with st.spinner("Loading patient data..."):
+                # Reset specific session state values when a new file is uploaded
+                st.session_state['risk_calculated'] = False
+                st.session_state['risk_result'] = None
+                st.session_state['risk_explanation'] = None
+                
+                # Load JSON content into session_state immediately
+                st.session_state['patient_data'] = json.load(uploaded_file)
+                time.sleep(1)  # Simulating processing delay if needed
+                st.success("Patient data loaded successfully!")
+
+    with upload_col2:
+        # Dropdown for predefined patients
+        selected_patient = st.selectbox(
+            "Or choose a predefined patient from the list to simulate EHR data transfer.",
+            ("Patient_1", "Patient_2", "Patient_3"),  # Add empty option for default
+            index=None,  # Start with the empty option
+            placeholder="Select a predefined patient...",
+        )
+        
+        if not selected_patient == None:  # If a valid patient is selected
+            with st.spinner("Loading patient data..."):
+                # Reset specific session state values when a new patient is selected
+                st.session_state['risk_calculated'] = False
+                st.session_state['risk_result'] = None
+                st.session_state['risk_explanation'] = None
+                
+                # Load JSON content into session_state immediately
+                patient_file_path = f"Patient_Simulation_Data/{selected_patient}.json"
+                
+                try:
+                    with open(patient_file_path) as f:
+                        st.session_state['patient_data'] = json.load(f)
+                    time.sleep(1)  # Simulating processing delay if needed
+                    st.success("Patient data loaded successfully!")
+                except FileNotFoundError:
+                    st.error(f"Data for {selected_patient} not found.")
 
 # Access patient data from session state for the rest of the app
 patient_data = st.session_state.get('patient_data', {})
