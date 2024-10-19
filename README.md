@@ -1,10 +1,12 @@
 # CardioVision: Advanced Diagnostic Analytics for Cardiovascular Health
 
-![CardioVision](https://github.com/KentFre/CDS_CardioVision/blob/main/visualization/assets/CardioVision_Full_Logo.svg)
+<img src="https://github.com/KentFre/CDS_CardioVision/blob/main/visualization/assets/CardioVision_Full_Logo.svg" width="600px">
 
 **CardioVision** is an advanced medical dashboard designed to assist cardiologists in predicting heart attack risks and providing **real-time**, **data-driven** insights into patient cardiovascular health. It combines key health metrics like **chest pain type**, **cholesterol levels**, **heart rate**, and **lifestyle factors** to support accurate **risk assessment** and improve patient care. 
 
-This project is part of a **university research initiative** aimed at enhancing **diagnostic analytics** for cardiovascular health using advanced machine learning techniques.
+This project is part of a **university course project** aimed at enhancing **diagnostic analytics** for cardiovascular health using advanced machine learning techniques and visualization tools.
+
+The resulting app can be accessed here: https://cardiovision.streamlit.app/
 
 ---
 
@@ -15,17 +17,17 @@ CardioVision contains a wide range of features that help with diagnosis and pati
 ### 1. **Patient Management**
 Easily access patient details and history through an intuitive interface.
 
-![Patient Management](https://github.com/KentFre/CDS_CardioVision/blob/main/visualization/assets/Patient_Management.svg)
+<img src="https://github.com/KentFre/CDS_CardioVision/blob/main/visualization/assets/Patient_Management.svg" width="30%">
 
 ### 2. **Heart Attack Risk Assessment**
 Assess heart attack risk using advanced algorithms that leverage clinical data.
 
-![Risk Assessment](https://github.com/KentFre/CDS_CardioVision/blob/main/visualization/assets/Risk_Prediction.svg)
+<img src="https://github.com/KentFre/CDS_CardioVision/blob/main/visualization/assets/Risk_Prediction.svg" width="30%">
 
 ### 3. **Diagnostic Insights**
 Generate insights from patient history and clinical test results to support decision-making.
 
-![Diagnostic Insights](https://github.com/KentFre/CDS_CardioVision/blob/main/visualization/assets/XAI.svg)
+<img src="https://github.com/KentFre/CDS_CardioVision/blob/main/visualization/assets/XAI.svg" width="30%">
 
 ---
 
@@ -53,7 +55,7 @@ The **Patient Information** page allows users to view the relevant patient data 
 - Displays key patient data including demographic, clinical, and lifestyle factors.
 - Provides an overview of the parameters that feed into the risk prediction model.
 
-![Patient Information](https://github.com/KentFre/CDS_CardioVision/blob/main/images/Patient_Info_Page.jpg)
+<img src="https://github.com/KentFre/CDS_CardioVision/blob/main/images/Patient_Info_Page.jpg" width="80%">
 
 ### 2. **Risk Prediction**
 Based on the patient information, the **Risk Prediction** page calculates the likelihood of a heart attack. The page also includes a SHAP visualization to show which factors influence the prediction the most.
@@ -62,7 +64,7 @@ Based on the patient information, the **Risk Prediction** page calculates the li
 - Calculates heart attack risk based on patient data.
 - Displays SHAP values to explain the impact of each feature on the prediction.
 
-![Risk Prediction](https://github.com/KentFre/CDS_CardioVision/blob/main/images/Risk_Calculation_Page.jpg)
+<img src="https://github.com/KentFre/CDS_CardioVision/blob/main/images/Risk_Calculation_Page.jpg" width="80%">
 
 ### 3. **Descriptive Analytics**
 The **Descriptive Analytics** page provides a high-level overview of the dataset, showing summary statistics such as **gender distribution**, **age distribution**, and **heart attack risk factors**.
@@ -71,7 +73,7 @@ The **Descriptive Analytics** page provides a high-level overview of the dataset
 - Summary of patient data (e.g., number of patients, risk factors).
 - Interactive visualizations for demographic and clinical data.
 
-![Descriptive Analytics](https://github.com/KentFre/CDS_CardioVision/blob/main/images/Descriptive_Page.jpg)
+<img src="https://github.com/KentFre/CDS_CardioVision/blob/main/images/Descriptive_Page.jpg" width="80%">
 
 ### 4. **Diagnostic Analytics**
 This page helps users explore relationships between variables:
@@ -83,7 +85,7 @@ This page helps users explore relationships between variables:
 - Custom feature selection and comparison.
 - Regression line and statistical insights.
 
-![Diagnostic Analytics](https://github.com/KentFre/CDS_CardioVision/blob/main/images/Diagnostic_Page.jpg)
+<img src="https://github.com/KentFre/CDS_CardioVision/blob/main/images/Diagnostic_Page.jpg" width="80%">
 
 ### 5. **About**
 The **About** page provides more background about the app, including dataset references, details on the team, and contact information for further inquiries.
@@ -92,7 +94,8 @@ The **About** page provides more background about the app, including dataset ref
 - Displays background information about the project.
 - Lists references, team members, and contact information.
 
-![About](https://github.com/KentFre/CDS_CardioVision/blob/main/images/About_Page.jpg)
+<img src="https://github.com/KentFre/CDS_CardioVision/blob/main/images/About_Page.jpg" width="80%">
+
 
 
 ---
@@ -111,5 +114,3 @@ The **CardioVision** project was developed by an interdisciplinary team of exper
 | Lead XAI Engineer     | Eranive M         |
 
 ---
-
-## How to Run the App
