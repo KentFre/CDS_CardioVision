@@ -3,11 +3,23 @@ from streamlit_lottie import st_lottie
 import json
 import time
 import base64
+import pandas as pd
 
 # Function to load and encode the image as base64
 def get_image_as_base64(image_path):
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode()
+    
+# Load data and store in cache
+@st.cache_data
+def load_data():
+    try:
+        data = pd.read_csv('data/02_processed_data/complete_case_machine_learning_data.csv')
+        raw_data = pd.read_csv('data/02_processed_data/complete_case_data.csv')
+        return data, raw_data
+    except FileNotFoundError:
+        st.error("Error loading dataset. Please check the file path.")
+        return pd.DataFrame(), pd.DataFrame()
 
 # Check if the image is already encoded and stored in session state
 if 'doctor_image_base64' not in st.session_state:
@@ -34,9 +46,18 @@ def load_lottie_file(filepath: str):
 if 'lottie' not in st.session_state:
     st.session_state.lottie = False
 
+
 if not st.session_state.lottie:
     lottfinder = load_lottie_file("visualization/assets/CardioVision_Loader_H.json")
     st_lottie(lottfinder, speed=1, loop=True)
+
+    print("Loading data")
+    # Load the dataset and store it in session state
+    df, raw_df = load_data()
+    st.session_state['df'] = df
+    st.session_state['raw_df'] = raw_df
+
+    # Continue with lottie for the effect    
     time.sleep(2)
     st.session_state.lottie = True
     st.rerun()

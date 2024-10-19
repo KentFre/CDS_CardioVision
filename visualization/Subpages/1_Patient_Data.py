@@ -217,7 +217,7 @@ with col1:
     ecg_image_path = "visualization/assets/12leadecg.svg"
     ecg_image_base64 = get_image_as_base64(ecg_image_path)
 
-    with st.popover("12-lead ECG Results", use_container_width=True):
+    with st.popover("12-lead ECG", use_container_width=True):
         # Display the ECG image in a scrollable container
         st.markdown(
             f"""

@@ -33,8 +33,12 @@ with st.container():
         )
 
 # Load and prepare data
-data_path = 'data/02_processed_data/complete_case_data.csv'
-df = load_data(data_path)
+# Access data from session state in other subpages
+if 'df' in st.session_state:
+    df = st.session_state['raw_df']
+else:
+    st.error("Data not loaded. Please go back to the main page to load the data.")
+
 total_patients, total_risk_patients, average_age = get_summary_statistics(df)
 
 # Instructions Expander
