@@ -12,17 +12,6 @@ from sklearn.decomposition import PCA
 # Initialize session state for selected variables if not already initialized
 if 'selected_features' not in st.session_state:
     st.session_state['selected_features'] = []
-
-# Load data and store in cache
-@st.cache_data
-def load_data():
-    try:
-        data = pd.read_csv('data/02_processed_data/complete_case_machine_learning_data.csv')
-        raw_data = pd.read_csv('data/02_processed_data/complete_case_data.csv')
-        return data, raw_data
-    except FileNotFoundError:
-        st.error("Error loading dataset. Please check the file path.")
-        return pd.DataFrame()
     
 # Function to calculate correlation and regression
 def calculate_regression(df, feature_1, feature_2):
@@ -53,8 +42,12 @@ def reduce_to_2d(df, features):
     reduced_data = pca.fit_transform(df[features])
     return reduced_data
 
-# Load the dataset
-df, raw_df = load_data()
+# Access data from session state in other subpages
+if 'df' in st.session_state and 'raw_df' in st.session_state:
+    df = st.session_state['df']
+    raw_df = st.session_state['raw_df']
+else:
+    st.error("Data not loaded. Please go back to the main page to load the data.")
 
 # Doctor Profile and Title
 doctor_name = "Dr. Emily Stone"

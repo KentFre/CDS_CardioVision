@@ -50,7 +50,7 @@ with st.container():
 st.header("Overview")
 st.markdown(
     """
-    **_CardioVision_** is an advanced medical dashboard specifically designed to assist **cardiologists** in predicting heart attack risks and providing **real-time**, **data-driven** insights into a patient’s cardiovascular health. Leveraging a combination of **key health metrics** such as **blood pressure**, **cholesterol levels**, **heart rate**, and **lifestyle factors** (including **smoking** and **exercise habits**), CardioVision supports more accurate **risk assessment** and **proactive patient management**.
+    **_CardioVision_** is an advanced medical dashboard specifically designed to assist **cardiologists** in predicting heart attack risks and providing **real-time**, **data-driven** insights into a patient’s cardiovascular health. Leveraging a combination of **key health metrics** such as **chest pain type**, **cholesterol levels**, **heart rate**, and **lifestyle factors**, CardioVision supports more accurate **risk assessment**.
 
     With its user-friendly interface and powerful analytics, **CardioVision** enhances decision-making and facilitates **holistic** patient care.
     """
@@ -71,7 +71,7 @@ with cols[0]:
              alt="Patient Management" 
              style="width: 190px; height: auto;" />
         <h5>Patient Management</h5>
-        <p>Easily manage and access patient details and history.</p>
+        <p>Easily access patient details and history.</p>
     </div>
     """,
     unsafe_allow_html=True
@@ -86,7 +86,7 @@ with cols[1]:
              alt="Heart Attack Risk Assessment" 
              style="width: 190px; height: auto;" />
         <h5>Heart Attack Risk Assessment</h5>
-        <p>Assess patients' risk factors using advanced algorithms.</p>
+        <p>Assess patients' heart attack risk & risk factors using advanced algorithms.</p>
     </div>
     """,
     unsafe_allow_html=True
@@ -101,7 +101,7 @@ with cols[2]:
              alt="Diagnostic Insights" 
              style="width: 190px; height: auto;" />
         <h5>Diagnostic Insights</h5>
-        <p>Generate insights from patient history and test results.</p>
+        <p>Generate insights from department patient history.</p>
     </div>
     """,
     unsafe_allow_html=True
@@ -287,7 +287,10 @@ st.markdown(
     Stay tuned as we work to make **CardioVision** an even more powerful tool for improving patient outcomes.
     """
 )
-st.button("Visit our GitHub", key="feature5")
+st.link_button(
+    label="Visit our GitHub", 
+    url="https://github.com/KentFre/CDS_CardioVision"
+)
 
 # Feedback Button Section
 st.header("We Value Your Feedback")
