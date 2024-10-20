@@ -3,7 +3,9 @@ import streamlit as st
 import pandas as pd
 import pickle
 from tensorflow.keras.models import load_model as keras_load_model
+import tensorflow as tf
 import shap
+import numpy as np
 
 
 # Function to load the preprocessor
@@ -96,17 +98,80 @@ def process_and_predict(preprocessor, model):
 
 def calculate_risk(preprocessor, model):
     prediction, transformed_df = process_and_predict(preprocessor, model)
-    
-    if prediction is not None:
-        risk_level = "High Risk" if prediction == 1 else "Low Risk"
-        
-        # Initialize SHAP explainer and calculate SHAP values
-        explainer = shap.TreeExplainer(model)
-        shap_values = explainer.shap_values(transformed_df)
 
-        explanation = ""
+    if prediction is not None:
+        risk_level = "High Risk" if prediction > 0.5 else "Low Risk"
+
+        # Convert transformed_df to NumPy array for the SHAP explainer
+        transformed_array = transformed_df.to_numpy()
+
+        # Use a background dataset of 40 random samples from the df in session state
+        background_data = st.session_state['df'].sample(40, random_state=42)
         
-        # Return risk level, explanation, SHAP values, and expected value for the plot
-        return f"{risk_level}", explanation, shap_values, explainer.expected_value
+        # Drop the target column (e.g., 'Has_heart_disease') if it's present
+        if 'Has_heart_disease' in background_data.columns:
+            background_data = background_data.drop(columns=['Has_heart_disease'])
+        
+        background_data_np = background_data.to_numpy().astype(np.float32)
+
+        # Detect if the model is a Keras model
+        if isinstance(model, tf.keras.Model):
+            # Use DeepExplainer for Keras models
+            explainer = shap.DeepExplainer(model, background_data_np)
+            shap_values = explainer.shap_values(transformed_array, check_additivity=False)
+        else:
+            # Use TreeExplainer for tree-based models or KernelExplainer for others
+            explainer = shap.TreeExplainer(model)
+            shap_values = explainer.shap_values(transformed_array)
+
+        # Convert expected_value Tensor to a scalar if needed
+        expected_value_scalar = explainer.expected_value.numpy()[0] if isinstance(explainer.expected_value, tf.Tensor) else explainer.expected_value
+
+        # Return risk level and SHAP values for use in the Streamlit app
+        return f"{risk_level}", shap_values, expected_value_scalar, prediction
     else:
-        return explanation, "", None, None
+        return "", "", None
+    
+
+# Function to generate interpretation text based on SHAP values
+def interpret_shap_values(shap_values_patient, feature_names, expected_value):
+    # Explanation of color coding in the SHAP plot
+    interpretation_text = ""
+
+    # Get the SHAP values for the patient
+    shap_values_flat = shap_values_patient[0]
+
+    # Create a DataFrame to sort features by SHAP values
+    shap_df = pd.DataFrame({
+        'Feature': feature_names,
+        'SHAP Value': shap_values_flat
+    })
+
+    # Sort features by SHAP values
+    positive_contributors = shap_df[shap_df['SHAP Value'] > 0].sort_values(by='SHAP Value', ascending=False).head(3)
+    negative_contributors = shap_df[shap_df['SHAP Value'] < 0].sort_values(by='SHAP Value', ascending=True).head(3)
+
+    # Interpret based on the overall SHAP value (risk threshold at 0.5)
+    if expected_value > 0.5:
+        # High risk interpretation
+        interpretation_text += "- These features **increased the risk**:\n"
+        for index, row in positive_contributors.iterrows():
+            interpretation_text += f"  - **{row['Feature']}**: contributed a SHAP value of {row['SHAP Value']:.4f}\n"
+
+        if not negative_contributors.empty:
+            interpretation_text += "\n- While these features **reduced the risk**, they were not enough to bring the risk to a low level:\n"
+            for index, row in negative_contributors.iterrows():
+                interpretation_text += f"  - **{row['Feature']}**: reduced the risk with a SHAP value of {row['SHAP Value']:.4f}\n"
+
+    else:
+        # Low risk interpretation
+        interpretation_text += "- These features **reduced the risk** for a heart attack:\n"
+        for index, row in negative_contributors.iterrows():
+            interpretation_text += f"  - **{row['Feature']}**: contributed a SHAP value of {row['SHAP Value']:.4f}\n"
+
+        if not positive_contributors.empty:
+            interpretation_text += "\n- While these features **increased the risk**, they were not enough to result in a high-risk prediction:\n"
+            for index, row in positive_contributors.iterrows():
+                interpretation_text += f"  - **{row['Feature']}**: increased the risk with a SHAP value of {row['SHAP Value']:.4f}\n"
+
+    return interpretation_text

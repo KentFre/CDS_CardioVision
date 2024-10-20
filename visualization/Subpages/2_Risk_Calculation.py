@@ -1,10 +1,11 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import numpy as np
 import base64
 import time
 import matplotlib.pyplot as plt
 import shap
-from visualization.models.model_utils import load_preprocessor, load_model, calculate_risk  # Update this path based on your utils location
+from visualization.models.model_utils import load_preprocessor, load_model, calculate_risk, interpret_shap_values  # Update this path based on your utils location
 
 # Function to load and encode the image as base64
 def get_image_as_base64(image_path):
@@ -166,7 +167,7 @@ with light_column:
                 if data_available:
                     with st.spinner("Calculating risk..."):
                         time.sleep(1)  # Simulate calculation delay
-                        result, explanation, shap_values = calculate_risk(preprocessor, risk_model)
+                        result, explanation, shap_values, prediction = calculate_risk(preprocessor, risk_model)
                         st.session_state['risk_calculated'] = True
                         st.session_state['risk_result'] = result
                         st.session_state['risk_explanation'] = explanation
@@ -194,21 +195,53 @@ with explain_column:
 # Full-width section below the columns for SHAP explanation
 st.subheader("Explanation of Results")
 
+with st.expander("What are SHAP Values?", expanded=False):
+    st.write(
+        """
+        **SHAP (SHapley Additive exPlanations)** values help explain how machine learning models make decisions for individual predictions. 
+        Each feature's SHAP value represents its contribution to pushing the model's prediction toward either a positive or negative outcome.
+
+        - **Red-colored features**: These features contributed to **increasing the risk** of a heart attack for this patient.
+        - **Blue-colored features**: These features contributed to **decreasing the risk** of a heart attack.
+        - The longer the bar, the **greater the influence** of that feature on the final prediction.
+
+        In the SHAP waterfall plot, you can clearly see how each feature impacts the overall risk score for the patient, helping interpret the model's decision in a transparent way.
+        """
+    )
+
 # Create two columns for SHAP plot and explanation
 shap_col, explanation_col = st.columns([1.5, 2])
 
 if st.session_state['risk_calculated']:
     # Get the SHAP values and expected value from calculate_risk
-    result, explanation, shap_values, expected_value = calculate_risk(preprocessor, risk_model)
-    
-    # Display risk result and explanation
-    st.subheader("Risk Calculation Result")
-    st.write(f"Risk Level: {result}")
-    st.write(explanation)
-    
-    # Display SHAP force plot for the prediction
+    result, shap_values, expected_value, prediction = calculate_risk(preprocessor, risk_model)
+
+    # Reshape the SHAP values if needed
+    if len(shap_values.shape) == 3:  # If SHAP values have a shape like (1, n_features, 1)
+        shap_values_patient = shap_values.reshape(-1, shap_values.shape[1])
+    else:
+        shap_values_patient = shap_values
+
+    # Display SHAP force plot or waterfall plot based on selection
     if shap_values is not None:
-        shap.force_plot(expected_value[1], shap_values[1], st.session_state['df'].iloc[0, :], matplotlib=True)
-        st.pyplot()  # Render the plot
+        feature_names = st.session_state['df'].columns.drop('Has_heart_disease')
+
+        col1, col2 = st.columns([1, 1])
+        
+        with col1:
+            fig, ax = plt.subplots()
+            shap.waterfall_plot(shap.Explanation(
+                values=shap_values_patient[0],         # SHAP values for the first patient
+                base_values=expected_value,            # Model's expected value
+                data=st.session_state['df'].iloc[0],   # Actual feature values for the first patient
+                feature_names=feature_names            # Feature names
+            ))
+            st.pyplot(fig)
+
+        with col2:
+            # Replace "Test" text with the interpretation of the SHAP values
+            interpretation_text = interpret_shap_values(shap_values_patient, feature_names, prediction)
+            st.markdown(interpretation_text)
+                
     else:
         st.write("SHAP values not available.")
