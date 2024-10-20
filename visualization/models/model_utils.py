@@ -156,22 +156,22 @@ def interpret_shap_values(shap_values_patient, feature_names, expected_value):
         # High risk interpretation
         interpretation_text += "- These features **increased the risk**:\n"
         for index, row in positive_contributors.iterrows():
-            interpretation_text += f"  - **{row['Feature']}**: contributed a SHAP value of {row['SHAP Value']:.4f}\n"
+            interpretation_text += f"  - **{row['Feature']}**\n"
 
         if not negative_contributors.empty:
             interpretation_text += "\n- While these features **reduced the risk**, they were not enough to bring the risk to a low level:\n"
             for index, row in negative_contributors.iterrows():
-                interpretation_text += f"  - **{row['Feature']}**: reduced the risk with a SHAP value of {row['SHAP Value']:.4f}\n"
+                interpretation_text += f"  - **{row['Feature']}**\n"
 
     else:
         # Low risk interpretation
         interpretation_text += "- These features **reduced the risk** for a heart attack:\n"
         for index, row in negative_contributors.iterrows():
-            interpretation_text += f"  - **{row['Feature']}**: contributed a SHAP value of {row['SHAP Value']:.4f}\n"
+            interpretation_text += f"  - **{row['Feature']}**\n"
 
         if not positive_contributors.empty:
             interpretation_text += "\n- While these features **increased the risk**, they were not enough to result in a high-risk prediction:\n"
             for index, row in positive_contributors.iterrows():
-                interpretation_text += f"  - **{row['Feature']}**: increased the risk with a SHAP value of {row['SHAP Value']:.4f}\n"
+                interpretation_text += f"  - **{row['Feature']}**\n"
 
     return interpretation_text
