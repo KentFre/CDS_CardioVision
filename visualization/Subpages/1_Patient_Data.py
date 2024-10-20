@@ -132,6 +132,7 @@ with st.expander("Simulate EHR Data Transfer", icon=":material/publish:"):
                 st.session_state['risk_calculated'] = False
                 st.session_state['risk_result'] = None
                 st.session_state['risk_explanation'] = None
+                st.session_state['shap_values'] = None
                 
                 # Load JSON content into session_state immediately
                 st.session_state['patient_data'] = json.load(uploaded_file)
@@ -153,6 +154,7 @@ with st.expander("Simulate EHR Data Transfer", icon=":material/publish:"):
                 st.session_state['risk_calculated'] = False
                 st.session_state['risk_result'] = None
                 st.session_state['risk_explanation'] = None
+                st.session_state['shap_values'] = None
                 
                 # Load JSON content into session_state immediately
                 patient_file_path = f"Patient_Simulation_Data/{selected_patient}.json"

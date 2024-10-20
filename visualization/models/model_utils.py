@@ -1,7 +1,10 @@
+import os
 import streamlit as st
 import pandas as pd
-import numpy as np
 import pickle
+from tensorflow.keras.models import load_model as keras_load_model
+import shap
+
 
 # Function to load the preprocessor
 def load_preprocessor(path):
@@ -9,10 +12,25 @@ def load_preprocessor(path):
         preprocessor = pickle.load(file)
     return preprocessor
 
-# Function to load the model
-def load_model(path):
-    with open(path, "rb") as file:
-        model = pickle.load(file)
+# Function to load the model (handles both .h5 and .pkl)
+def load_model(base_path):
+    # Define the paths for both the .h5 (Keras) and .pkl (Pickle) models
+    keras_model_path = base_path + ".h5"
+    pickle_model_path = base_path + ".pkl"
+    
+    # Check if the Keras model exists
+    if os.path.exists(keras_model_path):
+        # Load the Keras model
+        model = keras_load_model(keras_model_path)
+        print(f"Loaded Keras model from {keras_model_path}")
+    elif os.path.exists(pickle_model_path):
+        # Load the model using pickle if the Keras model does not exist
+        with open(pickle_model_path, "rb") as file:
+            model = pickle.load(file)
+        print(f"Loaded Pickled model from {pickle_model_path}")
+    else:
+        raise FileNotFoundError(f"No model found at {keras_model_path} or {pickle_model_path}")
+    
     return model
 
 # Process, validate, and predict function
@@ -66,10 +84,7 @@ def process_and_predict(preprocessor, model):
         # Make a prediction
         prediction = model.predict(transformed_df)
         
-        # Generate an explanation for the prediction
-        explanation = "The prediction for heart attack risk is based on factors such as age, cholesterol level, and ECG results."
-        
-        return prediction[0], explanation
+        return prediction[0], transformed_df
 
     except ValueError as e:
         # Handle validation errors
@@ -78,11 +93,20 @@ def process_and_predict(preprocessor, model):
         # Handle other unexpected errors
         return None, f"An error occurred: {e}"
 
-# Function to calculate risk
+
 def calculate_risk(preprocessor, model):
-    prediction, explanation = process_and_predict(preprocessor, model)
+    prediction, transformed_df = process_and_predict(preprocessor, model)
+    
     if prediction is not None:
         risk_level = "High Risk" if prediction == 1 else "Low Risk"
-        return f"{risk_level}", explanation
+        
+        # Initialize SHAP explainer and calculate SHAP values
+        explainer = shap.TreeExplainer(model)
+        shap_values = explainer.shap_values(transformed_df)
+
+        explanation = ""
+        
+        # Return risk level, explanation, SHAP values, and expected value for the plot
+        return f"{risk_level}", explanation, shap_values, explainer.expected_value
     else:
-        return explanation, ""
+        return explanation, "", None, None

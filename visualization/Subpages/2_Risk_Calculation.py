@@ -1,8 +1,9 @@
 import streamlit as st
-import pandas as pd
 import numpy as np
 import base64
 import time
+import matplotlib.pyplot as plt
+import shap
 from visualization.models.model_utils import load_preprocessor, load_model, calculate_risk  # Update this path based on your utils location
 
 # Function to load and encode the image as base64
@@ -12,7 +13,9 @@ def get_image_as_base64(image_path):
 
 # Load the model and preprocessor
 preprocessor = load_preprocessor("visualization/models/standardizer.pkl")
-risk_model = load_model("visualization/models/risk_prediction_model.pkl")
+
+# Load the risk model but just provide the name, as the util will find out if it is pkl or h5
+risk_model = load_model("visualization/models/risk_prediction_model")
 
 doctor_name = "Dr. Emily Stone"
 doctor_image_base64 = st.session_state.get('doctor_image_base64', '')
@@ -163,10 +166,11 @@ with light_column:
                 if data_available:
                     with st.spinner("Calculating risk..."):
                         time.sleep(1)  # Simulate calculation delay
-                        result, explanation = calculate_risk(preprocessor, risk_model)
+                        result, explanation, shap_values = calculate_risk(preprocessor, risk_model)
                         st.session_state['risk_calculated'] = True
                         st.session_state['risk_result'] = result
                         st.session_state['risk_explanation'] = explanation
+                        st.session_state['shap_values'] = shap_values
                         st.rerun()  # Refresh the app with updated session state
 
 # Column 3: Risk calculation result text
@@ -189,4 +193,22 @@ with explain_column:
 
 # Full-width section below the columns for SHAP explanation
 st.subheader("Explanation of Results")
-st.write(st.session_state['risk_explanation'])
+
+# Create two columns for SHAP plot and explanation
+shap_col, explanation_col = st.columns([1.5, 2])
+
+if st.session_state['risk_calculated']:
+    # Get the SHAP values and expected value from calculate_risk
+    result, explanation, shap_values, expected_value = calculate_risk(preprocessor, risk_model)
+    
+    # Display risk result and explanation
+    st.subheader("Risk Calculation Result")
+    st.write(f"Risk Level: {result}")
+    st.write(explanation)
+    
+    # Display SHAP force plot for the prediction
+    if shap_values is not None:
+        shap.force_plot(expected_value[1], shap_values[1], st.session_state['df'].iloc[0, :], matplotlib=True)
+        st.pyplot()  # Render the plot
+    else:
+        st.write("SHAP values not available.")
