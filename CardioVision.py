@@ -80,22 +80,48 @@ def legal_verification():
     
     # Modal content with the applied scrollable class
     st.markdown(
-        '**IMPORTANT NOTICE**: By proceeding, you affirm that the patient data entered is accurate and that you understand the following:'
+        '**IMPORTANT NOTICE**: By proceeding, you affirm that you meet the following conditions:'
     )
     st.markdown(' ')
+
+    # 1) Trained medical professional
     st.markdown(
-        '<strong>Accuracy of Data</strong>: It is your responsibility to ensure the patient data entered into this system is accurate and up-to-date. The reliability of the prediction depends heavily on the quality of the data provided.',
+        '<strong>Trained Medical Professional</strong>: You confirm that you are a trained medical professional with the expertise to interpret and use CardioVision correctly. ',
         unsafe_allow_html=True
     )
+
+    # 2) Target patient groups
     st.markdown(
-        '<strong>Non-Medical Product</strong>: This prediction tool is not a certified medical product. It is designed for informational and educational purposes only. It should not be used as a sole basis for medical decision-making. Any clinical decisions should be based on professional judgment and verified through other medical resources.',
+        '<strong>Target Patient Groups</strong>: CardioVision is intended only for use on cardiology patients who have accurate, complete data and show no signs of acute myocardial infarction.',
         unsafe_allow_html=True
     )
+
+    # 3) Patient data accuracy
     st.markdown(
-        '<strong>User Responsibility</strong>: You agree to use this tool responsibly and acknowledge that it is not a substitute for professional medical advice. The developers of this tool disclaim any liability for its usage outside of its intended purpose.',
+        '<strong>Data Accuracy</strong>: You agree to verify the accuracy of the patient data entered, as the predictions rely on correct input.',
         unsafe_allow_html=True
     )
+
+    # 4) Non-medical product
+    st.markdown(
+        '<strong>Non-Medical Product</strong>: This tool is for educational purposes only and is not a certified medical device. It should not be solely relied upon for clinical decisions.',
+        unsafe_allow_html=True
+    )
+
+    # 5) Final decision responsibility
+    st.markdown(
+        '<strong>Final Decision</strong>: As the healthcare provider, you are fully responsible for all clinical decisions. CardioVision serves as a decision aid, not a substitute.',
+        unsafe_allow_html=True
+    )
+
+    # 6) University project disclaimer
+    st.markdown(
+        '<strong>University Project</strong>: This tool is part of a university project and should not be used for real-world patient care.',
+        unsafe_allow_html=True
+    )
+
     st.markdown('</div>', unsafe_allow_html=True)
+
     
     # Confirmation button
     if st.button("I Understand and Confirm"):
@@ -133,12 +159,12 @@ risk_assessment_page = st.Page("visualization/Subpages/2_Risk_Calculation.py", t
 descriptive_analytics_page = st.Page("visualization/Subpages/3_Descriptive_Analytics.py", title="Descriptive Analytics", icon=":material/monitor_heart:")
 diagnostic_analytics_page = st.Page("visualization/Subpages/4_Diagnostic_Analytics.py", title="Diagnostic Analytics", icon=":material/quick_reference_all:")
 about_page = st.Page("visualization/Subpages/5_About.py", title="About", icon=":material/help:")
-
+technical_information_page = st.Page("visualization/Subpages/6_Technical_Information.py", title="Technical Information", icon=":material/manufacturing:")
 pg = st.navigation(
     {
         "Patient": [patient_data_page, risk_assessment_page],
         "Department Insights": [descriptive_analytics_page, diagnostic_analytics_page],
-        "Others": [about_page],
+        "Others": [technical_information_page, about_page],
     }
 )
 # Run the navigation pages
