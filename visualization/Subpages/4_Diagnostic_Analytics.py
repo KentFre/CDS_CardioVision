@@ -58,16 +58,16 @@ with st.container():
     with r1:
         r1.title("Diagnostic Analytics")
     with r2:
-        st.markdown(
+        st.html(
             f"""
             <div class="doctor-profile" style="display: flex; align-items: center; justify-content: flex-end;">
                 <span class="notification-bell" title="Notifications" style="font-size: 15px; margin-right: 5px;">
                     🔔
                 </span>
-                <h4 style="margin: 0; font-size: 14px; margin-right: 0px;">{doctor_name}</h4>
+                <h4 style="margin: 0; font-size: 14px; margin-right: 10px;">{doctor_name}</h4>
                 <img src="data:image/png;base64,{doctor_image_base64}" alt="Doctor Picture" style="width: 35px; height: auto;">
             </div>
-            """, unsafe_allow_html=True
+            """
         )
 
 # Instructions
