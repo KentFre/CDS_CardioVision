@@ -79,6 +79,44 @@ st.html(
     """
 )
 
+with st.expander("❗Medical Problem and End Users"):
+    col1, col2 = st.columns(2)
+
+    # Left column for Identified Medical Problem
+    with col1:
+        st.markdown("""
+        ### **Identified Medical Problem**
+        Heart attacks are a major cause of death in Sweden and many parts of the world. 
+        In 2022, Sweden alone reported over 23,000 cases of AMI. Early detection and prevention of heart attack risk can save lives and reduce healthcare costs.
+        CardioVision applies AI and machine learning to improve heart attack risk prediction, helping healthcare providers make more timely and informed decisions for patient care.
+        """)          
+
+    # Right column for End Users
+    with col2:
+        st.markdown("""
+        ### **End Users**
+        CardioVision is designed for clinicians focusing on predicting heart attack risk in patients who do not show signs of an acute heart attack on ECG or through elevated troponin levels. 
+        It helps clinicians identify high-risk patients by analyzing factors such as age, cholesterol, and blood pressure, and assists in reducing risk through early prevention strategies.
+        """)
+
+    # References in two columns
+    st.markdown("### **References**")
+    ref_col1, ref_col2 = st.columns(2)
+
+    # Left column for two references
+    with ref_col1:
+        st.markdown("""
+        - World Health Organization. Cardiovascular diseases (CVDs). *WHO*, 2021.
+        - National Board of Health and Welfare. Statistics on Myocardial Infarctions 2022. *Socialstyrelsen*, 2023.
+        """)
+
+    # Right column for two references
+    with ref_col2:
+        st.markdown("""
+        - Oude Wolcherink MJ et al. Early Detection of Cardiovascular Disease: *PharmacoEconomics*, 2023.
+        - Rojek I et al. AI-Based Heart Attack Risk Prediction: *Electronics*, 2024.
+        """)
+
 # Display doctor profile
 with st.container():
     r1, r2 = st.columns([2, 1])
@@ -98,6 +136,7 @@ with st.container():
             </div>
             """
         )
+
 
 # Instructions expander
 with st.expander("Instruction", icon=":material/info:"):
