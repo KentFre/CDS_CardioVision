@@ -34,7 +34,7 @@ if 'risk_calculated' not in st.session_state:
     st.session_state['risk_calculated'] = False
 
 # Style settings for the patient pane
-st.markdown(
+st.html(
     """
     <style>
     .pane-container {
@@ -63,7 +63,7 @@ st.markdown(
         margin: 5px 0;
     }
     </style>
-    """, unsafe_allow_html=True
+    """
 )
 
 # Layout for doctor profile and patient title
@@ -72,16 +72,16 @@ with st.container():
     with r1:
         r1.title("Patient Risk Calculation")
     with r2:
-        st.markdown(
+        st.html(
             f"""
             <div class="doctor-profile" style="display: flex; align-items: center; justify-content: flex-end;">
                 <span class="notification-bell" title="Notifications" style="font-size: 15px; margin-right: 5px;">
                     🔔
                 </span>
-                <h4 style="margin: 0; font-size: 14px; margin-right: 0px;">{doctor_name}</h4>
+                <h4 style="margin: 0; font-size: 14px; margin-right: 10px;">{doctor_name}</h4>
                 <img src="data:image/png;base64,{doctor_image_base64}" alt="Doctor Picture" style="width: 35px; height: auto;">
             </div>
-            """, unsafe_allow_html=True
+            """
         )
 
 with st.expander(label="Instruction", icon=":material/info:"):
@@ -114,7 +114,7 @@ def display_patient_details():
     image_path = patient_info.get("patient_photo_link", "visualization/assets/CardioVision.svg")
     image_base64 = get_image_as_base64(image_path)
     
-    st.markdown(
+    st.html(
         f"""
         <div class="pane-container">
             <div class="patient-details">
@@ -128,7 +128,7 @@ def display_patient_details():
                 <p><b>Email:</b> {patient_info.get('email', 'N/A')}</p>
             </div>
         </div>
-        """, unsafe_allow_html=True
+        """
     )
 
 with pat_info_col:
@@ -154,13 +154,12 @@ with light_column:
     
     col_light_left, col_light_middle, col_light_right = st.columns([1, 2, 1])
     with col_light_middle:
-        st.markdown(
+        st.html(
             f"""
             <div style="display: flex; align-items: center; justify-content: center; margin: 30px 0 10px 0;">
                 <img src="data:image/svg+xml;base64,{get_image_as_base64(image_path)}" alt="{risk_text} Traffic Light" width="110" style="padding: 10px;">
             </div>
-            """, 
-            unsafe_allow_html=True
+            """
         )
         if st.session_state['patient_data'] != {}:
             if st.button("Calculate Risk", type="primary"):
@@ -233,7 +232,6 @@ if st.session_state['risk_calculated']:
             shap.waterfall_plot(shap.Explanation(
                 values=shap_values_patient[0],         # SHAP values for the first patient
                 base_values=expected_value,            # Model's expected value
-                data=st.session_state['df'].iloc[0],   # Actual feature values for the first patient
                 feature_names=feature_names            # Feature names
             ))
             st.pyplot(fig)

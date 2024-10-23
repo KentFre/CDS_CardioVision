@@ -32,18 +32,16 @@ with st.container():
         r1.title("About")
 
     with r2:
-        # Display the profile information with the image, right-aligned and with reduced whitespace
-        st.markdown(
+        st.html(
             f"""
             <div class="doctor-profile" style="display: flex; align-items: center; justify-content: flex-end;">
                 <span class="notification-bell" title="Notifications" style="font-size: 15px; margin-right: 5px;">
                     🔔
                 </span>
-                <h4 style="margin: 0; font-size: 14px; margin-right: 0px;">{doctor_name}</h4>
+                <h4 style="margin: 0; font-size: 14px; margin-right: 10px;">{doctor_name}</h4>
                 <img src="data:image/png;base64,{doctor_image_base64}" alt="Doctor Picture" style="width: 35px; height: auto;">
             </div>
-            """,
-            unsafe_allow_html=True
+            """
         )
 
 # Overview Section
@@ -64,7 +62,7 @@ cols = st.columns(3)
 
 # Feature 1: Patient Management
 with cols[0]:
-    st.markdown(
+    st.html(
     f"""
     <div style="text-align: center;">
         <img src="data:image/svg+xml;base64,{patient_management_image_base64}" 
@@ -73,13 +71,12 @@ with cols[0]:
         <h5>Patient Management</h5>
         <p>Easily access patient details and history.</p>
     </div>
-    """,
-    unsafe_allow_html=True
+    """
     )
 
 # Feature 2: Risk Assessment
 with cols[1]:
-    st.markdown(
+    st.html(
     f"""
     <div style="text-align: center;">
         <img src="data:image/svg+xml;base64,{risk_prediction_image_base64}" 
@@ -88,13 +85,12 @@ with cols[1]:
         <h5>Heart Attack Risk Assessment</h5>
         <p>Assess patients' heart attack risk & risk factors using advanced algorithms.</p>
     </div>
-    """,
-    unsafe_allow_html=True
+    """
     )
 
 # Feature 3: Diagnostic Insights
 with cols[2]:
-    st.markdown(
+    st.html(
     f"""
     <div style="text-align: center;">
         <img src="data:image/svg+xml;base64,{xai_image_base64}" 
@@ -103,9 +99,56 @@ with cols[2]:
         <h5>Diagnostic Insights</h5>
         <p>Generate insights from department patient history.</p>
     </div>
-    """,
-    unsafe_allow_html=True
+    """
     )
+
+
+# Explanation of Machine Learning and Neural Networks
+st.header("Machine Learning & Neural Networks")
+st.markdown(
+    """
+    **Machine Learning (ML)** is a field of artificial intelligence that enables computers to learn from data without being explicitly programmed. In the context of CardioVision, ML helps identify patterns in cardiovascular health data, improving prediction accuracy for heart attack risk.
+
+    **Neural Networks (NN)**, particularly in **deep learning**, are models inspired by the structure of the human brain. These networks consist of multiple layers of neurons that process input data, identifying complex patterns and making predictions. Neural networks are highly effective in medical applications where subtle data patterns can inform critical decisions.
+
+    In our model training, we focused on **maximizing recall**. Recall is critical in this context because we aim to identify **as many patients at risk of cardiac arrest as possible**, even at the cost of a higher number of false positives. By prioritizing recall, we ensure that fewer patients with a real risk of cardiac arrest are missed.
+    """
+)
+
+# Model Performance Justification in two columns inside an expander
+with st.expander("Model Performance Justification"):
+    st.subheader("Model Performance Justification")
+
+    # Create two columns, with the left column being 1.5 times larger than the right column
+    col1, col2 = st.columns([1, 1])
+
+    # Define performance data for the table
+    performance_data = {
+        "Metric": ["Accuracy", "Precision", "Recall", "F1 Score", "AUC"],
+        "Value": [0.85, 0.82, 0.98, 0.89, 0.87],
+        "Justification": [
+            "Overall correctness of the model's predictions.",
+            "Proportion of true positive predictions among all positive predictions.",
+            "Critical measure ensuring most at-risk patients are identified, even at the cost of false positives.",
+            "Balance between precision and recall, ensuring good overall performance.",
+            "Ability to distinguish between patients at risk and not at risk."
+        ]
+    }
+
+    # Display the table in the left column
+    with col1:
+        df_performance = pd.DataFrame(performance_data)
+        st.table(df_performance)
+
+    # Explain the performance results in the right column
+    with col2:
+        st.markdown(
+            """
+            The model has performed exceptionally well in identifying cardiac arrest risk patients, especially with a **recall** of **0.98**. This is crucial because our priority is ensuring that nearly all high-risk patients are correctly flagged, even at the cost of false positives. The balance between recall and precision is reflected in the **F1 Score** of **0.89**, indicating robust overall performance.
+
+            Furthermore, the **AUC** score of **0.87** demonstrates the model's strong ability to differentiate between at-risk and non-at-risk patients, giving us confidence in the model's effectiveness.
+            """
+        )
 
 # Columns for dataset statistics
 col1, col2 = st.columns(2)

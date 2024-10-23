@@ -5,6 +5,8 @@ import base64
 import json
 from datetime import datetime, timedelta
 import time
+import plotly.express as px
+
 
 # Function to load and encode the image as base64
 def get_image_as_base64(image_path):
@@ -38,7 +40,7 @@ doctor_name = "Dr. Emily Stone"
 doctor_image_base64 = st.session_state.get('doctor_image_base64', '')
 
 # CSS styling for patient pane
-st.markdown(
+st.html(
     """
     <style>
     .pane-container {
@@ -74,8 +76,7 @@ st.markdown(
         font-size: 16px;
     }
     </style>
-    """,
-    unsafe_allow_html=True
+    """
 )
 
 # Display doctor profile
@@ -86,17 +87,16 @@ with st.container():
         r1.title("Patient Data Overview")
 
     with r2:
-        st.markdown(
+        st.html(
             f"""
             <div class="doctor-profile" style="display: flex; align-items: center; justify-content: flex-end;">
                 <span class="notification-bell" title="Notifications" style="font-size: 15px; margin-right: 5px;">
                     🔔
                 </span>
-                <h4 style="margin: 0; font-size: 14px; margin-right: 0px;">{doctor_name}</h4>
+                <h4 style="margin: 0; font-size: 14px; margin-right: 10px;">{doctor_name}</h4>
                 <img src="data:image/png;base64,{doctor_image_base64}" alt="Doctor Picture" style="width: 35px; height: auto;">
             </div>
-            """,
-            unsafe_allow_html=True
+            """
         )
 
 # Instructions expander
@@ -110,7 +110,7 @@ with st.expander("Instruction", icon=":material/info:"):
         Additionally, this section provides insight into various health metrics and ECG results that are crucial for the heart attack risk prediction process.
         
         **Steps:**
-        1. Upload a JSON file containing patient data to simulate the EHR connection.
+        1. Upload a JSON file containing patient data or choose a predefined patient to simulate the EHR connection.
         2. Review the displayed patient information to ensure accuracy.
         3. Observe the health metrics tiles and ECG details for additional insights.
         4. Use the provided features for an in-depth risk analysis on the next pages.
@@ -148,7 +148,7 @@ with st.expander("Simulate EHR Data Transfer", icon=":material/publish:"):
             placeholder="Select a predefined patient...",
         )
         
-        if not selected_patient == None:  # If a valid patient is selected
+        if not selected_patient == None:
             with st.spinner("Loading patient data..."):
                 # Reset specific session state values when a new patient is selected
                 st.session_state['risk_calculated'] = False
@@ -183,7 +183,7 @@ with col1:
     image_path = patient_info.get("patient_photo_link", "visualization/assets/CardioVision.svg")
     image_base64 = get_image_as_base64(image_path)
     # Display the patient pane 
-    st.markdown(
+    st.html(
         f"""
         <div class="pane-container">
             <div class="patient-details">
@@ -197,17 +197,9 @@ with col1:
                 <p><b>Email:</b> {patient_info.get('email', 'N/A')}</p>
             </div>
         </div>
-        """,
-        unsafe_allow_html=True
+        """
     )
 
-    # Core Complaints
-    st.subheader("Core Complaints")
-    if data_available:
-        core_complaints = patient_data.get("CoreComplaints", [])
-        st.write("1. " + "\n2. ".join(core_complaints))
-    else:
-        st.write("No data available.")
 
     # Cardiologist's Notes popover
     with st.popover("Cardiologist's Notes", use_container_width=True):
@@ -221,13 +213,12 @@ with col1:
 
     with st.popover("12-lead ECG", use_container_width=True):
         # Display the ECG image in a scrollable container
-        st.markdown(
+        st.html(
             f"""
             <div style="overflow-y: auto; max-height: 500px; text-align: center;">
                 <img src="data:image/svg+xml;base64,{ecg_image_base64}" alt="12-lead ECG" style="width: 100%; height: auto;">
             </div>
-            """,
-            unsafe_allow_html=True
+            """
         )
 
 # Column 2: Last Patient Data and Trend Analysis
@@ -242,8 +233,16 @@ with col2:
             </div>
         """
 
+    # Define a function to generate the HTML for complaints dynamically
+    def display_complaint(complaint):
+        return f"""
+            <div class="complaint-box" style="background-color: #f1f3f5; padding: 15px; border-radius: 8px; text-align: center; width: calc(33.33% - 10px); margin-bottom: 10px; box-sizing: border-box; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <p>{complaint}</p>
+            </div>
+        """
+
     # CSS for grid layout
-    st.markdown(
+    st.html(
         """
         <style>
         .tile-container {
@@ -255,24 +254,44 @@ with col2:
         .data-tile {
             flex: 1 1 calc(25% - 10px);
         }
+        .complaints-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: flex-start;
+            box-sizing: border-box;
+        }
         </style>
-        """,
-        unsafe_allow_html=True
+        """
     )
 
     if data_available:
         # Display warning message and red "Calculate Risk" button if the risk is not calculated
         if not st.session_state['risk_calculated']:
-            # Warning message container with flexbox layout
-            st.markdown(
+            st.html(
                 """
                 <div style="display: flex; align-items: center; padding: 10px; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px; margin-bottom: 15px;">
                     <p style="margin: 0; color: #721c24; flex: 1;">⚠️ No Heart Attack Risk has been calculated.</p>
                 </div>
-                """,
-                unsafe_allow_html=True
+                """
             )
+        
+        # Core Complaints
+        st.subheader("Core Complaints")
+        if data_available:
+            core_complaints = patient_data.get("CoreComplaints", [])
+            
+            # Create a container for core complaints in boxes next to each other (3 per row)
+            complaints_html = '<div class="complaints-container">'
+            for complaint in core_complaints[:9]:  # Adjust number of complaints as needed
+                complaints_html += display_complaint(complaint)
+            complaints_html += '</div>'
+            st.html(complaints_html)
+        else:
+            st.write("No data available.")
 
+        # Core Complaints
+        st.subheader("Patient Evaluation Data")
         # Generate the HTML content for the tiles
         tile_content = f"""
             <div class="tile-container">
@@ -280,7 +299,6 @@ with col2:
                 {display_tile("Max Heart Rate (bpm)", patient_data["VitalParameters"].get("max_heart_rate", ""), get_color(patient_data["VitalParameters"].get("max_heart_rate", ""), thresholds.get("max_heart_rate")))}
                 {display_tile("Serum Cholesterol (mg/dL)", patient_data["LaboratoryValues"].get("serum_cholesterol", ""), get_color(patient_data["LaboratoryValues"].get("serum_cholesterol", ""), thresholds.get("serum_cholesterol")))}
                 {display_tile("Cigarettes per Day", patient_data["SocialFactors"].get("cigarettes_per_day", ""))}
-                
                 {display_tile("Has Hypertension", "Yes" if patient_data["VitalParameters"].get("has_hypertension", 0) == 1 else "No", get_condition_color(patient_data["VitalParameters"].get("has_hypertension", 0), 1))}
                 {display_tile("ST Depression", patient_data["LaboratoryValues"].get("st_depression", ""), "red" if patient_data["LaboratoryValues"].get("st_depression", 0) > 0 else "black")}
                 {display_tile("Exercise Induced Angina", "Yes" if patient_data["SymptomsObservations"].get("exercise_induced_angina", False) else "No", get_condition_color(patient_data["SymptomsObservations"].get("exercise_induced_angina", False), True))}
@@ -302,6 +320,14 @@ with col2:
                 'Heart Rate': np.random.randint(60, 100, size=len(date_range)),
             })
 
+            # Define units for each feature
+            units = {
+                'Blood Pressure': 'mmHg',
+                'Cholesterol': 'mg/dL',
+                'FBS': 'mg/dL',
+                'Heart Rate': 'bpm'
+            }
+
             row1_col1, row1_col2, row1_col3 = st.columns(3)
             with row1_col1:
                 feature = st.selectbox('Select feature', ['Blood Pressure', 'Cholesterol', 'FBS', 'Heart Rate'])
@@ -312,9 +338,22 @@ with col2:
 
             if start_date <= end_date:
                 filtered_data = trend_data[(trend_data['Date'] >= pd.to_datetime(start_date)) & 
-                                           (trend_data['Date'] <= pd.to_datetime(end_date))]
-                st.line_chart(filtered_data.set_index('Date')[feature])
+                                        (trend_data['Date'] <= pd.to_datetime(end_date))]
+                
+                # Plotly line chart with custom y-axis label based on selected feature
+                fig = px.line(
+                    filtered_data,
+                    x='Date',
+                    y=feature,
+                    title=f'{feature} Over Time',
+                    labels={feature: f'{feature} ({units[feature]})', 'Date': 'Date'}
+                )
+
+                # Show the plot
+                st.plotly_chart(fig)
             else:
                 st.error('End date must fall after start date.')
+
+
     else:
         st.warning("No patient data uploaded.")
