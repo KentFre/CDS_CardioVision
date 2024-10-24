@@ -87,7 +87,17 @@ This page helps users explore relationships between variables:
 
 <img src="https://github.com/KentFre/CDS_CardioVision/blob/main/images/Diagnostic_Page.jpg" width="80%">
 
-### 5. **About**
+### 5. **Technical Information**
+The **Technical Information** page provides more background about machine learning model used, the evaluation metrics and the dataset used to train it.
+
+**Features:**
+- Displays background information about the data.
+- Show evaluation metrics of the applied machine learning model.
+
+<img src="https://github.com/KentFre/CDS_CardioVision/blob/main/images/Technical_Information_Page.jpg" width="80%">
+
+
+### 6. **About**
 The **About** page provides more background about the app, including dataset references, details on the team, and contact information for further inquiries.
 
 **Features:**
@@ -95,7 +105,6 @@ The **About** page provides more background about the app, including dataset ref
 - Lists references, team members, and contact information.
 
 <img src="https://github.com/KentFre/CDS_CardioVision/blob/main/images/About_Page.jpg" width="80%">
-
 
 
 ---
