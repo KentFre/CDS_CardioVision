@@ -1,3 +1,11 @@
+#####################################################################################
+# plot_utils.py                                                                     #
+#                                                                                   #
+# This is a helper function collection for handling the plots                       #
+#                                                                                   #
+# - Functions to plot data in different variants                                    #
+#####################################################################################
+
 import plotly.express as px
 import pandas as pd
 

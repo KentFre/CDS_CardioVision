@@ -1,13 +1,25 @@
+#####################################################################################
+# 4_Diagnostic_Analytics.py                                                         #
+#                                                                                   #
+# This is the streamlit page showing diagnostic analysis                            #
+#                                                                                   #
+# - Perform Diagnostic Evaluations                                                  #
+#####################################################################################
+
+# Import needed libraries
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-
 import numpy as np
 from scipy import stats
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 from sklearn.decomposition import PCA
+
+#####################################################################################
+### File preparation: Functions and Status checks and model import                ###
+#####################################################################################
 
 # Initialize session state for selected variables if not already initialized
 if 'selected_features' not in st.session_state:
@@ -49,6 +61,19 @@ if 'df' in st.session_state and 'raw_df' in st.session_state:
 else:
     st.error("Data not loaded. Please go back to the main page to load the data.")
 
+# Filter out original numeric columns excluding "has_hypertension"
+@st.cache_resource
+def get_numeric_features(df):
+    numeric_features = df.select_dtypes(include=['float64', 'int64']).columns.tolist()
+    if "has_hypertension" in numeric_features:
+        numeric_features.remove("has_hypertension")
+    return numeric_features
+
+
+#####################################################################################
+### Page Title and Doctor Info                                                    ###
+#####################################################################################
+
 # Doctor Profile and Title
 doctor_name = "Dr. Emily Stone"
 doctor_image_base64 = st.session_state.get('doctor_image_base64', '')
@@ -70,6 +95,10 @@ with st.container():
             """
         )
 
+#####################################################################################
+### Expander with Information about the page                                      ###
+#####################################################################################
+
 # Instructions
 with st.expander("Instructions", icon=":material/info:", expanded=True):
     st.write("""
@@ -78,13 +107,17 @@ with st.expander("Instructions", icon=":material/info:", expanded=True):
     Follow the prompts below each visualization for a clear understanding of the results.
     """)
 
+#####################################################################################
+### Correlation analysis and Heatmap                                              ###
+#####################################################################################
+
 if not df.empty:
     # Ensure numeric columns from the dataset are available for initial selection
     numeric_features = df.select_dtypes(include=['float64', 'int64']).columns.tolist()
 
     # Use session state to maintain the feature selection
     if 'selected_variables' not in st.session_state:
-        st.session_state['selected_variables'] = numeric_features  # Default to numeric features
+        st.session_state['selected_variables'] = numeric_features
     
     st.subheader("Correlation Analysis")
     # Info Expander for explaining the pair plot
@@ -110,14 +143,14 @@ if not df.empty:
     selected_variables = st.multiselect(
         "Choose variables to include in correlation heatmap:",
         df.columns.tolist(),
-        default=st.session_state['selected_variables'],  # Start with numeric features selected
+        default=st.session_state['selected_variables'],
         key="feature_multiselect"
     )
 
     # Button to select all features
     if st.button("Select all"):
-        st.session_state['selected_variables'] = df.columns.tolist()  # Select all features
-        selected_variables = df.columns.tolist()  # Update selected variables
+        st.session_state['selected_variables'] = df.columns.tolist()
+        selected_variables = df.columns.tolist()
 
     # Organize layout in two columns: left for insights, right for heatmap
     col1, col2 = st.columns([1, 2])
@@ -202,13 +235,9 @@ if not df.empty:
             else:
                 st.write("No combinations have correlations greater than 0.5 or less than -0.5.")
 
-    # Filter out original numeric columns excluding "has_hypertension"
-    @st.cache_resource
-    def get_numeric_features(df):
-        numeric_features = df.select_dtypes(include=['float64', 'int64']).columns.tolist()
-        if "has_hypertension" in numeric_features:
-            numeric_features.remove("has_hypertension")
-        return numeric_features
+#####################################################################################
+### Pair Plot Analysis                                                            ###
+#####################################################################################
 
     # Get numeric features
     numeric_features = get_numeric_features(raw_df)
@@ -270,7 +299,7 @@ if not df.empty:
                 st.subheader("Pair Plot for All Features")
 
                 # Show progress bar while loading the pair plot
-                with st.spinner("Loading pair plot... this might take a while for large datasets."):
+                with st.spinner("Loading pair plot..."):
                     fig = px.scatter_matrix(raw_df[numeric_features])
                     fig.update_layout(width=800, height=800)
                     st.plotly_chart(fig, use_container_width=True)
@@ -280,7 +309,11 @@ if not df.empty:
                 fig.update_layout(xaxis_title=feature_1, yaxis_title=feature_2)
                 st.plotly_chart(fig, use_container_width=True)
 
-    # 2. Clustering Section
+#####################################################################################
+### Clusterin Values                                                              ###
+#####################################################################################
+
+    # Clustering Section
     df_clustering = df.copy(deep=True)
 
     with st.container():
@@ -340,7 +373,7 @@ if not df.empty:
                 # Reduce to 2 dimensions using PCA for visualization
                 reduced_data = reduce_to_2d(df_clustering, selected_features)
                 reduced_df = pd.DataFrame(reduced_data, columns=['PCA 1', 'PCA 2'])
-                reduced_df['Cluster'] = clusters  # Add the cluster labels to the reduced dataframe
+                reduced_df['Cluster'] = clusters
 
                 # Plot the reduced data with clusters
                 fig = px.scatter(reduced_df, x='PCA 1', y='PCA 2', color='Cluster',

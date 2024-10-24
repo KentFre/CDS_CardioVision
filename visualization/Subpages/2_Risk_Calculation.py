@@ -1,3 +1,13 @@
+#####################################################################################
+# 2_Risk_Calculation.py                                                             #
+#                                                                                   #
+# This is the streamlit page showing the risk calculation and SHAP values           #
+#                                                                                   #
+# - Calculate Heart Attack Risk                                                     #
+# - Display SHAP Explanation                                                        #
+#####################################################################################
+
+# Import needed libraries
 import streamlit as st
 import streamlit.components.v1 as components
 import numpy as np
@@ -5,7 +15,11 @@ import base64
 import time
 import matplotlib.pyplot as plt
 import shap
-from visualization.models.model_utils import load_preprocessor, load_model, calculate_risk, interpret_shap_values  # Update this path based on your utils location
+from visualization.models.model_utils import load_preprocessor, load_model, calculate_risk, interpret_shap_values
+
+#####################################################################################
+### File preparation: Functions and Status checks and model import                ###
+#####################################################################################
 
 # Function to load and encode the image as base64
 def get_image_as_base64(image_path):
@@ -18,6 +32,18 @@ preprocessor = load_preprocessor("visualization/models/standardizer.pkl")
 # Load the risk model but just provide the name, as the util will find out if it is pkl or h5
 risk_model = load_model("visualization/models/risk_prediction_model")
 
+# Get patient data form session
+patient_data = st.session_state.get('patient_data', {})
+data_available = bool(patient_data)
+
+# Risk calculation state
+if 'risk_calculated' not in st.session_state:
+    st.session_state['risk_calculated'] = False
+
+#####################################################################################
+### Page Title and Doctor Infor                                                   ###
+#####################################################################################
+
 doctor_name = "Dr. Emily Stone"
 doctor_image_base64 = st.session_state.get('doctor_image_base64', '')
 
@@ -25,13 +51,6 @@ doctor_image_base64 = st.session_state.get('doctor_image_base64', '')
 if 'patient_data' not in st.session_state:
     st.session_state['patient_data'] = {}
     st.session_state['risk_explanation'] = ""
-
-patient_data = st.session_state.get('patient_data', {})
-data_available = bool(patient_data)
-
-# Risk calculation state
-if 'risk_calculated' not in st.session_state:
-    st.session_state['risk_calculated'] = False
 
 # Style settings for the patient pane
 st.html(
@@ -84,6 +103,11 @@ with st.container():
             """
         )
 
+
+#####################################################################################
+### Expander with Information about the page                                      ###
+#####################################################################################
+
 with st.expander(label="Instruction", icon=":material/info:"):
     st.write(
         """
@@ -104,6 +128,10 @@ with st.expander(label="Instruction", icon=":material/info:"):
         **Note**: You may re-upload or update patient data at any time to reassess the risk or view different results.
         """
     )
+
+#####################################################################################
+### Show Patient Detail, Risk Light, Risk Description in Columns                  ###
+#####################################################################################
 
 # Three-column layout for patient info, risk calculation light, and result text
 pat_info_col, light_column, explain_column = st.columns([1, 1, 2])
@@ -165,13 +193,12 @@ with light_column:
             if st.button("Calculate Risk", type="primary"):
                 if data_available:
                     with st.spinner("Calculating risk..."):
-                        time.sleep(1)  # Simulate calculation delay
                         result, explanation, shap_values, prediction = calculate_risk(preprocessor, risk_model)
                         st.session_state['risk_calculated'] = True
                         st.session_state['risk_result'] = result
                         st.session_state['risk_explanation'] = explanation
                         st.session_state['shap_values'] = shap_values
-                        st.rerun()  # Refresh the app with updated session state
+                        st.rerun()
 
 # Column 3: Risk calculation result text
 with explain_column:
@@ -191,7 +218,11 @@ with explain_column:
     else:
         st.error("⚠️ No Patient Data uploaded. Reload Patient data from EHR or enter manually!")
 
-# Full-width section below the columns for SHAP explanation
+
+#####################################################################################
+### SHAP Values Diagram and Explanation                                           ###
+#####################################################################################
+
 st.subheader("Explanation of Results")
 
 with st.expander("What are SHAP Values?", expanded=False):
@@ -216,12 +247,12 @@ if st.session_state['risk_calculated']:
     result, shap_values, expected_value, prediction = calculate_risk(preprocessor, risk_model)
 
     # Reshape the SHAP values if needed
-    if len(shap_values.shape) == 3:  # If SHAP values have a shape like (1, n_features, 1)
+    if len(shap_values.shape) == 3:
         shap_values_patient = shap_values.reshape(-1, shap_values.shape[1])
     else:
         shap_values_patient = shap_values
 
-    # Display SHAP force plot or waterfall plot based on selection
+    # Display SHAP waterfall plot
     if shap_values is not None:
         feature_names = st.session_state['df'].columns.drop('Has_heart_disease')
 
@@ -230,14 +261,14 @@ if st.session_state['risk_calculated']:
         with col1:
             fig, ax = plt.subplots()
             shap.waterfall_plot(shap.Explanation(
-                values=shap_values_patient[0],         # SHAP values for the first patient
-                base_values=expected_value,            # Model's expected value
-                feature_names=feature_names            # Feature names
+                values=shap_values_patient[0],
+                base_values=expected_value,
+                feature_names=feature_names
             ))
             st.pyplot(fig)
 
         with col2:
-            # Replace "Test" text with the interpretation of the SHAP values
+            # Show the interpretation text of the SHAP results
             interpretation_text = interpret_shap_values(shap_values_patient, feature_names, prediction)
             st.markdown(interpretation_text)
                 

@@ -1,9 +1,19 @@
-# This file will cover the about tab
+#####################################################################################
+# 5_About.py                                                                        #
+#                                                                                   #
+# This is the streamlit page showing the information about CardioVision             #
+#                                                                                   #
+# - Get Information about the product and team                                      #
+#####################################################################################
 
+# Import needed libraries
 import streamlit as st
 import streamlit.components.v1 as components
 import base64
-import pandas as pd
+
+#####################################################################################
+### File preparation: Functions and Status checks and model import                ###
+#####################################################################################
 
 # Helper function to load and encode images as base64
 def get_image_as_base64(image_path):
@@ -20,6 +30,11 @@ xaiengineer_image = get_image_as_base64("visualization/assets/team/XAI_Engineer.
 patient_management_image_base64 = get_image_as_base64("visualization/assets/Patient_Management.svg")
 risk_prediction_image_base64 = get_image_as_base64("visualization/assets/Risk_Prediction.svg")
 xai_image_base64 = get_image_as_base64("visualization/assets/XAI.svg")
+
+
+#####################################################################################
+### Page Title and Doctor Info                                                    ###
+#####################################################################################
 
 doctor_name = "Dr. Emily Stone"
 doctor_image_base64 = st.session_state['doctor_image_base64']
@@ -44,6 +59,11 @@ with st.container():
             """
         )
 
+
+#####################################################################################
+### Product Overview, Intended User Group, Patient Group                          ###
+#####################################################################################
+
 # Overview Section
 st.header("Overview")
 st.markdown(
@@ -61,17 +81,15 @@ with st.expander("❗Medical Problem and End Users", expanded=True):
     with col1:
         st.markdown("""
         ### **Identified Medical Problem**
-        Heart attacks are a major cause of death in Sweden and many parts of the world. 
-        In 2022, Sweden alone reported over 23,000 cases of AMI. Early detection and prevention of heart attack risk can save lives and reduce healthcare costs.
-        CardioVision applies AI and machine learning to improve heart attack risk prediction, helping healthcare providers make more timely and informed decisions for patient care.
+        Cardiovascular disease (CVD) remains leading cause of death [1]. In Europe and Sweden, even though the incidence and mortality rates of ischemic heart disease (IHD) have been decreasing in recent decades, it remains a significant health issue [2][3]. Preventive measures like addressing risk factors are key in reducing the burden of this disease. Early identification of individuals at risk of having a heart attack allows for early intervention enabling to make informed decisions before a major cardiovascular event occurs. Furthermore, current evidence suggests that early CVD detection strategies are predominantly cost effective and may reduce CVD related costs compared with no early detection[4]. 
         """)          
 
     # Right column for End Users
     with col2:
         st.markdown("""
         ### **End Users**
-        CardioVision is designed for clinicians focusing on predicting heart attack risk in patients who do not show signs of an acute heart attack on ECG or through elevated troponin levels. 
-        It helps clinicians identify high-risk patients by analyzing factors such as age, cholesterol, and blood pressure, and assists in reducing risk through early prevention strategies.
+        Our tool seeks to enhance and support clinicians who assess patients at risk of IHD in the cardiovascular centres in the hospital setting, providing them patient risk stratification so early personalised preventative measures and more targeted management strategies can be adopted. Patients identified as high risk can receive prompt interventions that reduce their chances of suffering a heart attack or consequences of a delayed diagnosis and intervention. 
+        Our project aims to design and implement a web-based dashboard that will help clinicians to accurately predict the risk of heart attacks among patients before they are diagnosed with the disease (early detection) and enhance the focus towards the development of a prevention strategies based on modifiable factors supported by employment of artificial intelligence tools [5].
         """)
 
     # References in two columns
@@ -81,19 +99,22 @@ with st.expander("❗Medical Problem and End Users", expanded=True):
     # Left column for two references
     with ref_col1:
         st.markdown("""
-        - World Health Organization. Cardiovascular diseases (CVDs). *WHO*, 2021.
-        - National Board of Health and Welfare. Statistics on Myocardial Infarctions 2022. *Socialstyrelsen*, 2023.
+        - [1] World Health Organization. Cardiovascular diseases (CVDs). *WHO*, 2021.
+        - [2] Vancheri F, Tate AR, Henein M, Backlund L, Donfrancesco C, Palmieri L, et al. Time trends in ischaemic heart disease incidence and mortality over three decades (1990–2019) in 20 Western European countries: systematic analysis of the Global Burden of Disease Study 2019. Eur J Prev Cardiol. 2022 Jan 1;29(2):396–403. 
         """)
 
     # Right column for two references
     with ref_col2:
         st.markdown("""
-        - Oude Wolcherink MJ et al. Early Detection of Cardiovascular Disease: *PharmacoEconomics*, 2023.
-        - Rojek I et al. AI-Based Heart Attack Risk Prediction: *Electronics*, 2024.
+        - [3] National Board of Health and Welfare. Statistics on Myocardial Infarctions 2022. *Socialstyrelsen*, 2023.
+        - [4] Oude Wolcherink MJ et al. Early Detection of Cardiovascular Disease: *PharmacoEconomics*, 2023.
+        - [5] Rojek I et al. AI-Based Heart Attack Risk Prediction: *Electronics*, 2024.
         """)
 
 
-# Features Section
+#####################################################################################
+### Feature Section                                                               ###
+#####################################################################################
 st.header("Key Features")
 cols = st.columns(3)
 
@@ -141,6 +162,9 @@ with cols[2]:
 
 
 
+#####################################################################################
+### Team Section                                                                  ###
+#####################################################################################
 
 # Streamlit app layout
 st.header("Meet the Team")
@@ -152,7 +176,7 @@ components.html(f"""
     <div class="swiper-wrapper">
         <!-- Team Member 1 -->
         <div class="swiper-slide" style="text-align: center;">
-            <img src="data:image/svg+xml;base64,{cardiologist_image}" alt="Dr. Valentina OM" style="border-radius: 50%; width: 80px;">
+            <img src="data:image/svg+xml;base64,{cardiologist_image}" alt="Valentina OM" style="border-radius: 50%; width: 80px;">
             <h6>Dr. Valentina OM</h6>
             <p>Lead Cardiologist</p>
         </div>
@@ -173,14 +197,14 @@ components.html(f"""
 
         <!-- Team Member 4 -->
         <div class="swiper-slide" style="text-align: center;">
-            <img src="data:image/svg+xml;base64,{uiuxdesigner_image}" alt="Jacky K" style="border-radius: 50%; width: 80px;">
+            <img src="data:image/svg+xml;base64,{uiuxdesigner_image}" alt="Jackline K" style="border-radius: 50%; width: 80px;">
             <h6>Jacky K</h6>
             <p>Lead UI/UX Designer</p>
         </div>
 
         <!-- Team Member 5 -->
         <div class="swiper-slide" style="text-align: center;">
-            <img src="data:image/svg+xml;base64,{mlengineer_image}" alt="JiWei Y" style="border-radius: 50%; width: 80px;">
+            <img src="data:image/svg+xml;base64,{mlengineer_image}" alt="Ji Wei Y" style="border-radius: 50%; width: 80px;">
             <h6>JiWei Y</h6>
             <p>Lead ML Engineer</p>
         </div>
@@ -219,14 +243,22 @@ components.html(f"""
 </script>
 """, height=300)
 
-# Contact Section
+
+#####################################################################################
+### Contact Section                                                               ###
+#####################################################################################
+
 st.header("Contact Us")
 contact_info = """
-- Email: [support@example.com](mailto:support@example.com)
-- Phone: +1 (123) 456-7890
+- Email: [support@example.se](mailto:support@example.se)
+- Phone: +46 (123) 456-7890
 """
 st.markdown(contact_info)
 
+
+#####################################################################################
+### Others  Section                                                               ###
+#####################################################################################
 # Future Enhancements Section
 st.header("Future Enhancements")
 st.markdown(
@@ -247,7 +279,7 @@ st.link_button(
 )
 
 # Feedback Button Section
-st.header("We Value Your Feedback")
+st.header("We Value Your Feedback") # No we don't, as it goes nowhere ;-)
 st.write(
     """
     Your insights are crucial to us! Whether you have suggestions for improvements, have encountered any technical issues, 

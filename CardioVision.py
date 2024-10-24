@@ -1,11 +1,28 @@
-import streamlit as st
-from streamlit_lottie import st_lottie
-import json
-import time
-import base64
-import pandas as pd
+#####################################################################################
+# CardioVision.py                                                                   #
+#                                                                                   #
+# This is the main CardioVision App file. It is called to start the streamlit app.  #
+#                                                                                   #
+# - Load the background data                                                        #
+# - Animate the Logo                                                                #
+# - Provided Legal Information                                                      #
+# - Structure pages and add navigation                                              #
+#####################################################################################
 
-# Function to load and encode the image as base64
+
+# Load needed libraries
+import streamlit as st                          # For streamlit framework
+from streamlit_lottie import st_lottie          # For startup animation
+import json                                     # For parsing of the patient json
+import time                                     # To improve animation effect of the loader ;-)
+import base64                                   # To transfer pictures to embeddable format
+import pandas as pd                             # To work with the data
+
+#####################################################################################
+### Functions that a reused in this file                                          ###
+#####################################################################################
+
+# Function to load and encode the images as base64
 def get_image_as_base64(image_path):
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode()
@@ -20,6 +37,11 @@ def load_data():
     except FileNotFoundError:
         st.error("Error loading dataset. Please check the file path.")
         return pd.DataFrame(), pd.DataFrame()
+    
+
+#####################################################################################    
+### Check if needed pictures are available and design the page                    ###
+#####################################################################################
 
 # Check if the image is already encoded and stored in session state
 if 'doctor_image_base64' not in st.session_state:
@@ -38,6 +60,10 @@ st.set_page_config(
     page_icon="visualization/assets/CardioVision_icon.png",
 )
 
+#####################################################################################
+### Show the CardioVision Animation                                               ###
+#####################################################################################
+
 # Load your Lottie JSON file
 def load_lottie_file(filepath: str):
     with open(filepath, "r") as f:
@@ -46,7 +72,7 @@ def load_lottie_file(filepath: str):
 if 'lottie' not in st.session_state:
     st.session_state.lottie = False
 
-
+# Show lottie animation during loadingd
 if not st.session_state.lottie:
     lottfinder = load_lottie_file("visualization/assets/CardioVision_Loader_H.json")
     st_lottie(lottfinder, speed=1, loop=True)
@@ -58,9 +84,14 @@ if not st.session_state.lottie:
     st.session_state['raw_df'] = raw_df
 
     # Continue with lottie for the effect    
-    time.sleep(2)
+    time.sleep(3)
     st.session_state.lottie = True
     st.rerun()
+
+
+#####################################################################################
+### Legal Information Dialog                                                      ###
+#####################################################################################
 
 # Define the dialog for legal text/verification
 @st.dialog("Patient Data Verification", width="large")
@@ -130,6 +161,10 @@ if 'popup_closed' not in st.session_state:
 if not st.session_state.popup_closed:
     legal_verification()
 
+#####################################################################################
+### Beautify the page                                                             ###
+#####################################################################################
+
 # Workaround to set the logo size using st.html
 st.markdown(
     """
@@ -146,6 +181,10 @@ st.markdown(
 st.logo(
     "visualization/assets/CardioVision_Full_Logo.svg"
 )
+
+#####################################################################################
+### Define pages and navigation                                                   ###
+#####################################################################################
 
 # Define pages
 patient_data_page = st.Page("visualization/Subpages/1_Patient_Data.py", title="Patient Data", icon=":material/personal_injury:", default=True)

@@ -1,3 +1,16 @@
+#####################################################################################
+# model_utils.py                                                                    #
+#                                                                                   #
+# This is a helper function collection for handling the machine learning models     #
+#                                                                                   #
+# - Prepare raw patient data for ml                                                 #
+# - load ml models                                                                  #
+# - predict target value for new data                                               #
+# - generate SHAP values                                                            #
+# - generate SHAP explanation and risk explanation                                  #
+#####################################################################################
+
+# Import needed libraries
 import os
 import streamlit as st
 import pandas as pd
@@ -6,7 +19,6 @@ from tensorflow.keras.models import load_model as keras_load_model
 import tensorflow as tf
 import shap
 import numpy as np
-from sklearn.preprocessing import OneHotEncoder
 
 # Dictionary to map original feature names to more understandable names
 feature_name_mapping = {
@@ -38,6 +50,10 @@ feature_units = {
 }
 
 
+#####################################################################################
+### Import trained models                                                         ###
+#####################################################################################
+
 # Function to load the preprocessor
 def load_preprocessor(path):
     with open(path, "rb") as file:
@@ -64,6 +80,11 @@ def load_model(base_path):
         raise FileNotFoundError(f"No model found at {keras_model_path} or {pickle_model_path}")
     
     return model
+
+
+#####################################################################################
+### Prepare Data, Predict Risk                                                    ###
+#####################################################################################
 
 # Process, validate, and predict function
 def process_and_predict(preprocessor, model):
@@ -133,7 +154,9 @@ def process_and_predict(preprocessor, model):
         # Handle other unexpected errors
         return None, f"An error occurred: {e}"
 
-
+#####################################################################################
+### Wrapper Calculate Risk Function                                               ###
+#####################################################################################
 def calculate_risk(preprocessor, model):
     prediction, transformed_df = process_and_predict(preprocessor, model)
 
@@ -182,9 +205,6 @@ def calculate_risk(preprocessor, model):
         # Create a DataFrame where each SHAP value corresponds to a feature name
         shap_df = pd.DataFrame([shap_values_flat], columns=feature_names)
 
-        # Display the SHAP values alongside their feature names
-        print(shap_df)
-
         # Convert expected_value Tensor to a scalar if needed
         expected_value_scalar = explainer.expected_value.numpy()[0] if isinstance(explainer.expected_value, tf.Tensor) else explainer.expected_value
 
@@ -193,6 +213,10 @@ def calculate_risk(preprocessor, model):
     else:
         return "", "", None
     
+
+#####################################################################################
+### Explain SHAP values in human readable format                                  ###
+#####################################################################################
 
 # Function to generate interpretation text based on SHAP values
 def interpret_shap_values(shap_values_patient, feature_names, expected_value):
@@ -218,7 +242,7 @@ def interpret_shap_values(shap_values_patient, feature_names, expected_value):
         }
     }
 
-    # Explanation of color coding in the SHAP plot
+    # Reset Text variable
     interpretation_text = ""
 
     # Get the SHAP values for the patient

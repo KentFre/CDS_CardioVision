@@ -1,3 +1,13 @@
+#####################################################################################
+# 1_Patient_Data.py                                                                 #
+#                                                                                   #
+# This is the streamlit page showing the patient information and uploading data     #
+#                                                                                   #
+# - Load Patient data                                                               #
+# - Display Patient Data                                                            #
+#####################################################################################
+
+# Import needed libraries
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -7,6 +17,9 @@ from datetime import datetime, timedelta
 import time
 import plotly.express as px
 
+#####################################################################################
+### File preparation: Functions and Status checks                                 ###
+#####################################################################################
 
 # Function to load and encode the image as base64
 def get_image_as_base64(image_path):
@@ -34,6 +47,11 @@ def get_color(value, range):
 # Check boolean and other conditions for additional fields
 def get_condition_color(value, condition=True):
     return "red" if value == condition else "black"
+
+
+#####################################################################################
+### Page Title and Doctor Infor                                                   ###
+#####################################################################################
 
 # Load the doctor profile image from session state
 doctor_name = "Dr. Emily Stone"
@@ -99,6 +117,9 @@ with st.container():
             """
         )
 
+#####################################################################################
+### Expander with Information about the page                                      ###
+#####################################################################################
 
 # Instructions expander
 with st.expander("Instruction", icon=":material/info:"):
@@ -123,6 +144,11 @@ with st.expander("Instruction", icon=":material/info:"):
         4. Use the provided features for an in-depth risk analysis on the next pages.
         """
     )
+
+
+#####################################################################################
+### Expander with options to simulate / upload a patient                          ###
+#####################################################################################
 
 with st.expander("Simulate EHR Data Transfer", icon=":material/publish:"):
     
@@ -178,6 +204,9 @@ with st.expander("Simulate EHR Data Transfer", icon=":material/publish:"):
 patient_data = st.session_state.get('patient_data', {})
 data_available = bool(patient_data)
 
+#####################################################################################
+### Display the patient and parameters                                            ###
+#####################################################################################
 
 # Layout columns for displaying patient details
 col1, col2 = st.columns([1, 3])
@@ -300,7 +329,7 @@ with col2:
         else:
             st.info("No data available.")
 
-        # Core Complaints
+        # Patient Parameters
         st.subheader("Patient Evaluation Data")
         # Generate the HTML content for the tiles
         tile_content = f"""
@@ -367,7 +396,10 @@ with col2:
 
     else:
         st.error("No patient data received from Electronic Health Record (EHR) System!")
-        # Popover to modify patient data
+        
+        #####################################################################################
+        ### Allow manually adding patient data when no patient was added                  ###
+        #####################################################################################
 
         # Default values for form inputs (this won't change st.session_state)
         default_patient_data = {
@@ -450,7 +482,7 @@ with col2:
                 submitted = st.form_submit_button("Update Data")
 
                 if submitted:
-                    # After submission, update st.session_state (or save to JSON file)
+                    # After submission, update st.session_state
                     st.session_state['patient_data'] = {
                         "PatientInfo": {
                             "patient_id": patient_id,

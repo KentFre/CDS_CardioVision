@@ -1,7 +1,19 @@
+#####################################################################################
+# 6_Technical_Information.py                                                        #
+#                                                                                   #
+# This is the streamlit page showing the technical info about CardioVision          #
+#                                                                                   #
+# - Get Information about the ML model and data                                     #
+#####################################################################################
+
+# Import needed libraries
 import streamlit as st
-import streamlit.components.v1 as components
 import pandas as pd
 
+
+#####################################################################################
+### Page Title and Doctor Info                                                    ###
+#####################################################################################
 doctor_name = "Dr. Emily Stone"
 doctor_image_base64 = st.session_state['doctor_image_base64']
 
@@ -25,6 +37,10 @@ with st.container():
             """
         )
 
+#####################################################################################
+### General ML Section                                                            ###
+#####################################################################################
+
 # Machine Learning & Neural Networks Section
 st.header("Machine Learning & Neural Networks")
 st.markdown(
@@ -36,6 +52,10 @@ st.markdown(
     In our model training, we focused on **maximizing recall**. Recall is critical in this context because we aim to identify **as many patients at risk of cardiac arrest as possible**, even at the cost of a higher number of false positives. By prioritizing recall, we ensure that fewer patients with a real risk of cardiac arrest are missed.
     """
 )
+
+#####################################################################################
+### Our Model Performance Section                                                 ###
+#####################################################################################
 
 # Model Performance Justification in two columns inside an expander
 with st.expander("Model Performance Justification"):
@@ -76,6 +96,12 @@ with st.expander("Model Performance Justification"):
             The model took **57 seconds** to train, and each prediction takes an average of **0.18 seconds**, making it efficient for clinical use in real-time scenarios.
             """
         )
+
+
+#####################################################################################
+### Data Section                                                                  ###
+#####################################################################################
+
 # Dataset Overview
 st.header("Dataset Overview")
 st.write("For CardioVision, we utilized the **Cleveland** and **Long Beach** datasets. These datasets were selected due to their completeness and relevance to cardiovascular health metrics.")
