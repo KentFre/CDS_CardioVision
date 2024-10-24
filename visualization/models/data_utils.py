@@ -1,4 +1,13 @@
-# data_utils.py
+#####################################################################################
+# data_utils.py                                                                     #
+#                                                                                   #
+# This is a helper function collection for handling the raw data                    #
+#                                                                                   #
+# - Load data from file path                                                        #
+# - Calculate basic summaries                                                       #
+#####################################################################################
+
+
 import pandas as pd
 
 # Load and process data

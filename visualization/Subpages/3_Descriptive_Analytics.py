@@ -1,3 +1,12 @@
+#####################################################################################
+# 3_Descriptive_Analytics.py                                                        #
+#                                                                                   #
+# This is the streamlit page showing descriptive analysis                           #
+#                                                                                   #
+# - Perform Descriptive Evaluations                                                 #
+#####################################################################################
+
+# Import needed libaries
 import streamlit as st
 import pandas as pd
 from visualization.models.plot_utils import (
@@ -9,7 +18,25 @@ from visualization.models.plot_utils import (
     plot_heart_attack_by_age_group_and_gender
 )
 import plotly.express as px
-from visualization.models.data_utils import load_data, get_summary_statistics
+from visualization.models.data_utils import get_summary_statistics
+
+#####################################################################################
+### File preparation: Functions and Status checks and model import                ###
+#####################################################################################
+
+# Load and prepare data
+# Access data from session state in other subpages
+if 'df' in st.session_state:
+    df = st.session_state['raw_df']
+else:
+    st.error("Data not loaded. Please go back to the main page to load the data.")
+
+total_patients, total_risk_patients, average_age = get_summary_statistics(df)
+
+
+#####################################################################################
+### Page Title and Doctor Info                                                    ###
+#####################################################################################
 
 # Doctor Profile and Title
 doctor_name = "Dr. Emily Stone"
@@ -32,14 +59,10 @@ with st.container():
             """
         )
 
-# Load and prepare data
-# Access data from session state in other subpages
-if 'df' in st.session_state:
-    df = st.session_state['raw_df']
-else:
-    st.error("Data not loaded. Please go back to the main page to load the data.")
 
-total_patients, total_risk_patients, average_age = get_summary_statistics(df)
+#####################################################################################
+### Expander with Information about the page                                      ###
+#####################################################################################
 
 # Instructions Expander
 with st.expander(label="Instructions", icon=":material/info:"):
@@ -55,6 +78,9 @@ with st.expander(label="Instructions", icon=":material/info:"):
         """
     )
 
+#####################################################################################
+### Display the value tiles                                                       ###
+#####################################################################################
 
 # Function to generate tile content with HTML
 def display_tile(label, value, color="black"):
@@ -101,7 +127,9 @@ st.subheader("Patient Population Base")
 # Pass the concatenated HTML to st.markdown
 st.html(tiles_html)
 
-
+#####################################################################################
+### Expander for population visualizations                                        ###
+#####################################################################################
 
 # Expander for Population Visualization with independent filtering for each graph
 with st.expander("Population Visualization", expanded=True):
@@ -208,6 +236,9 @@ with st.expander("Population Visualization", expanded=True):
             st.plotly_chart(fig2, use_container_width=True)
 
 
+#####################################################################################
+### Expander for Feature Exploration                                              ###
+#####################################################################################
 
 # Expander for Feature Exploration
 with st.expander("Feature Exploration", expanded=True):
@@ -230,7 +261,7 @@ with st.expander("Feature Exploration", expanded=True):
         elif patient_filter_feature == "Only No Heart Attack Patients":
             filtered_feature_df = df[df['heart_disease_diagnosis'] == False]
         else:
-            filtered_feature_df = df  # All patients
+            filtered_feature_df = df
 
     st.divider()
     # Feature selection dropdown on the right
@@ -238,7 +269,7 @@ with st.expander("Feature Exploration", expanded=True):
         numerical_features = filtered_feature_df.select_dtypes(include=['float64', 'int64']).columns.tolist()
         selected_feature = st.selectbox("Choose a feature to analyze:", numerical_features)
 
-    # Now move to two columns for tabular data and visualization
+    # Show two columns for tabular data and visualization
     col1, col2 = st.columns(2)
 
     # Column 1: Display tabular data of the selected feature
