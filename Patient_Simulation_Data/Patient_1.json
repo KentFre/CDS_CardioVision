@@ -34,8 +34,8 @@
     "resting_ecg_results": "Normal"
   },
   "SocialFactors": {
-    "cigarettes_per_day": 0.0,
-    "years_smoking": 0.0,
+    "cigarettes_per_day": 8.0,
+    "years_smoking": 10.0,
     "family_history_cad": true
   }
 }

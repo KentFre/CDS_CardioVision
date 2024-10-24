@@ -79,44 +79,6 @@ st.html(
     """
 )
 
-with st.expander("❗Medical Problem and End Users"):
-    col1, col2 = st.columns(2)
-
-    # Left column for Identified Medical Problem
-    with col1:
-        st.markdown("""
-        ### **Identified Medical Problem**
-        Heart attacks are a major cause of death in Sweden and many parts of the world. 
-        In 2022, Sweden alone reported over 23,000 cases of AMI. Early detection and prevention of heart attack risk can save lives and reduce healthcare costs.
-        CardioVision applies AI and machine learning to improve heart attack risk prediction, helping healthcare providers make more timely and informed decisions for patient care.
-        """)          
-
-    # Right column for End Users
-    with col2:
-        st.markdown("""
-        ### **End Users**
-        CardioVision is designed for clinicians focusing on predicting heart attack risk in patients who do not show signs of an acute heart attack on ECG or through elevated troponin levels. 
-        It helps clinicians identify high-risk patients by analyzing factors such as age, cholesterol, and blood pressure, and assists in reducing risk through early prevention strategies.
-        """)
-
-    # References in two columns
-    st.markdown("### **References**")
-    ref_col1, ref_col2 = st.columns(2)
-
-    # Left column for two references
-    with ref_col1:
-        st.markdown("""
-        - World Health Organization. Cardiovascular diseases (CVDs). *WHO*, 2021.
-        - National Board of Health and Welfare. Statistics on Myocardial Infarctions 2022. *Socialstyrelsen*, 2023.
-        """)
-
-    # Right column for two references
-    with ref_col2:
-        st.markdown("""
-        - Oude Wolcherink MJ et al. Early Detection of Cardiovascular Disease: *PharmacoEconomics*, 2023.
-        - Rojek I et al. AI-Based Heart Attack Risk Prediction: *Electronics*, 2024.
-        """)
-
 # Display doctor profile
 with st.container():
     r1, r2 = st.columns([2, 1])
@@ -143,7 +105,13 @@ with st.expander("Instruction", icon=":material/info:"):
     st.write(
         """
         **Welcome to the Patient Data Analysis and Risk Prediction Page**
-        
+
+        If you are unfamiliar with **CardioVision**, please study this page first:""")
+
+        # Learn more about CardioVision button
+    st.page_link("visualization/Subpages/5_About.py", label="Learn more about CardioVision", icon=":material/help:")
+    st.write(
+        """
         Here you can simulate the process of Electronic Health Record (EHR) data transfer for a patient by uploading a JSON file. 
         Once uploaded, you can verify the patient data, which includes essential details like personal information, core complaints, and patient parameters. 
         Additionally, this section provides insight into various health metrics and ECG results that are crucial for the heart attack risk prediction process.
@@ -320,14 +288,17 @@ with col2:
         if data_available:
             core_complaints = patient_data.get("CoreComplaints", [])
             
-            # Create a container for core complaints in boxes next to each other (3 per row)
-            complaints_html = '<div class="complaints-container">'
-            for complaint in core_complaints[:9]:  # Adjust number of complaints as needed
-                complaints_html += display_complaint(complaint)
-            complaints_html += '</div>'
-            st.html(complaints_html)
+            if core_complaints:
+                # Create a container for core complaints in boxes next to each other (3 per row)
+                complaints_html = '<div class="complaints-container">'
+                for complaint in core_complaints[:9]:  # Adjust number of complaints as needed
+                    complaints_html += display_complaint(complaint)
+                complaints_html += '</div>'
+                st.html(complaints_html)
+            else:
+                st.info("No core complaints recorded.")
         else:
-            st.write("No data available.")
+            st.info("No data available.")
 
         # Core Complaints
         st.subheader("Patient Evaluation Data")
@@ -395,4 +366,120 @@ with col2:
 
 
     else:
-        st.warning("No patient data uploaded.")
+        st.error("No patient data received from Electronic Health Record (EHR) System!")
+        # Popover to modify patient data
+
+        # Default values for form inputs (this won't change st.session_state)
+        default_patient_data = {
+            "PatientInfo": {
+                "patient_id": "Enter ID",
+                "age": 50,
+                "gender": "Male"
+            },
+            "SymptomsObservations": {
+                "chest_pain_type": "Typical Angina",
+                "exercise_induced_angina": False
+            },
+            "VitalParameters": {
+                "resting_heart_rate": 60.0,
+                "max_heart_rate": 150.0,
+                "has_hypertension": False  # Set as False for default
+            },
+            "LaboratoryValues": {
+                "serum_cholesterol": 200.0,
+                "high_fasting_blood_sugar": False,
+                "st_depression": 1.0
+            },
+            "ECGResults": {
+                "resting_ecg_results": "Normal"
+            },
+            "SocialFactors": {
+                "cigarettes_per_day": 0.0,
+                "years_smoking": 0.0,
+                "family_history_cad": False
+            }
+        }
+
+        # Popover to modify patient data
+        with st.popover(" 📝 Manually add Patient Data", use_container_width=True):
+            with st.form("modify_patient_data"):
+                # Create two columns
+                col1, col2 = st.columns(2)
+
+                # Column 1: Patient Info, Symptoms Observations, Vital Parameters
+                with col1:
+                    st.subheader("Patient Info")
+                    patient_id = st.text_input("Patient ID", value=default_patient_data['PatientInfo']['patient_id'])
+                    age = st.number_input("Age", value=default_patient_data['PatientInfo']['age'])
+                    gender = st.selectbox("Gender", options=["Male", "Female"], index=0 if default_patient_data['PatientInfo']['gender'] == "Male" else 1)
+
+                    st.subheader("Symptoms & Observations")
+                    chest_pain_type = st.selectbox(
+                        "Chest Pain Type", 
+                        options=["Typical Angina", "Atypical Angina", "Non-Anginal Pain", "Asymptomatic"],
+                        index=["Typical Angina", "Atypical Angina", "Non-Anginal Pain", "Asymptomatic"].index(default_patient_data['SymptomsObservations']['chest_pain_type'])
+                    )
+                    exercise_induced_angina = st.checkbox("Exercise Induced Angina", value=default_patient_data['SymptomsObservations']['exercise_induced_angina'])
+
+                    st.subheader("Vital Parameters")
+                    resting_heart_rate = st.number_input("Resting Heart Rate (bpm)", value=int(default_patient_data['VitalParameters']['resting_heart_rate']), step=1)
+                    max_heart_rate = st.number_input("Maximum Heart Rate (bpm)", value=int(default_patient_data['VitalParameters']['max_heart_rate']), step=1)
+                    has_hypertension = st.checkbox("Has Hypertension", value=default_patient_data['VitalParameters']['has_hypertension'])
+
+                # Column 2: Laboratory Values, ECG Results, Social Factors
+                with col2:
+                    st.subheader("Laboratory Values")
+                    serum_cholesterol = st.number_input("Serum Cholesterol (mg/dL)", value=int(default_patient_data['LaboratoryValues']['serum_cholesterol']), step=1)
+                    high_fasting_blood_sugar = st.checkbox("High Fasting Blood Sugar", value=default_patient_data['LaboratoryValues']['high_fasting_blood_sugar'])
+                    
+                    st.subheader("ECG Results")
+                    resting_ecg_results = st.selectbox(
+                        "Resting ECG Results", 
+                        options=["Normal", "ST-T Wave Abnormality", "Left Ventricular Hypertrophy"],
+                        index=["Normal", "ST-T Wave Abnormality", "Left Ventricular Hypertrophy"].index(default_patient_data['ECGResults']['resting_ecg_results'])
+                    )
+                    st_depression = st.number_input("ST Depression", value=default_patient_data['LaboratoryValues']['st_depression'], step=0.1, format="%.1f")
+
+
+                    st.subheader("Social Factors")
+                    cigarettes_per_day = st.number_input("Cigarettes Per Day", value=int(default_patient_data['SocialFactors']['cigarettes_per_day']), step=1)
+                    years_smoking = st.number_input("Years Smoking", value=int(default_patient_data['SocialFactors']['years_smoking']), step=1)
+                    family_history_cad = st.checkbox("Family History of CAD", value=default_patient_data['SocialFactors']['family_history_cad'])
+
+                # Submit button to update data
+                submitted = st.form_submit_button("Update Data")
+
+                if submitted:
+                    # After submission, update st.session_state (or save to JSON file)
+                    st.session_state['patient_data'] = {
+                        "PatientInfo": {
+                            "patient_id": patient_id,
+                            "age": age,
+                            "gender": gender
+                        },
+                        "SymptomsObservations": {
+                            "chest_pain_type": chest_pain_type,
+                            "exercise_induced_angina": exercise_induced_angina
+                        },
+                        "VitalParameters": {
+                            "resting_heart_rate": resting_heart_rate,
+                            "max_heart_rate": max_heart_rate,
+                            "has_hypertension": 1 if has_hypertension else 0
+                        },
+                        "LaboratoryValues": {
+                            "serum_cholesterol": serum_cholesterol,
+                            "high_fasting_blood_sugar": high_fasting_blood_sugar,
+                            "st_depression": round(st_depression,1)
+                        },
+                        "ECGResults": {
+                            "resting_ecg_results": resting_ecg_results
+                        },
+                        "SocialFactors": {
+                            "cigarettes_per_day": cigarettes_per_day,
+                            "years_smoking": years_smoking,
+                            "family_history_cad": family_history_cad
+                        }
+                    }
+
+                    st.success("Patient data updated successfully!")
+                    st.rerun()

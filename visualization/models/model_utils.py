@@ -143,8 +143,8 @@ def calculate_risk(preprocessor, model):
         # Convert transformed_df to NumPy array for the SHAP explainer
         transformed_array = transformed_df.to_numpy()
 
-        # Use a background dataset of 40 random samples from the df in session state
-        background_data = st.session_state['df'].sample(40, random_state=42)
+        # Use a background dataset of 200 random samples from the df in session state
+        background_data = st.session_state['df'].sample(200, random_state=22)
         
         # Drop the target column (e.g., 'Has_heart_disease') if it's present
         if 'Has_heart_disease' in background_data.columns:

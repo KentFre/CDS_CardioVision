@@ -76,7 +76,7 @@ def legal_verification():
         </style>
         <div class="scrollable-modal-content">
     """
-    st.markdown(scrollable_content_style, unsafe_allow_html=True)
+    st.html(scrollable_content_style)
     
     # Modal content with the applied scrollable class
     st.markdown(
@@ -86,41 +86,35 @@ def legal_verification():
 
     # 1) Trained medical professional
     st.markdown(
-        '<strong>Trained Medical Professional</strong>: You confirm that you are a trained medical professional with the expertise to interpret and use CardioVision correctly. ',
-        unsafe_allow_html=True
+        '**Trained Medical Professional**: You confirm that you are a trained medical professional with the expertise to interpret and use CardioVision correctly. '
     )
 
     # 2) Target patient groups
     st.markdown(
-        '<strong>Target Patient Groups</strong>: CardioVision is intended only for use on cardiology patients who have accurate, complete data and show no signs of acute myocardial infarction.',
-        unsafe_allow_html=True
+        '**Target Patient Groups**: CardioVision is intended only for use on cardiology patients who have accurate, complete data and show no signs of acute myocardial infarction.'
     )
 
     # 3) Patient data accuracy
     st.markdown(
-        '<strong>Data Accuracy</strong>: You agree to verify the accuracy of the patient data entered, as the predictions rely on correct input.',
-        unsafe_allow_html=True
+        '**Data Accuracy**: You agree to verify the accuracy of the patient data entered, as the predictions rely on correct input.'
     )
 
     # 4) Non-medical product
     st.markdown(
-        '<strong>Non-Medical Product</strong>: This tool is for educational purposes only and is not a certified medical device. It should not be solely relied upon for clinical decisions.',
-        unsafe_allow_html=True
+        '**Non-Medical Product**: This tool is for educational purposes only and is not a certified medical device. It should not be solely relied upon for clinical decisions.'
     )
 
     # 5) Final decision responsibility
     st.markdown(
-        '<strong>Final Decision</strong>: As the healthcare provider, you are fully responsible for all clinical decisions. CardioVision serves as a decision aid, not a substitute.',
-        unsafe_allow_html=True
+        '**Final Decision**: As the healthcare provider, you are fully responsible for all clinical decisions. CardioVision serves as a decision aid, not a substitute.'
     )
 
     # 6) University project disclaimer
     st.markdown(
-        '<strong>University Project</strong>: This tool is part of a university project and should not be used for real-world patient care.',
-        unsafe_allow_html=True
+        '**University Project**: This tool is part of a university project and should not be used for real-world patient care.'
     )
 
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.html('</div>')
 
     
     # Confirmation button
