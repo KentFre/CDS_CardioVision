@@ -46,32 +46,36 @@ with st.expander("Model Performance Justification"):
 
     # Define performance data for the table
     performance_data = {
-        "Metric": ["Accuracy", "Precision", "Recall", "F1 Score", "AUC"],
-        "Value": [0.85, 0.82, 0.98, 0.89, 0.87],
+        "Metric": ["Accuracy", "Precision", "Recall", "F1 Score", "AUC", "Training Time", "Prediction Time"],
+        "Value": [0.798, 0.789, 0.862, 0.824, 0.792, 57, 0.18],
         "Justification": [
             "Overall correctness of the model's predictions.",
             "Proportion of true positive predictions among all positive predictions.",
             "Critical measure ensuring most at-risk patients are identified, even at the cost of false positives.",
             "Balance between precision and recall, ensuring good overall performance.",
-            "Ability to distinguish between patients at risk and not at risk."
+            "Ability to distinguish between patients at risk and not at risk.",
+            "Duration it took to train the model with the existing data.",
+            "Duration each new prediction takes."
         ]
     }
 
     # Display the table in the left column
     with col1:
         df_performance = pd.DataFrame(performance_data)
+        df_performance['Value'] = df_performance['Value'].apply(lambda x: f"{x:.3f}")
         st.table(df_performance)
 
     # Explain the performance results in the right column
     with col2:
         st.markdown(
             """
-            The model has performed exceptionally well in identifying cardiac arrest risk patients, especially with a **recall** of **0.98**. This is crucial because our priority is ensuring that nearly all high-risk patients are correctly flagged, even at the cost of false positives. The balance between recall and precision is reflected in the **F1 Score** of **0.89**, indicating robust overall performance.
+            The model has performed very well in identifying heart attack risk patients, especially with a **recall** of **0.86**. This is crucial because our priority is ensuring that nearly all high-risk patients are correctly flagged, even at the cost of false positives. The balance between recall and precision is reflected in the **F1 Score** of **0.82**, indicating robust overall performance.
 
-            Furthermore, the **AUC** score of **0.87** demonstrates the model's strong ability to differentiate between at-risk and non-at-risk patients, giving us confidence in the model's effectiveness.
+            Furthermore, the **AUC** score of **0.79** demonstrates the model's strong ability to differentiate between at-risk and non-at-risk patients, giving us confidence in the model's effectiveness.
+
+            The model took **57 seconds** to train, and each prediction takes an average of **0.18 seconds**, making it efficient for clinical use in real-time scenarios.
             """
         )
-
 # Dataset Overview
 st.header("Dataset Overview")
 st.write("For CardioVision, we utilized the **Cleveland** and **Long Beach** datasets. These datasets were selected due to their completeness and relevance to cardiovascular health metrics.")

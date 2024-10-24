@@ -243,3 +243,10 @@ if st.session_state['risk_calculated']:
                 
     else:
         st.write("SHAP values not available.")
+
+# Add a small information text at the bottom
+st.markdown("---")
+st.markdown("If you want to learn more about the prediction model, data used, and quality of our predictions:")
+
+# Use st.page_link to link to the Technical Information page
+st.page_link("visualization/Subpages/6_Technical_Information.py", label="Open Technical Information Page", icon=":material/manufacturing:")
