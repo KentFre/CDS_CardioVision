@@ -16,6 +16,8 @@ import time
 import matplotlib.pyplot as plt
 import shap
 from visualization.models.model_utils import load_preprocessor, load_model, calculate_risk, interpret_shap_values
+from visualization.models.data_utils import generate_pdf
+from io import BytesIO
 
 #####################################################################################
 ### File preparation: Functions and Status checks and model import                ###
@@ -39,6 +41,39 @@ data_available = bool(patient_data)
 # Risk calculation state
 if 'risk_calculated' not in st.session_state:
     st.session_state['risk_calculated'] = False
+
+
+def calculate_SHAP():
+    # Get the SHAP values and expected value from calculate_risk
+    result, shap_values, expected_value, prediction = calculate_risk(preprocessor, risk_model)
+
+    # Reshape the SHAP values if needed
+    if len(shap_values.shape) == 3:
+        shap_values_patient = shap_values.reshape(-1, shap_values.shape[1])
+    else:
+        shap_values_patient = shap_values
+
+    st.session_state['shap_values_patient'] = shap_values_patient
+    st.session_state['expected_value'] = expected_value
+
+    # Display SHAP waterfall plot
+    if shap_values is not None:
+        feature_names = st.session_state['df'].columns.drop('Has_heart_disease')
+        st.session_state['feature_names'] = feature_names
+
+        fig, ax = plt.subplots()
+        shap.waterfall_plot(shap.Explanation(
+            values=shap_values_patient[0],
+            base_values=expected_value,
+            feature_names=feature_names
+        ))
+
+        # Save the SHAP waterfall plot as an image in memory (BytesIO)
+        img_buffer = BytesIO()
+        fig.savefig(img_buffer, format='png')
+        img_buffer.seek(0)  # Rewind the buffer to the beginning
+        st.session_state['shap_image'] = img_buffer  # Save image in session state
+        st.session_state['interpretation_text'] = interpret_shap_values(shap_values_patient, feature_names, prediction)
 
 #####################################################################################
 ### Page Title and Doctor Infor                                                   ###
@@ -189,16 +224,31 @@ with light_column:
             </div>
             """
         )
+        # Check if patient data exists
         if st.session_state['patient_data'] != {}:
-            if st.button("Calculate Risk", type="primary"):
-                if data_available:
-                    with st.spinner("Calculating risk..."):
-                        result, explanation, shap_values, prediction = calculate_risk(preprocessor, risk_model)
-                        st.session_state['risk_calculated'] = True
-                        st.session_state['risk_result'] = result
-                        st.session_state['risk_explanation'] = explanation
-                        st.session_state['shap_values'] = shap_values
-                        st.rerun()
+            # Show the "Calculate Risk" button if the risk has not been calculated yet
+            if not st.session_state.get('risk_calculated', False):
+                if st.button("Calculate Risk", type="primary"):
+                    if data_available:
+                        with st.spinner("Calculating risk..."):
+                            result, explanation, shap_values, prediction = calculate_risk(preprocessor, risk_model)
+                            st.session_state['risk_calculated'] = True
+                            st.session_state['risk_result'] = result
+                            st.session_state['risk_explanation'] = explanation
+                            st.session_state['shap_values'] = shap_values
+                            calculate_SHAP()
+                            st.rerun()  # Refresh the page after calculation
+
+            # If risk is already calculated, show the download button
+            else:
+                if st.session_state['interpretation_text']:
+                    st.download_button(
+                        label="Download Risk Report",
+                        file_name="risk_report.pdf",
+                        mime="application/pdf",
+                        data=generate_pdf(st.session_state['patient_data'], st.session_state['risk_result'], st.session_state['shap_image'], st.session_state['interpretation_text']),
+                        type="primary"
+                    )
 
 # Column 3: Risk calculation result text
 with explain_column:
@@ -254,23 +304,22 @@ if st.session_state['risk_calculated']:
 
     # Display SHAP waterfall plot
     if shap_values is not None:
-        feature_names = st.session_state['df'].columns.drop('Has_heart_disease')
 
         col1, col2 = st.columns([1, 1])
         
         with col1:
+            # Display SHAP waterfall plot directly as matplotlib figure
             fig, ax = plt.subplots()
             shap.waterfall_plot(shap.Explanation(
-                values=shap_values_patient[0],
-                base_values=expected_value,
-                feature_names=feature_names
+                values=st.session_state['shap_values_patient'][0],
+                base_values=st.session_state['expected_value'],
+                feature_names=st.session_state['feature_names']
             ))
             st.pyplot(fig)
 
         with col2:
             # Show the interpretation text of the SHAP results
-            interpretation_text = interpret_shap_values(shap_values_patient, feature_names, prediction)
-            st.markdown(interpretation_text)
+            st.markdown(st.session_state['interpretation_text'])
                 
     else:
         st.write("SHAP values not available.")
