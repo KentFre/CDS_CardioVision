@@ -39,7 +39,7 @@ class CustomPDF(FPDF):
 
     def header(self):
         # Add the logo on every page
-        self.image(r'visualization\assets\CardioVision_Full_Logo.png', x=self.w * 0.3, y=10, w=self.w * 0.5)
+        self.image("visualization/assets/CardioVision_Full_Logo.png", x=self.w * 0.3, y=10, w=self.w * 0.5)
         self.ln(30)  # Move to next section after the image
 
         # Get current date and time
