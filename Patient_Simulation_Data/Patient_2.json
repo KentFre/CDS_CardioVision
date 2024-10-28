@@ -6,7 +6,7 @@
     "address": "2745 Oak Street, San Francisco, CA 94102",
     "phone": "415-555-8932",
     "email": "william.harper@example.com",
-    "age": 67,
+    "age": 57,
     "gender": "Male"
   },
   "CoreComplaints": [
@@ -34,8 +34,8 @@
     "resting_ecg_results": "ST-T Wave Abnormality"
   },
   "SocialFactors": {
-    "cigarettes_per_day": 10.0,
-    "years_smoking": 40.0,
+    "cigarettes_per_day": 0,
+    "years_smoking": 0,
     "family_history_cad": false
   }
 }
