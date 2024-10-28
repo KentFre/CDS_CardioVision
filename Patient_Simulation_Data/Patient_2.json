@@ -22,7 +22,7 @@
   },
   "VitalParameters": {
     "resting_heart_rate": 64.0,
-    "max_heart_rate": 108.0,
+    "max_heart_rate": 128.0,
     "has_hypertension": 1.0
   },
   "LaboratoryValues": {
@@ -31,7 +31,7 @@
     "st_depression": 1.5
   },
   "ECGResults": {
-    "resting_ecg_results": "Normal"
+    "resting_ecg_results": "ST-T Wave Abnormality"
   },
   "SocialFactors": {
     "cigarettes_per_day": 10.0,
